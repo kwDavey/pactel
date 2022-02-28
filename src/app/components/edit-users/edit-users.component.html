@@ -1,0 +1,68 @@
+<div class="container"  style="width: 20%;">
+    <H1>Edit User</H1>
+  
+    <div>
+      <div class="form-group">
+        <label>Username:</label>
+        <input class="form-control" name="Username" type="text" [(ngModel)]="Username" required
+          placeholder="Enter Username" maxlength="20" minlength="6"/>
+      </div>
+  
+  
+      <div class="form-group">
+        <label>Password:</label>
+        <input class="form-control" name="Password" type="text" [(ngModel)]="Password" required
+          placeholder="Enter Password" maxlength="10" minlength="6"/>
+      </div>
+
+      <div class="form-group">
+        <label>Confirm Password:</label>
+        <input class="form-control" name="ConfirmPassword" type="text" [(ngModel)]="ConfirmPassword" required
+          placeholder="Confirm Password" maxlength="20" minlength="6"/>
+      </div>
+
+      <div class="form-group">
+        <label>Rights:</label>
+          <select class="form-control" name="Rights" type="text" [(ngModel)]="Rights" required
+          placeholder="Enter Rights">
+              <option value="Admin">Admin</option>
+              <option value="Manager">Manager</option>
+              <option value="User">User</option>
+          </select>
+      </div>
+  
+  
+      <div class="form-group" style="display: inline-flex;">
+  
+          <div style="float: left;margin-right: 20px;">
+              <button class="btn btn-primary btn-lg btn-block" type="submit"  (click)="Back()">Back</button>
+          </div>
+  
+  
+          <div style="float: left;margin-right: 20px;margin-left:20px;">
+              <button class="btn btn-warning btn-lg btn-block" type="submit"  (click)="Reset()">Reset</button>
+          </div>
+  
+          <div style="float: right;margin-left:20px;">
+              <button class="btn btn-success btn-lg btn-block" type="submit" [disabled]="!Username || !Password ||!Rights ||!ConfirmPassword" (click)="Save()">Save</button>
+          </div>
+  
+          <div style="float: right;margin-right: 20px;margin-left:20px;">
+              <button class="btn btn-danger btn-lg btn-block" type="submit" [disabled]="!Username || !Password ||!Rights ||!ConfirmPassword" (click)="Delete()">Delete</button>
+          </div>
+  
+  
+          
+  
+          
+  
+          
+      </div>
+  
+  
+      
+  
+    </div>
+  
+  </div>
+  

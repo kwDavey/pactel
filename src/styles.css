@@ -1,1 +1,94 @@
-/* You can add global styles to this file, and also import other style files */
+H1{
+  margin-bottom: 20px;
+}
+
+
+button[disabled]{
+    cursor: not-allowed;
+}
+
+.ng-invalid {
+    border-color: rgb(255, 0, 0);
+  }
+
+  .ng-valid {
+    border-color: green;
+  }
+
+.btnClear{
+  border-color: green;
+}
+
+.container{
+  width:100%;
+  text-align: center;
+}
+
+.viewDataTable{
+  width:100%;
+  margin-top: 40px;
+  height: 50vh;
+  overflow: auto;
+  display: block;
+}
+
+.viewDataTableHeading{
+  font-size: 20px;
+}
+
+th:nth-child(2) {
+  width:60%;
+}
+
+th:nth-child(3) {
+  width:40%;
+}
+
+th:nth-child(4) {
+  width:20%;
+  min-width: 150px;
+}
+
+td:nth-child(1) {
+  padding: 5px;
+}
+
+
+
+
+
+
+
+
+
+table {
+  width: 100%;
+  text-align: center;
+  border-collapse: separate; /* Don't collapse */
+  border-spacing: 0;
+}
+
+table th {
+  /* Apply both top and bottom borders to the <th> */
+  border-top: black 1px solid;
+  border-bottom: black 1px solid;
+  border-right: black 1px solid;
+}
+
+table td {
+  /* For cells, apply the border to one of each side only (right but not left, bottom but not top) */
+  border-bottom: black 1px solid;
+  border-right: black 1px solid;
+}
+
+table th:first-child,
+table td:first-child {
+  /* Apply a left border on the first <td> or <th> in a row */
+  border-left: black 1px solid;
+}
+
+table thead th {
+  position: sticky;
+  top: 0;
+  background-color: #edecec;
+}

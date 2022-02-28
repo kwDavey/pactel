@@ -1,0 +1,31 @@
+<div class="container"  style="width: 20%;">
+    <H1>Scan Box</H1>
+  
+    <div>
+
+  
+      <div class="form-group">
+        <label>Enter Box Code:</label>
+        <div class="input-group mb-3">
+            <input class="form-control" [(ngModel)]="BoxCode" ID="BoxCode" name="BoxCode" type="text"  placeholder="Box Code" required/>
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary btnClear" style="border-color:grey;;" type="button" id="button-addon2" (click)="ClearSearch()">X</button>
+            </div>
+          </div>
+      </div>
+
+      
+  
+  
+      <div class="form-group" style="display: inline-flex;">
+   
+          <div style="float: right;margin-left:20px;">
+              <button class="btn btn-success btn-lg btn-block" type="submit" [disabled]="!BoxCode" (click)="Next()">Next</button>
+          </div> 
+  
+      </div>
+  
+    </div>
+  
+  </div>
+  

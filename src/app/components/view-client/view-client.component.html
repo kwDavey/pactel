@@ -1,0 +1,39 @@
+
+<div class="container">
+    <H1>View Clients</H1>
+
+    <div style="padding-top: 15px;width: 300px;text-align: left;" > 
+      <label>Search:</label>
+      <div class="input-group mb-3">
+        <input class="form-control" ID="details" name="details" type="text" [(ngModel)]="SearchValue" placeholder="Type in something to search"/>
+        <div class="input-group-append">
+          <button class="btn btn-outline-secondary btnClear" type="button" id="button-addon2" (click)="ClearSearch()">X</button>
+        </div>
+      </div>
+      
+    </div>
+
+
+    <table id="dtBasicExample" class="viewDataTable" ngb-sort>
+        <tr>
+          <th class="viewDataTableHeading"></th>
+          <th class="viewDataTableHeading">Client Name</th>
+          <th class="viewDataTableHeading">Province</th>
+          <th class="viewDataTableHeading">Area</th>
+        </tr>
+
+        <tr *ngFor="let data of data | filter:SearchValue">
+            <td class="viewDataTableCell">
+                <button type="submit" class="btn btn-primary btn-lg btn-block"  ID="btnViewData" (click)="EditData(data.ID)">Edit</button>
+            </td>
+            <td class="viewDataTableCell">{{data.ID}}</td>
+            <td class="viewDataTableCell">{{data.Province}}</td>
+            <td class="viewDataTableCell">{{data.Area}}</td>
+        </tr>
+
+      </table>
+
+    
+    
+
+</div>

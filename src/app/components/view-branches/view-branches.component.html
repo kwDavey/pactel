@@ -1,0 +1,33 @@
+<div class="container">
+    <H1>View Branches</H1>
+
+    <div style="padding-top: 15px;width: 300px;text-align: left;" > 
+      <label>Search:</label>
+      <div class="input-group mb-3">
+        <input class="form-control" ID="details" name="details" type="text" [(ngModel)]="SearchValue" placeholder="Type in something to search"/>
+        <div class="input-group-append">
+          <button class="btn btn-outline-secondary btnClear" type="button" id="button-addon2" (click)="ClearSearch()">X</button>
+        </div>
+      </div>
+      
+    </div>
+
+    
+    <table class="viewDataTable">
+        <tr>
+          <th class="viewDataTableHeading"></th>
+          <th class="viewDataTableHeading">Branch Name</th>
+        </tr>
+
+        <tr *ngFor="let data of data | filter:SearchValue">
+            <td class="viewDataTableCell">
+                <button type="submit" class="btn btn-primary btn-lg btn-block"  ID="btnViewData" (click)="EditData(data.ID)">Edit</button>
+            </td>
+            <td class="viewDataTableCell" style="min-width: 250px;">{{data.ID}}</td>
+        </tr>
+
+      </table>
+
+    
+
+</div>

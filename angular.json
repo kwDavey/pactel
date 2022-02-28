@@ -124,5 +124,8 @@
       }
     }
   },
-  "defaultProject": "pactel"
+  "defaultProject": "pactel",
+  "cli": {
+    "analytics": false
+  }
 }

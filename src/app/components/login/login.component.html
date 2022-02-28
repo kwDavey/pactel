@@ -1,0 +1,30 @@
+<section class="vh-100" style="padding-top: 10%;">
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+          <div class="card shadow-2-strong" style="border-radius: 1rem;">
+            <div class="card-body p-5 text-center">
+  
+              <h3 class="mb-5">Sign in</h3>
+  
+              <div class="form-group">
+                <label>Username:</label>
+                <input class="form-control" name="Username"  type="text"  [(ngModel)]="Username" required placeholder="Enter Username" />
+              </div>
+
+  
+              <div class="form-group">
+                <label>Password:</label>
+                <input class="form-control" name="Password"  type="text"  [(ngModel)]="Password" required placeholder="Enter Password" />
+              </div>
+  
+              <button class="btn btn-primary btn-lg btn-block" type="submit" [disabled]="!Username || !Password" (click)="Login()">Login</button>
+  
+         
+  
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>

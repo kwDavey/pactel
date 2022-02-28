@@ -1,0 +1,88 @@
+<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
+
+  <img src="/assets/logo.png" width="100" height="100" class="d-inline-block align-top" alt="" style="margin-right: 50px;">
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarNavAltMarkup" style="padding-left: 0px;">
+    <div class="navbar-nav">
+
+      <a [ngClass]="{'nav-item nav-link': true,'active': (ActivePage=='ScanBox')}" (click)="changePage('ScanBox')" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup">Scan Box</a><!--User-->
+
+
+      <li *ngIf="UserLevel=='Admin'" class="nav-item dropdown"><!--Admin-->
+        <a [ngClass]="{'nav-link dropdown-toggle': true,' active ': (ActivePage=='Client')}" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Clients
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" (click)="changePage('ClientAdd')">Add</a>
+          <a class="dropdown-item" (click)="changePage('ClientView')">View</a>
+        </div>
+      </li>
+
+
+      <!--Manager-->
+      <li *ngIf="UserLevel=='Manager' || UserLevel=='Admin'" class="nav-item dropdown"><!--Admin-->
+        <a [ngClass]="{'nav-link dropdown-toggle': true,' active ': (ActivePage=='Areas')}" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Areas
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" (click)="changePage('AreasAdd')">Add</a>
+          <a class="dropdown-item" (click)="changePage('AreasView')">View</a>
+        </div>
+      </li>
+
+
+      <!-- ---------------------------------------------Admin----------------------------------------------->
+      <a *ngIf="UserLevel=='Admin'" [ngClass]="{'nav-item nav-link': true,'active': (ActivePage=='Provinces')}"  (click)="changePage('Provinces')" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup">Provinces</a><!--User-->
+
+
+      <li *ngIf="UserLevel=='Admin'" class="nav-item dropdown"><!--Admin-->
+        <a [ngClass]="{'nav-link dropdown-toggle': true,' active ': (ActivePage=='Distributors')}" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Distributors
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" (click)="changePage('DistributorsAdd')">Add</a>
+          <a class="dropdown-item" (click)="changePage('DistributorsView')">View</a>
+        </div>
+      </li>
+
+      <li *ngIf="UserLevel=='Admin'" class="nav-item dropdown"><!--Admin-->
+        <a [ngClass]="{'nav-link dropdown-toggle': true,' active ': (ActivePage=='Providers')}" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Providers
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" (click)="changePage('ProvidersAdd')">Add</a>
+          <a class="dropdown-item" (click)="changePage('ProvidersView')">View</a>
+        </div>
+      </li>
+
+      <li *ngIf="UserLevel=='Admin'" class="nav-item dropdown"><!--Admin-->
+        <a [ngClass]="{'nav-link dropdown-toggle': true,' active ': (ActivePage=='Branches')}" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Branches
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" (click)="changePage('BranchesAdd')">Add</a>
+          <a class="dropdown-item" (click)="changePage('BranchesView')">View</a>
+        </div>
+      </li>
+
+
+      <li *ngIf="UserLevel=='Admin'" class="nav-item dropdown"><!--Admin-->
+        <a [ngClass]="{'nav-link dropdown-toggle': true,' active ': (ActivePage=='Users')}" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Users
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" (click)="changePage('UsersAdd')">Add</a>
+          <a class="dropdown-item" (click)="changePage('UsersView')">View</a>
+        </div>
+      </li>
+
+
+      <a [ngClass]="{'nav-item nav-link': true,'active': (ActivePage=='Profile')}"  (click)="changePage('Profile')" style="display: none;">Profile</a>
+    </div>
+  </div>
+
+  </nav>

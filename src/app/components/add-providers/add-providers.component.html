@@ -1,0 +1,58 @@
+<div class="container"  style="width: 20%;">
+    <H1>Add Provider</H1>
+  
+    <div>
+      <div class="form-group">
+        <label>Provider Name:</label>
+        <input class="form-control" name="ProviderName" type="text" [(ngModel)]="ProviderName" required
+          placeholder="Enter Provider Name" maxlength="20"/>
+      </div>
+  
+  
+      <div class="form-group">
+        <label>Box Size:</label>
+        <input class="form-control" name="BoxSize" type="text" [(ngModel)]="BoxSize" required
+          placeholder="Enter Box Size" />
+      </div>
+
+      <div class="form-group">
+        <label>Batch Size:</label>
+        <input class="form-control" name="BatchSize" type="text" [(ngModel)]="BatchSize" required
+          placeholder="Enter Batch Size" />
+      </div>
+  
+  
+      <div class="form-group" style="display: inline-flex;">
+  
+          <div style="float: left;margin-right: 20px;">
+              <button class="btn btn-primary btn-lg btn-block" type="submit"  (click)="Back()">Back</button>
+          </div>
+  
+  
+          <div style="float: left;margin-right: 20px;margin-left:20px;">
+              <button class="btn btn-warning btn-lg btn-block" type="submit"  (click)="Reset()">Reset</button>
+          </div>
+  
+          <div style="float: right;margin-left:20px;">
+              <button class="btn btn-success btn-lg btn-block" type="submit" [disabled]="!ProviderName || !BoxSize ||!BatchSize" (click)="Save()">Save</button>
+          </div>
+  
+          <div style="float: right;margin-right: 20px;margin-left:20px;">
+              <button class="btn btn-danger btn-lg btn-block" type="submit" [disabled]="!ProviderName || !BoxSize ||!BatchSize" (click)="Delete()">Delete</button>
+          </div>
+  
+  
+          
+  
+          
+  
+          
+      </div>
+  
+  
+      
+  
+    </div>
+  
+  </div>
+  
