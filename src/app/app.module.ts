@@ -35,6 +35,7 @@ import { ScanBoxComponent } from './components/scan-box/scan-box.component';
 import { ViewClientComponent } from './components/view-client/view-client.component';
 import { AddClientComponent } from './components/add-client/add-client.component';
 import { EditClientComponent } from './components/edit-client/edit-client.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
@@ -70,6 +71,7 @@ import { EditClientComponent } from './components/edit-client/edit-client.compon
     HttpClientModule,
     FormsModule,
     Ng2SearchPipeModule,
+    NgbModule,
 
   ],
   providers: [],

@@ -46,10 +46,102 @@
           <div style="float: right;margin-left:20px;">
               <button class="btn btn-success btn-lg btn-block" type="submit" [disabled]="!Username || !Password ||!Rights ||!ConfirmPassword " (click)="Save()">Save</button>
           </div>
+
       </div>
-      
-  
+
     </div>
   
   </div>
+
+
+  
+  <div style="float: right;margin-left:20px;">
+    <button class="btn btn-success btn-lg btn-block" id="ErrorButton" (click)="open(content)" style="display: none;">
+    </button>
+  </div>
+   <ng-template #content let-modal ID="Errormessage">
+        <div class="modal-header">
+            <h4 class="modal-title" 
+                id="modal-basic-title">
+                {{PopupTitle}}
+            </h4>
+            <button type="button" class="close"
+                    aria-label="Close" (click)=
+                    "modal.dismiss('Cross click')">
+      
+                <span aria-hidden="true">
+                    ×
+                </span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <form>
+                <div class="form-group">
+                    <label for="dateOfBirth">
+                        {{DisplayErrormessage}}
+                    </label>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" 
+                class="btn btn-success btn-lg btn-block" 
+                (click)="modal.close('Save click')">
+                Done
+            </button>
+        </div>
+    </ng-template>
+
+  <!--
+
+<ng-template #content let-modal ID="Errormessage">
+        <div class="modal-header">
+            <h4 class="modal-title" 
+                id="modal-basic-title">
+                Error
+            </h4>
+            <button type="button" class="close"
+                    aria-label="Close" (click)=
+                    "modal.dismiss('Cross click')">
+      
+                <span aria-hidden="true">
+                    ×
+                </span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <form>
+                <div class="form-group">
+                    <label for="dateOfBirth">
+                        Something went wrong
+                    </label>
+                    <div class="input-group">
+                        <input id="dateOfBirth" 
+                            class="form-control" 
+                            placeholder="yyyy-mm-dd" 
+                            name="dp" ngbDatepicker
+                            #dp="ngbDatepicker">
+      
+                        <div class="input-group-append">
+                            <button class="btn 
+                                btn-outline-secondary calendar"
+                                (click)="dp.toggle()"
+                                type="button">
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" 
+                class="btn btn-outline-dark" 
+                (click)="modal.close('Save click')">
+                Save
+            </button>
+        </div>
+    </ng-template>
+
+
+  -->
   
