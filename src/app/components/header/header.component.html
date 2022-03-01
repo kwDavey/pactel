@@ -12,7 +12,7 @@
       <a [ngClass]="{'nav-item nav-link': true,'active': (ActivePage=='ScanBox')}" (click)="changePage('ScanBox')" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup">Scan Box</a><!--User-->
 
 
-      <li *ngIf="UserLevel=='Admin'" class="nav-item dropdown"><!--Admin-->
+      <li class="nav-item dropdown"><!--User-->
         <a [ngClass]="{'nav-link dropdown-toggle': true,' active ': (ActivePage=='Client')}" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Clients
         </a>
