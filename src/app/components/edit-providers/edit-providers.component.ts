@@ -12,6 +12,7 @@ export class EditProvidersComponent implements OnInit {
 
   constructor(private dbService: SqlService,private route: ActivatedRoute,  private router: Router) { }
 
+  oldProviderName="";
   ProviderName= "";
   BoxSize = "";
   BatchSize = "";
@@ -19,22 +20,58 @@ export class EditProvidersComponent implements OnInit {
   ngOnInit(): void {
 
     this.route.paramMap.subscribe(params => {
-      //this.GetGroupsData(params.get('ID'));
+      this.getData(params.get('ID'));
     });
 
   }
 
+  async getData(ID:any){
+   
 
-  Delete(){
 
+    await(this.dbService.GetSpecificProvider(ID).subscribe((ret:any) => {
+      if(ret != "false"){
+      
+        let a = (ret as string).split(',');
+
+        this.ProviderName = a[0];
+        this.oldProviderName = a[0];
+        this.BoxSize = a[1];
+        this.BatchSize = a[2];
+
+      }else{
+        alert("Please check your connection and try again");
+      }
+    }));
   }
 
-  Save(){
 
+  async Delete(){
+    await(this.dbService.DeleteProvider(this.ProviderName).subscribe((ret:any) => {
+      if(ret != "false"){
+        alert("Provider has been deleted");
+        this.Back();
+      }else{
+        alert("Please check your connection and try again");
+      }
+    }));
+  }
+
+  async Save(){
+    await(this.dbService.EditProvider(this.oldProviderName, this.ProviderName, this.BoxSize, this.BatchSize).subscribe((ret:any) => {
+      if(ret != "false"){
+        alert("Provider has been editted");
+        this.Back();
+      }else{
+        alert("Please check your connection and try again");
+      }
+    }));
   }
 
   Reset(){
-
+    this.ProviderName= "";
+    this.BoxSize = "";
+    this.BatchSize = "";
   }
 
   Back(){

@@ -21,21 +21,21 @@ export class LoginComponent implements OnInit {
 
 
   async Login(){
-
-    /*if(this.Username.length < 6 || this.Password.length<6){
+    
+    if(this.Username.length < 6 || this.Password.length<6){
       alert("Please check your details and try again");
-    }else{*/
+    }else{
       await(this.dbService.LogUserIn(this.Username, this.Password).subscribe((ret) => {
-        if(ret == true){
+        if(ret != "false"){
           //alert("Logged in");
-          this.dbService.DidUserLogInSuccessfully(true);
+          this.dbService.DidUserLogInSuccessfully(ret as string,true);
           this.router.navigate(['ScanBox']); 
         }else{
-          this.dbService.DidUserLogInSuccessfully(false);
+          this.dbService.DidUserLogInSuccessfully("",false);
           alert("Please check your details and try again");
         }
       }));
-    //}
+    }
 
   }
 }

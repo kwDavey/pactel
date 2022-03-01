@@ -17,16 +17,20 @@ export class AddBranchesComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  Delete(){
-
+  async Save(){
+    await(this.dbService.AddBranch(this.BranchName).subscribe((ret:any) => {
+      if(ret != "false"){
+        alert("Branch Added");
+        this.Reset();
+      }else{
+        alert("Please check your connection and try again");
+      }
+    }));
   }
 
-  Save(){
-
-  }
 
   Reset(){
-
+    this.BranchName = "";
   }
 
   Back(){

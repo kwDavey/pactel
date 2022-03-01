@@ -19,6 +19,25 @@ export class ViewBranchesComponent implements OnInit {
   constructor(private dbService: SqlService,private router: Router) { }
 
   ngOnInit(): void {
+    this.getData();
+  }
+
+  async getData(){
+   
+    await(this.dbService.GetAllBranches().subscribe((ret:any) => {
+      if(ret != "false"){
+        this.data.splice(0);
+        let a = (ret as string).split(';');
+        a.splice(a.length-1,1);
+
+        a.forEach(element=> {
+          let temp = { ID:element };
+          this.data.push(temp);
+        });
+      }else{
+        alert("Please check your connection and try again");
+      }
+    }));
   }
 
   EditData(AreaID:string){

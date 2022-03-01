@@ -19,22 +19,31 @@ export class AddUsersComponent implements OnInit {
   ngOnInit(): void {
 
     this.route.paramMap.subscribe(params => {
-      //this.GetGroupsData(params.get('ID'));
     });
 
   }
 
 
-  Delete(){
-
-  }
-
-  Save(){
-
+  async Save(){
+    if(this.Username.length < 6 || this.Password.length<6|| this.Password != this.ConfirmPassword){
+      alert("Please check your details and try again");
+    }else{
+      await(this.dbService.AddUser(this.Username, this.Password, this.Rights).subscribe((ret:any) => {
+        if(ret != "false"){
+          alert("User Added");
+          this.Reset();
+        }else{
+          alert("Please check your connection and try again");
+        }
+      }));
+    }
   }
 
   Reset(){
-
+    this.Username= "";
+    this.Password = "";
+    this.ConfirmPassword = "";
+    this.Rights = "User";
   }
 
   Back(){

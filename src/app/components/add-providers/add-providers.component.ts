@@ -17,23 +17,24 @@ export class AddProvidersComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.route.paramMap.subscribe(params => {
-      //this.GetGroupsData(params.get('ID'));
-    });
-
   }
 
 
-  Delete(){
-
-  }
-
-  Save(){
-
+  async Save(){
+    await(this.dbService.AddProvider(this.ProviderName, this.BoxSize, this.BatchSize).subscribe((ret:any) => {
+      if(ret != "false"){
+        alert("Provider Added");
+        this.Reset();
+      }else{
+        alert("Please check your connection and try again");
+      }
+    }));
   }
 
   Reset(){
-
+    this.ProviderName= "";
+    this.BoxSize = "";
+    this.BatchSize = "";
   }
 
   Back(){

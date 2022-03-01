@@ -15,7 +15,7 @@
   
               <div class="form-group">
                 <label>Password:</label>
-                <input class="form-control" name="Password"  type="text"  [(ngModel)]="Password" required placeholder="Enter Password" />
+                <input class="form-control" name="Password"  type="password"  [(ngModel)]="Password" required placeholder="Enter Password" />
               </div>
   
               <button class="btn btn-primary btn-lg btn-block" type="submit" [disabled]="!Username || !Password" (click)="Login()">Login</button>

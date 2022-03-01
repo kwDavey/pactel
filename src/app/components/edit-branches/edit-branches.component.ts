@@ -10,22 +10,46 @@ import {SqlService} from "../../Database/sql.service";
 export class EditBranchesComponent implements OnInit {
 
   BranchName = "";
+  OldBranchName = "";
 
   constructor(private dbService: SqlService,private route: ActivatedRoute,  private router: Router) { }
 
   ngOnInit(): void {
+    this.route.paramMap.subscribe(params => {
+      this.BranchName = params.get('ID') as string;
+      this.OldBranchName = params.get('ID') as string;
+    });
   }
 
-  Delete(){
 
+  
+  async Delete(){
+    await(this.dbService.DeleteBranches(this.BranchName).subscribe((ret:any) => {
+      if(ret != "false"){
+        alert("Branch has been deleted");
+        this.Back();
+      }else{
+        alert("Please check your connection and try again");
+      }
+    }));
   }
 
-  Save(){
-
+  async Save(){
+    await(this.dbService.EditBranches(this.OldBranchName, this.BranchName).subscribe((ret:any) => {
+      if(ret != "false"){
+        alert("Branch has been editted");
+        this.Back();
+      }else{
+        alert("Please check your connection and try again");
+      }
+    }));
   }
 
   Reset(){
-
+    this.route.paramMap.subscribe(params => {
+      this.BranchName = params.get('ID') as string;
+      this.OldBranchName = params.get('ID') as string;
+    });
   }
 
   Back(){

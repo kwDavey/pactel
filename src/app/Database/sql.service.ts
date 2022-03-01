@@ -44,19 +44,19 @@ export class SqlService {
   }
 
   LogUserIn(Username:string,Password:string){
-    return this.http.get('https://www.rhemafamilychurches.co.za/application/RFCgetUsers.php?username=' + Username + "&password=" + Password).pipe(catchError(this.handleError));
+    return this.http.get('https://www.silversharksswimmingacademy.co.za/Pactel/login.php?username=' + Username + "&password=" + Password).pipe(catchError(this.handleError));
   }
   
-  DidUserLogInSuccessfully(Answer:Boolean){
-    if(Answer == true){
-      //var UserData = this.http.get('https://www.rhemafamilychurches.co.za/application/RFCgetUsers.php?username=dfs').pipe(catchError(this.handleError));
+  DidUserLogInSuccessfully(Rights:string, Success:Boolean){
+    if(Success == true){
+
       localStorage.setItem('UserLoggedIn', "true");
-      localStorage.setItem('UserLevel', "1£Admin");
+      localStorage.setItem('UserLevel', "1£"+Rights);
       //localStorage.setItem('UserLevel', "1£Manager");
       //localStorage.setItem('UserLevel', "1£User");
       
       this.UserLoggedIn = true;
-      this.UserLevel = "Admin";
+      this.UserLevel = Rights;
       console.log("LOGGED IN");
 
     }else{
@@ -216,4 +216,107 @@ export class SqlService {
   }
   
 
+
+  getAllProviders(){
+    return this.http.get('https://www.silversharksswimmingacademy.co.za/Pactel/getAllProviders.php').pipe(catchError(this.handleError));
+  }
+
+  GetSpecificProvider(Name:string){
+    var formData = new FormData(); // Currently empty
+    formData.set('ProvidersName', Name);
+    return this.http.post("https://www.silversharksswimmingacademy.co.za/Pactel/getSpecificProvider.php", formData)
+  }
+
+  AddProvider(Provider:string,BoxSize:string,BatchSize:string){
+    return this.http.get('https://www.silversharksswimmingacademy.co.za/Pactel/addProvider.php?Provider='+ Provider + '&BoxSize=' + BoxSize+ '&BatchSize=' + BatchSize).pipe(catchError(this.handleError));
+  }
+
+  DeleteProvider(Name:string){
+    var formData = new FormData(); // Currently empty
+    
+    formData.set('ProvidersName', Name);
+    return this.http.post("https://www.silversharksswimmingacademy.co.za/Pactel/deleteProvider.php", formData)
+  }
+
+  EditProvider(OldProvider:string,Provider:string,BoxSize:string,BatchSize:string){
+    var formData = new FormData(); // Currently empty
+
+    formData.set('OldProvider', OldProvider);
+    formData.set('Provider', Provider);
+    formData.set('BoxSize', BoxSize);
+    formData.set('BatchSize', BatchSize);
+
+
+    return this.http.post("https://www.silversharksswimmingacademy.co.za/Pactel/editProvider.php", formData)
+  }
+
+
+
+
+  GetAllBranches(){
+    return this.http.get('https://www.silversharksswimmingacademy.co.za/Pactel/getAllBranches.php').pipe(catchError(this.handleError));
+  }
+
+
+  AddBranch(Name:string){
+    return this.http.get('https://www.silversharksswimmingacademy.co.za/Pactel/addBranch.php?Name='+ Name).pipe(catchError(this.handleError));
+  }
+
+  DeleteBranches(Name:string){
+    var formData = new FormData(); // Currently empty
+    
+    formData.set('Name', Name);
+    return this.http.post("https://www.silversharksswimmingacademy.co.za/Pactel/deleteBranch.php", formData)
+  }
+
+  EditBranches(OldName:string,Name:string){
+    var formData = new FormData(); // Currently empty
+
+    formData.set('OldName', OldName);
+    formData.set('Name', Name);
+
+
+    return this.http.post("https://www.silversharksswimmingacademy.co.za/Pactel/editBranch.php", formData)
+  }
+
+
+
+
+
+  getAllUsers(){
+    return this.http.get('https://www.silversharksswimmingacademy.co.za/Pactel/getAllUsers.php').pipe(catchError(this.handleError));
+  }
+
+  GetSpecificUser(Name:string){
+    var formData = new FormData(); // Currently empty
+    formData.set('Username', Name);
+    return this.http.post("https://www.silversharksswimmingacademy.co.za/Pactel/getSpecificUser.php", formData)
+  }
+
+  AddUser(Username:string,Password:string,Rights:string){
+    var formData = new FormData(); // Currently empty
+    formData.set('Username', Username);
+    formData.set('Password', Password);
+    formData.set('Rights', Rights);
+    return this.http.post("https://www.silversharksswimmingacademy.co.za/Pactel/addUser.php", formData)
+  }
+
+  DeleteUser(Name:string){
+    var formData = new FormData(); // Currently empty
+    
+    formData.set('Username', Name);
+    return this.http.post("https://www.silversharksswimmingacademy.co.za/Pactel/deleteUser.php", formData)
+  }
+
+  EditUser(OldUsername:string,Username:string,Password:string,Rights:string){
+    var formData = new FormData(); // Currently empty
+
+    formData.set('OldUsername', OldUsername);
+    formData.set('Username', Username);
+    formData.set('Password', Password);
+    formData.set('Rights', Rights);
+
+
+    return this.http.post("https://www.silversharksswimmingacademy.co.za/Pactel/editUser.php", formData)
+  }
 }

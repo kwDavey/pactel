@@ -11,14 +11,14 @@
 
     <div class="form-group">
       <label>Box Size:</label>
-      <input class="form-control" name="BoxSize" type="text" [(ngModel)]="BoxSize" required
-        placeholder="Enter Box Size" />
+      <input class="form-control" name="BoxSize" type="number" [(ngModel)]="BoxSize" required
+        placeholder="Enter Box Size" min=1 oninput="this.value =!!this.value && Math.abs(this.value) > 0 ? Math.abs(this.value) : null"/>
     </div>
 
     <div class="form-group">
       <label>Batch Size:</label>
-      <input class="form-control" name="BatchSize" type="text" [(ngModel)]="BatchSize" required
-        placeholder="Enter Batch Size" />
+      <input class="form-control" name="BatchSize" type="number" [(ngModel)]="BatchSize" required
+        placeholder="Enter Batch Size" min=1 oninput="this.value =!!this.value && Math.abs(this.value) > 0 ? Math.abs(this.value) : null"/>
     </div>
 
 
@@ -37,6 +37,11 @@
         <button class="btn btn-success btn-lg btn-block" type="submit"
           [disabled]="!ProviderName || !BoxSize ||!BatchSize" (click)="Save()">Save</button>
       </div>
+
+      <div style="float: right;margin-right: 20px;margin-left:20px;">
+        <button class="btn btn-danger btn-lg btn-block" type="submit" [disabled]="!ProviderName || !BoxSize ||!BatchSize" (click)="Delete()">Delete</button>
+    </div>
+
     </div>
 
   </div>
