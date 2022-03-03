@@ -1,31 +1,138 @@
 <div class="container"  style="width: 20%;">
-    <H1>Scan Box</H1>
+    <H1>Import Box</H1>
   
-    <div>
+    <div *ngIf=StageOne>
 
   
       <div class="form-group">
-        <label>Enter Box Code:</label>
+        <label>Provider:</label>
         <div class="input-group mb-3">
-            <input class="form-control" [(ngModel)]="BoxCode" ID="BoxCode" name="BoxCode" type="text"  placeholder="Box Code" required/>
-            <div class="input-group-append">
-              <button class="btn btn-outline-secondary btnClear" style="border-color:grey;;" type="button" id="button-addon2" (click)="ClearSearch()">X</button>
-            </div>
-          </div>
+            <select class="form-control" name="Provider" type="text" [(ngModel)]="Provider" required
+            placeholder="Enter Provider" >
+                <option *ngFor="let Provider of Providers; let i =index" value={{Provider}}>{{Provider}}
+                </option> 
+            </select>
+        </div>
       </div>
 
+
+      <div class="form-group">
+        <label>Branch:</label>
+        <div class="input-group mb-3">
+            <select class="form-control" name="Branch" type="text" [(ngModel)]="Branch" required
+            placeholder="Enter Branch" >
+                <option *ngFor="let Branch of Branchs; let i =index" value={{Branch}}>{{Branch}}
+                </option> 
+            </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Date recieved:</label>
+        <div class="input-group mb-3">
+          <input class="form-control" name="date"  type="date"  [(ngModel)]="date" required placeholder="Select a date" />
+        </div>
+      </div>
+
+
+      <div class="form-group">
+        <label>Import Excel Spread Sheet:</label>
+        <div class="input-group mb-3">
+          <input type="file" (change)="onFileChange($event)" [(ngModel)]="excelFile" placeholder="Upload file" accept=".xls , .xlsx">
+        </div>
+      </div>
       
-  
-  
       <div class="form-group" style="display: inline-flex;">
    
+
+          <div style="float: left;margin-right: 20px;margin-left:20px;">
+            <button class="btn btn-warning btn-lg btn-block" type="submit"  (click)="Reset()">Reset</button>
+          </div>
+
           <div style="float: right;margin-left:20px;">
-              <button class="btn btn-success btn-lg btn-block" type="submit" [disabled]="!BoxCode" (click)="Next()">Next</button>
+              <button class="btn btn-success btn-lg btn-block" type="submit" [disabled]="!Provider || !Branch || !date || !ImportValid" (click)="Next()">Next</button>
           </div> 
   
       </div>
+
+     
   
+    </div>
+
+
+    <div *ngIf=!StageOne>
+
+      <div class="form-group">
+        <label>Box Number:</label>
+        <div class="input-group mb-3">
+          <label>{{BoxNumber}}</label>
+        </div>
+      </div>
+
+
+      <table id="dtBasicExample" class="viewDataTable" ngb-sort>
+        <tr>
+          <th class="viewDataTableHeading">SERIAL NUMBER</th>
+        </tr>
+
+        <tr *ngFor="let SERIALNUMBERs of SERIALNUMBERs">
+            <td class="viewDataTableCell">{{SERIALNUMBERs}}</td>
+        </tr>
+
+      </table>
+
+      <div class="form-group" style="display: inline-flex;">
+
+        <div style="float: left;margin-right: 20px;">
+          <button class="btn btn-primary btn-lg btn-block" type="submit"  (click)="Back()">Back</button>
+        </div>
+   
+        <div style="float: right;margin-left:20px;">
+            <button class="btn btn-success btn-lg btn-block" type="submit"  (click)="Done()">Confirm</button>
+        </div> 
+
+      </div>
+
     </div>
   
   </div>
   
+
+
+  <!--Error popup-->
+  <div style="float: right;margin-left:20px;">
+    <button class="btn btn-success btn-lg btn-block" id="ErrorButton" (click)="open(content)" style="display: none;">
+    </button>
+  </div>
+   <ng-template #content let-modal ID="Errormessage">
+        <div class="modal-header">
+            <h4 class="modal-title" 
+                id="modal-basic-title">
+                {{PopupTitle}}
+            </h4>
+            <button type="button" class="close"
+                    aria-label="Close" (click)=
+                    "modal.dismiss('Cross click')">
+      
+                <span aria-hidden="true">
+                    ×
+                </span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <form>
+                <div class="form-group">
+                    <label for="dateOfBirth">
+                        {{DisplayErrormessage}}
+                    </label>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" 
+                class="btn btn-success btn-lg btn-block" 
+                (click)="modal.close('Save click')">
+                Done
+            </button>
+        </div>
+    </ng-template>

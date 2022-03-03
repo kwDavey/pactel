@@ -319,4 +319,9 @@ export class SqlService {
 
     return this.http.post("https://www.silversharksswimmingacademy.co.za/Pactel/editUser.php", formData)
   }
+
+
+  AddNewBox(formData:FormData){
+    return this.http.post("https://www.silversharksswimmingacademy.co.za/Pactel/addNewBox.php", formData);
+  }
 }
