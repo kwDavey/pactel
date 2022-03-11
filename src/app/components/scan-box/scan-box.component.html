@@ -9,7 +9,7 @@
         <div class="input-group mb-3">
             <select class="form-control" name="Provider" type="text" [(ngModel)]="Provider" required
             placeholder="Enter Provider" >
-                <option *ngFor="let Provider of Providers; let i =index" value={{Provider}}>{{Provider}}
+                <option *ngFor="let Provider of ProvidersData; let i =index" value={{i}}>{{Provider.ID}}
                 </option> 
             </select>
         </div>
@@ -50,7 +50,7 @@
           </div>
 
           <div style="float: right;margin-left:20px;">
-              <button class="btn btn-success btn-lg btn-block" type="submit" [disabled]="!Provider || !Branch || !date || !ImportValid" (click)="Next()">Next</button>
+              <button class="btn btn-success btn-lg btn-block" type="submit" [disabled]="!Branch || !date || !ImportValid" (click)="Next()">Next</button>
           </div> 
   
       </div>

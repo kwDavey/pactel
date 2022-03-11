@@ -1,0 +1,171 @@
+<div class="container"  style="width: 25%;">
+    <H1>Prepare Batch</H1>
+  
+    <div *ngIf="firstscreen">
+      <div class="form-group">
+        <label>Enter Box Number:</label>
+        <input class="form-control" name="BoxNumber" type="text" [(ngModel)]="BoxNumber" required
+          placeholder="Enter Box Number" maxlength="30"/>
+      </div>
+
+  
+      <div class="form-group" style="display: inline-flex;">
+  
+          <div style="float: left;margin-right: 20px;margin-left:20px;">
+              <button class="btn btn-warning btn-lg btn-block" type="submit"  (click)="Reset()">Reset</button>
+          </div>
+  
+          <div style="float: right;margin-left:20px;">
+              <button class="btn btn-success btn-lg btn-block" type="submit" [disabled]="!BoxNumber" (click)="Next()">Next</button>
+          </div>
+          
+      </div>
+  
+  
+      
+  
+    </div>
+
+
+    <div *ngIf="Secondscreen">
+        <div class="form-group">
+          <label>Box Number: {{BoxNumber}}</label><br>
+          <label>Box Size: {{Boxsize}}</label><br>
+          <label>Batch Size: {{Batchsize}}</label><br>
+          <label>status: {{status}}</label><br><br>
+
+          <label>Current Batch: {{CurrentBatch}}</label> 
+        </div>
+
+        <div class="form-group" *ngFor="let item of [].constructor(Batchsize); let i = index">
+            <label>Enter Serial Number:</label>
+            <input class="form-control" name="InputSerialNumber" type="number" [(ngModel)]="InputSerialNumber[i]" required
+              placeholder="Enter Serial Number" maxlength="30"/> 
+        </div>
+  
+    
+        <div class="form-group" style="display: inline-flex;">
+    
+            <div style="float: left;margin-right: 20px;margin-left:20px;">
+                <button class="btn btn-danger btn-lg btn-block" type="submit"  (click)="ResetBox()">Reset Box</button>
+            </div>
+
+            <div style="float: left;margin-right: 20px;margin-left:20px;">
+                <button class="btn btn-warning btn-lg btn-block" type="submit"  (click)="ResetBatch()">Reset Batch</button>
+            </div>
+    
+            <div style="float: right;margin-left:20px;">
+                <button class="btn btn-success btn-lg btn-block" type="submit"  (click)="NextBatch()">Next Batch</button>
+            </div>
+
+            <div style="float: right;margin-left:20px;">
+                <button class="btn btn-success btn-lg btn-block" type="submit"  (click)="ForceClose()">Force Close</button>
+            </div>
+            
+        </div>
+    
+    
+        
+    
+      </div>
+  
+  </div>
+  
+
+
+   <!--Error popup-->
+   <div style="float: right;margin-left:20px;">
+    <button class="btn btn-success btn-lg btn-block" id="ErrorButton" (click)="open(content)" style="display: none;">
+    </button>
+
+    <button class="btn btn-success btn-lg btn-block" id="ErrorButtonConstant" (click)="open2(content)" style="display: none;">
+    </button>
+
+
+    <button class="btn btn-success btn-lg btn-block" id="btnConfirmReset" (click)="openConfirmReset(content2)" style="display: none;">
+    </button>
+
+    <button class="btn btn-success btn-lg btn-block" id="btnConfirmClose" (click)="openConfirmForceClose(content2)" style="display: none;">
+    </button>
+  </div>
+   <ng-template #content let-modal ID="Errormessage">
+        <div class="modal-header">
+            <h4 class="modal-title" 
+                id="modal-basic-title">
+                {{PopupTitle}}
+            </h4>
+            <button type="button" class="close"
+                    aria-label="Close" (click)=
+                    "modal.dismiss('Cross click')">
+      
+                <span aria-hidden="true">
+                    
+                </span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <form>
+                <div class="form-group">
+                    <label for="dateOfBirth">
+                        {{DisplayErrormessage}}
+                    </label>
+                </div>
+
+             
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" 
+                class="btn btn-success btn-lg btn-block" 
+                (click)="modal.close('Save click')">
+                Done
+            </button>
+
+            
+        </div>
+    </ng-template>
+
+
+    <ng-template #content2 let-modal ID="ConfirmReset">
+        <div class="modal-header">
+            <h4 class="modal-title" 
+                id="modal-basic-title">
+                {{PopupTitle}}
+            </h4>
+            <button type="button" class="close"
+                    aria-label="Close" (click)=
+                    "modal.dismiss('Cross click')">
+      
+                <span aria-hidden="true">
+                    X
+                </span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <form>
+                <div class="form-group">
+                    <label for="dateOfBirth">
+                        {{DisplayErrormessage}}
+                    </label>
+
+                    <div class="form-group">
+                        <input class="form-control" name="ConfirmReset" type="text" [(ngModel)]="ConfirmReset" required
+                        placeholder="" maxlength="30"/> 
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" 
+                class="btn btn-success btn-lg btn-block" 
+                (click)="modal.close('Save click')">
+                Done
+            </button>
+
+            <button type="button" 
+            class="btn btn-warning btn-lg btn-block" 
+            (click)="modal.close('Cancel')">
+            Cancel
+        </button>
+        </div>
+    </ng-template>

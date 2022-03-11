@@ -31,7 +31,9 @@ import { AddClientComponent } from './components/add-client/add-client.component
 import { EditClientComponent } from './components/edit-client/edit-client.component';
 
 import { ScanBoxComponent } from './components/scan-box/scan-box.component';
-
+import { PrepareBatchesComponent } from './components/prepare-batches/prepare-batches.component';
+import { AllocateDistrubutorComponent } from './components/allocate-distrubutor/allocate-distrubutor.component';
+import { TransferBranchComponent } from './components/transfer-branch/transfer-branch.component';
 
 import { AuthGaurdGuard } from './auth-gaurd.guard';
 
@@ -71,6 +73,13 @@ const routes: Routes = [
   { path : 'EditClient/:ID', component: EditClientComponent, canActivate: [AuthGaurdGuard]},
 
   { path : 'ScanBox', component: ScanBoxComponent},
+  
+  { path : 'PrepareBatches', component: PrepareBatchesComponent},
+  { path : 'AllocateDistributor', component: AllocateDistrubutorComponent},
+  { path : 'TransferBranch', component: TransferBranchComponent},
+  
+  
+  
 
  
 

@@ -17,8 +17,15 @@ export class ScanBoxComponent implements OnInit {
 
   StageOne = true;
 
-  Provider = "";
-  Providers = [""];
+  Provider = 0;
+
+  ProvidersData = [
+    {
+      ID:"",
+      BoxSize: "",
+      BatchSize: ""
+    }];
+
 
   Branch = "";
   Branchs = [""];
@@ -50,13 +57,20 @@ export class ScanBoxComponent implements OnInit {
    
     await(this.dbService.getAllProviders().subscribe((ret:any) => {
       if(ret != "false"){
-        this.Providers.splice(0);
+        this.ProvidersData.splice(0);
         let a = (ret as string).split(';');
         a.splice(a.length-1,1);
 
         a.forEach(element=> {
-          this.Providers.push(element.split(",")[0]);
+          let elementtemp = element.split(",")
+          let temp = { ID:elementtemp[0],
+                        BoxSize: elementtemp[1],
+                        BatchSize:elementtemp[2]
+                      }
+
+          this.ProvidersData.push(temp);
         });
+
       }else{
         alert("Please check your connection and try again");
       }
@@ -152,10 +166,19 @@ export class ScanBoxComponent implements OnInit {
       this.SERIALNUMBERs.push(this.data[index][1] as string);
     }
 
+
     
-    tempString = "INSERT INTO `BoxDetails`(`Boxno`, `Serialno`, `Batchno`, `Client`, `DateDist`) VALUES" + tempString.substr(0,tempString.length-1);
-    
+    let temp = this.ProvidersData[this.Provider];
+
+    tempString = "INSERT INTO `BoxDetails`(`Boxno`, `Serialno`, `Batchno`, `Client`, `DateDist`) VALUES" + tempString.substr(0,tempString.length-1) + " ; ";
     this.formData.set("SQL", tempString);
+
+
+    tempString = "INSERT INTO `Boxes`(`Boxno`, `Provider`, `Boxsize`, `Batchsize`, `DateReceived`, `Status`, `Branch`, `Distributor`, `Province`) VALUES" + 
+                 "('"+this.BoxNumber+"','"+temp.ID+"','"+temp.BoxSize+"','"+temp.BatchSize+"','"+this.date +"','','"+this.Branch+"','','' );";
+
+    this.formData.set("SQL2", tempString);
+    
     this.ImportValid = true;
   }
 
@@ -168,7 +191,7 @@ export class ScanBoxComponent implements OnInit {
   }
 
   Reset(){
-    this.Provider = "";
+    this.Provider = 0;
     this.Branch = "";
     this.date = "";
     this.excelFile = "";

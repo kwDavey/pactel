@@ -28,10 +28,6 @@ export class HeaderComponent implements OnInit {
 
     localStorage.setItem('ActivePage', nextPage);
     
-    
-    if(nextPage == "ScanBox"){
-      this.router.navigate(['ScanBox']); 
-    }
 
     if(nextPage == "ClientView"){
       this.router.navigate(['ViewClient']); 
@@ -91,6 +87,27 @@ export class HeaderComponent implements OnInit {
       this.router.navigate(['AddUsers']); 
       this.ActivePage = "Users";
     }
+
+
+
+
+    if(nextPage == "ImportBox"){
+      this.router.navigate(['ScanBox']); 
+      this.ActivePage = "Boxes";
+    }
+    if(nextPage == "PrepareBatches"){
+      this.router.navigate(['PrepareBatches']); 
+      this.ActivePage = "Boxes";
+    }
+    if(nextPage == "AllocateDistributor"){
+      this.router.navigate(['AllocateDistributor']); 
+      this.ActivePage = "Boxes";
+    }
+    if(nextPage == "TransferBranch"){
+      this.router.navigate(['TransferBranch']); 
+      this.ActivePage = "Boxes";
+    }
+
 
   }
 

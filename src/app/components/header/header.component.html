@@ -9,7 +9,19 @@
   <div class="collapse navbar-collapse" id="navbarNavAltMarkup" style="padding-left: 0px;">
     <div class="navbar-nav">
 
-      <a [ngClass]="{'nav-item nav-link': true,'active': (ActivePage=='ScanBox')}" (click)="changePage('ScanBox')" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup">Scan Box</a><!--User-->
+
+      <!--User-->
+      <li class="nav-item dropdown"><!--Admin-->
+        <a [ngClass]="{'nav-link dropdown-toggle': true,' active ': (ActivePage=='Boxes')}" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Boxes
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" (click)="changePage('ImportBox')">Import Box</a>
+          <a class="dropdown-item" (click)="changePage('PrepareBatches')">Prepare Batche's</a>
+          <a class="dropdown-item" (click)="changePage('AllocateDistributor')">Allocate Distributor</a>
+          <a class="dropdown-item" (click)="changePage('TransferBranch')">Transfer Branch</a>
+        </div>
+      </li>
 
 
       <li class="nav-item dropdown"><!--User-->

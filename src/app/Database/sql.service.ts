@@ -12,6 +12,8 @@ export class SqlService {
 
   UserLoggedIn = false;
   UserLevel = "" ;
+
+  Link = "https://www.silversharksswimmingacademy.co.za/Pactel/";
   
 
   constructor(private http:HttpClient,private router: Router) { }
@@ -44,7 +46,7 @@ export class SqlService {
   }
 
   LogUserIn(Username:string,Password:string){
-    return this.http.get('https://www.silversharksswimmingacademy.co.za/Pactel/login.php?username=' + Username + "&password=" + Password).pipe(catchError(this.handleError));
+    return this.http.get(this.Link + 'login.php?username=' + Username + "&password=" + Password).pipe(catchError(this.handleError));
   }
   
   DidUserLogInSuccessfully(Rights:string, Success:Boolean){
@@ -102,24 +104,24 @@ export class SqlService {
 
 
   getAllProvinces(){
-    return this.http.get('https://www.silversharksswimmingacademy.co.za/Pactel/getProvinces.php').pipe(catchError(this.handleError));
+    return this.http.get(this.Link + 'getProvinces.php').pipe(catchError(this.handleError));
   }
 
   getAreaPerProvince(Province:string){
-    return this.http.get('https://www.silversharksswimmingacademy.co.za/Pactel/getAreaPerProvinces.php?Province=' + Province).pipe(catchError(this.handleError));
+    return this.http.get(this.Link + 'getAreaPerProvinces.php?Province=' + Province).pipe(catchError(this.handleError));
   }
 
 
   GetAllClients(){
-    return this.http.get('https://www.silversharksswimmingacademy.co.za/Pactel/getAllClients.php').pipe(catchError(this.handleError));
+    return this.http.get(this.Link + 'getAllClients.php').pipe(catchError(this.handleError));
   }
 
   AddClient(Name:string,Province:string,Area:string){
-    return this.http.get('https://www.silversharksswimmingacademy.co.za/Pactel/addClient.php?Name=' + Name + '&Province=' + Province  + '&Area=' + Area).pipe(catchError(this.handleError));
+    return this.http.get(this.Link + 'addClient.php?Name=' + Name + '&Province=' + Province  + '&Area=' + Area).pipe(catchError(this.handleError));
   }
 
   DeleteClient(Name:string){
-    return this.http.get('https://www.silversharksswimmingacademy.co.za/Pactel/deleteClient.php?Name=' + Name).pipe(catchError(this.handleError));
+    return this.http.get(this.Link + 'deleteClient.php?Name=' + Name).pipe(catchError(this.handleError));
   }
 
   EditClient(OldName:string,Name:string,Province:string,Area:string){
@@ -131,7 +133,7 @@ export class SqlService {
     formData.set('Area', Area);
 
 
-    return this.http.post("https://www.silversharksswimmingacademy.co.za/Pactel/editClient.php", formData)
+    return this.http.post(this.Link + "editClient.php", formData)
   }
   
   
@@ -142,30 +144,30 @@ export class SqlService {
     formData.set('ClientName', ClientName);
 
 
-    return this.http.post("https://www.silversharksswimmingacademy.co.za/Pactel/getSpecificClient.php", formData)
+    return this.http.post(this.Link + "getSpecificClient.php", formData)
   }
 
 
 
   AddArea(Area:string,Province:string){
-    return this.http.get('https://www.silversharksswimmingacademy.co.za/Pactel/addArea.php?Area=' + Area + '&Province=' + Province).pipe(catchError(this.handleError));
+    return this.http.get(this.Link + 'addArea.php?Area=' + Area + '&Province=' + Province).pipe(catchError(this.handleError));
   }
 
   getAllAreas(){
-    return this.http.get('https://www.silversharksswimmingacademy.co.za/Pactel/getAllAreas.php').pipe(catchError(this.handleError));
+    return this.http.get(this.Link + 'getAllAreas.php').pipe(catchError(this.handleError));
   }
 
   GetSpecificArea(AreaName:string){
     var formData = new FormData(); // Currently empty
     formData.set('AreaName', AreaName);
-    return this.http.post("https://www.silversharksswimmingacademy.co.za/Pactel/getSpecificArea.php", formData)
+    return this.http.post(this.Link + "getSpecificArea.php", formData)
   }
 
   DeleteArea(Name:string){
     var formData = new FormData(); // Currently empty
     
     formData.set('AreaName', Name);
-    return this.http.post("https://www.silversharksswimmingacademy.co.za/Pactel/deleteArea.php", formData)
+    return this.http.post(this.Link + "deleteArea.php", formData)
   }
 
   EditArea(OldName:string,Name:string,Province:string){
@@ -176,24 +178,24 @@ export class SqlService {
     formData.set('Province', Province);
 
 
-    return this.http.post("https://www.silversharksswimmingacademy.co.za/Pactel/editArea.php", formData)
+    return this.http.post(this.Link + "editArea.php", formData)
   }
 
 
 
   AddDistrubutor(DistributorsName:string, Province:string,Active:string){
-    return this.http.get('https://www.silversharksswimmingacademy.co.za/Pactel/addDistributor.php?DistributorsName=' + DistributorsName + '&Province=' + Province+ '&Active=' + Active).pipe(catchError(this.handleError));
+    return this.http.get(this.Link + 'addDistributor.php?DistributorsName=' + DistributorsName + '&Province=' + Province+ '&Active=' + Active).pipe(catchError(this.handleError));
   }
 
   getAllDistrubutor(){
-    return this.http.get('https://www.silversharksswimmingacademy.co.za/Pactel/getAllDistributors.php').pipe(catchError(this.handleError));
+    return this.http.get(this.Link + 'getAllDistributors.php').pipe(catchError(this.handleError));
   }
 
   DeleteDistrubutor(Name:string){
     var formData = new FormData(); // Currently empty
     
     formData.set('DistributorName', Name);
-    return this.http.post("https://www.silversharksswimmingacademy.co.za/Pactel/deleteDistrubutor.php", formData)
+    return this.http.post(this.Link + "deleteDistrubutor.php", formData)
   }
 
   EditDistrubutor(OldName:string,Name:string,Province:string,Active:string){
@@ -205,37 +207,37 @@ export class SqlService {
     formData.set('Active', Active);
 
 
-    return this.http.post("https://www.silversharksswimmingacademy.co.za/Pactel/editDistrubutor.php", formData)
+    return this.http.post(this.Link + "editDistrubutor.php", formData)
   }
 
 
   GetSpecificDistrubutor(Name:string){
     var formData = new FormData(); // Currently empty
     formData.set('DistributorName', Name);
-    return this.http.post("https://www.silversharksswimmingacademy.co.za/Pactel/getSpecificDistrubutor.php", formData)
+    return this.http.post(this.Link + "getSpecificDistrubutor.php", formData)
   }
   
 
 
   getAllProviders(){
-    return this.http.get('https://www.silversharksswimmingacademy.co.za/Pactel/getAllProviders.php').pipe(catchError(this.handleError));
+    return this.http.get(this.Link + 'getAllProviders.php').pipe(catchError(this.handleError));
   }
 
   GetSpecificProvider(Name:string){
     var formData = new FormData(); // Currently empty
     formData.set('ProvidersName', Name);
-    return this.http.post("https://www.silversharksswimmingacademy.co.za/Pactel/getSpecificProvider.php", formData)
+    return this.http.post(this.Link + "getSpecificProvider.php", formData)
   }
 
   AddProvider(Provider:string,BoxSize:string,BatchSize:string){
-    return this.http.get('https://www.silversharksswimmingacademy.co.za/Pactel/addProvider.php?Provider='+ Provider + '&BoxSize=' + BoxSize+ '&BatchSize=' + BatchSize).pipe(catchError(this.handleError));
+    return this.http.get(this.Link + 'addProvider.php?Provider='+ Provider + '&BoxSize=' + BoxSize+ '&BatchSize=' + BatchSize).pipe(catchError(this.handleError));
   }
 
   DeleteProvider(Name:string){
     var formData = new FormData(); // Currently empty
     
     formData.set('ProvidersName', Name);
-    return this.http.post("https://www.silversharksswimmingacademy.co.za/Pactel/deleteProvider.php", formData)
+    return this.http.post(this.Link + "deleteProvider.php", formData)
   }
 
   EditProvider(OldProvider:string,Provider:string,BoxSize:string,BatchSize:string){
@@ -247,26 +249,26 @@ export class SqlService {
     formData.set('BatchSize', BatchSize);
 
 
-    return this.http.post("https://www.silversharksswimmingacademy.co.za/Pactel/editProvider.php", formData)
+    return this.http.post(this.Link + "editProvider.php", formData)
   }
 
 
 
 
   GetAllBranches(){
-    return this.http.get('https://www.silversharksswimmingacademy.co.za/Pactel/getAllBranches.php').pipe(catchError(this.handleError));
+    return this.http.get(this.Link + 'getAllBranches.php').pipe(catchError(this.handleError));
   }
 
 
   AddBranch(Name:string){
-    return this.http.get('https://www.silversharksswimmingacademy.co.za/Pactel/addBranch.php?Name='+ Name).pipe(catchError(this.handleError));
+    return this.http.get(this.Link + 'addBranch.php?Name='+ Name).pipe(catchError(this.handleError));
   }
 
   DeleteBranches(Name:string){
     var formData = new FormData(); // Currently empty
     
     formData.set('Name', Name);
-    return this.http.post("https://www.silversharksswimmingacademy.co.za/Pactel/deleteBranch.php", formData)
+    return this.http.post(this.Link + "deleteBranch.php", formData)
   }
 
   EditBranches(OldName:string,Name:string){
@@ -276,7 +278,7 @@ export class SqlService {
     formData.set('Name', Name);
 
 
-    return this.http.post("https://www.silversharksswimmingacademy.co.za/Pactel/editBranch.php", formData)
+    return this.http.post(this.Link + "editBranch.php", formData)
   }
 
 
@@ -284,13 +286,13 @@ export class SqlService {
 
 
   getAllUsers(){
-    return this.http.get('https://www.silversharksswimmingacademy.co.za/Pactel/getAllUsers.php').pipe(catchError(this.handleError));
+    return this.http.get(this.Link + 'getAllUsers.php').pipe(catchError(this.handleError));
   }
 
   GetSpecificUser(Name:string){
     var formData = new FormData(); // Currently empty
     formData.set('Username', Name);
-    return this.http.post("https://www.silversharksswimmingacademy.co.za/Pactel/getSpecificUser.php", formData)
+    return this.http.post(this.Link + "getSpecificUser.php", formData)
   }
 
   AddUser(Username:string,Password:string,Rights:string){
@@ -298,14 +300,14 @@ export class SqlService {
     formData.set('Username', Username);
     formData.set('Password', Password);
     formData.set('Rights', Rights);
-    return this.http.post("https://www.silversharksswimmingacademy.co.za/Pactel/addUser.php", formData)
+    return this.http.post(this.Link + "addUser.php", formData)
   }
 
   DeleteUser(Name:string){
     var formData = new FormData(); // Currently empty
     
     formData.set('Username', Name);
-    return this.http.post("https://www.silversharksswimmingacademy.co.za/Pactel/deleteUser.php", formData)
+    return this.http.post(this.Link + "deleteUser.php", formData)
   }
 
   EditUser(OldUsername:string,Username:string,Password:string,Rights:string){
@@ -317,11 +319,53 @@ export class SqlService {
     formData.set('Rights', Rights);
 
 
-    return this.http.post("https://www.silversharksswimmingacademy.co.za/Pactel/editUser.php", formData)
+    return this.http.post(this.Link + "editUser.php", formData)
   }
 
 
   AddNewBox(formData:FormData){
-    return this.http.post("https://www.silversharksswimmingacademy.co.za/Pactel/addNewBox.php", formData);
+    return this.http.post(this.Link + "addNewBox.php", formData);
+  }
+
+
+
+
+
+  TransferBranch(BoxNumber:string,Branch:string){ 
+    var formData = new FormData(); // Currently empty
+
+    formData.set('BoxNumber', BoxNumber);
+    formData.set('Branch', Branch);
+
+
+    return this.http.post(this.Link + "TransferBranch.php", formData)
+  }
+
+
+  GetBoxDetails(BoxNumber:string){  
+    var formData = new FormData(); // Currently empty
+
+    formData.set('BoxNumber', BoxNumber);
+
+
+    return this.http.post(this.Link + "getBoxDetails.php", formData)
+  }
+
+
+  AddNewBatch(formData:FormData){
+    return this.http.post(this.Link + "addNewBatch.php", formData)
+  }
+
+  FinanilizeAllBatches(formData:FormData){
+    return this.http.post(this.Link + "finanilizeAllBatches.php", formData)
+  }
+
+
+  ClearBoxBatches(formData:FormData){
+    return this.http.post(this.Link + "clearBoxBatches.php", formData)
+  }
+
+  AllocateDistributor(formData:FormData){
+    return this.http.post(this.Link + "allocateDistributor.php", formData)
   }
 }

@@ -36,6 +36,9 @@ import { ViewClientComponent } from './components/view-client/view-client.compon
 import { AddClientComponent } from './components/add-client/add-client.component';
 import { EditClientComponent } from './components/edit-client/edit-client.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { PrepareBatchesComponent } from './components/prepare-batches/prepare-batches.component';
+import { AllocateDistrubutorComponent } from './components/allocate-distrubutor/allocate-distrubutor.component';
+import { TransferBranchComponent } from './components/transfer-branch/transfer-branch.component';
 
 
 @NgModule({
@@ -64,6 +67,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     ViewClientComponent,
     AddClientComponent,
     EditClientComponent,
+    PrepareBatchesComponent,
+    AllocateDistrubutorComponent,
+    TransferBranchComponent,
   ],
   imports: [
     BrowserModule,
