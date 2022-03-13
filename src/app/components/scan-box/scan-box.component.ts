@@ -200,6 +200,7 @@ export class ScanBoxComponent implements OnInit {
   async Done(){
     await(this.dbService.AddNewBox(this.formData).subscribe((ret:any) => {
       if(ret != "false"){
+        this.router.navigate(['PrepareBatches']); 
         this.PopupTitle = "Success"
         this.DisplayErrormessage = "The Box has been added";
         let element: HTMLButtonElement = document.getElementById('ErrorButton') as HTMLButtonElement;

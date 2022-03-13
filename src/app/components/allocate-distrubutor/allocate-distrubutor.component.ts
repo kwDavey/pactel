@@ -3,13 +3,22 @@ import { ActivatedRoute, Router } from "@angular/router";
 import {SqlService} from "../../Database/sql.service";
 
 import {ModalDismissReasons, NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import { getLocaleDateFormat } from '@angular/common';
+
+import * as fs from 'file-saver';
+
+import { Workbook } from 'exceljs';
+import { numberToString } from 'pdf-lib';
+
 @Component({
   selector: 'app-allocate-distrubutor',
   templateUrl: './allocate-distrubutor.component.html',
   styleUrls: ['./allocate-distrubutor.component.css']
 })
 export class AllocateDistrubutorComponent implements OnInit {
+
+  EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
+  EXCEL_EXTENSION = '.xlsx';
+
 
   closeResult = '';
   DisplayErrormessage = "";
@@ -132,11 +141,155 @@ export class AllocateDistrubutorComponent implements OnInit {
     //**********************************************************************************************
   }
 
+  
+
   Print(){
     //**********************************************************************************************
-    //Go back to "In Prep" stage"
+    //Print out distrubutor sheet
     //**********************************************************************************************
+    var title = 'Box Number: CJA1458679';
+    
+    var setup = [
+      ["Distributor"],
+      ["Date"],
+      ["Branch"],
+      ["Area"]
+
+    ]
+
+
+    let workbook = new Workbook();
+    let worksheet = workbook.addWorksheet('Distributor sheet');
+
+    worksheet.columns = [
+      { width: 15 },
+      { width: 30 },
+      { width: 10 },
+      { width: 30 },
+    ];
+
+    // Add new row
+    let titleRow = worksheet.addRow([title]);
+    
+    // Set font, size and style in title row.
+    titleRow.font = { name: 'Comic Sans MS', family: 4, size: 16, underline: 'double', bold: true };
+
+   
+    setup.forEach(element => {
+
+      let row =  worksheet.addRow(element);
+
+      row.getCell(1).border = {
+        top: { style: 'thin' }, 
+        left: { style: 'thin' }, 
+        bottom: { style: 'thin' }, 
+        right: { style: 'thin' }
+      }
+
+      row.getCell(2).border = {
+        top: { style: 'thin' }, 
+        left: { style: 'thin' }, 
+        bottom: { style: 'thin' }, 
+        right: { style: 'thin' }
+      }
+
+      row.getCell(1).font = { name: 'Comic Sans MS', family: 4, size: 16};
+      row.getCell(2).font = { name: 'Comic Sans MS', family: 4, size: 16};
+
+    });
+
+    var originalNum = 21;
+    var maxnum = originalNum;
+    var topNumber = Math.floor(maxnum/2);
+
+    if(maxnum% 2 != 0){
+      //Odd
+      maxnum++;
+    }
+
+    
+   
+    for (let index = 1; index <= maxnum; index++) {
+      topNumber++;
+      console.log("HI");
+      var strRow = [""];
+      if((originalNum)% 2 != 0){
+        //Odd
+
+        if(index == 1){
+          topNumber++;
+        }
+
+        
+        if(index== maxnum-1){
+          strRow = [numberToString(index)," "," "," "];
+        }else{
+          strRow = [numberToString(index)," ",numberToString(topNumber)," "];
+        }
+
+        
+      }else{
+        strRow = [numberToString(index)," ",numberToString(topNumber)," "];
+      }
+      let row = worksheet.addRow(strRow);
+      
+
+      row.getCell(1).border = {
+        top: { style: 'thin' }, 
+        left: { style: 'thin' }, 
+        bottom: { style: 'thin' }, 
+        right: { style: 'thin' }
+      }
+
+      row.getCell(2).border = {
+        top: { style: 'thin' }, 
+        left: { style: 'thin' }, 
+        bottom: { style: 'thin' }, 
+        right: { style: 'thin' }
+      }
+
+      row.getCell(3).border = {
+        top: { style: 'thin' }, 
+        left: { style: 'thin' }, 
+        bottom: { style: 'thin' }, 
+        right: { style: 'thin' }
+      }
+
+      row.getCell(4).border = { 
+        top: { style: 'thin' }, 
+        left: { style: 'thin' }, 
+        bottom: { style: 'thin' }, 
+        right: { style: 'thin' }
+      }
+
+      row.getCell(1).font = { name: 'Comic Sans MS', family: 4, size: 16};
+      row.getCell(2).font = { name: 'Comic Sans MS', family: 4, size: 16};
+      row.getCell(3).font = { name: 'Comic Sans MS', family: 4, size: 16};
+      row.getCell(4).font = { name: 'Comic Sans MS', family: 4, size: 16};
+
+      row.height = 40;
+
+      maxnum--;
+    }
+
+
+
+
+    
+
+
+
+
+
+
+    //Generate Excel File with given name
+    workbook.xlsx.writeBuffer().then((data) => {
+      let blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+      fs.saveAs(blob, 'Export.xlsx');
+    })
+
   }
+
 
 
   open(content: any) {
