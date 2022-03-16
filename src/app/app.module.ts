@@ -39,6 +39,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { PrepareBatchesComponent } from './components/prepare-batches/prepare-batches.component';
 import { AllocateDistrubutorComponent } from './components/allocate-distrubutor/allocate-distrubutor.component';
 import { TransferBranchComponent } from './components/transfer-branch/transfer-branch.component';
+import { AllocateClientComponent } from './components/allocate-client/allocate-client.component';
 
 
 @NgModule({
@@ -70,6 +71,7 @@ import { TransferBranchComponent } from './components/transfer-branch/transfer-b
     PrepareBatchesComponent,
     AllocateDistrubutorComponent,
     TransferBranchComponent,
+    AllocateClientComponent,
   ],
   imports: [
     BrowserModule,

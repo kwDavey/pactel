@@ -108,6 +108,11 @@ export class HeaderComponent implements OnInit {
       this.ActivePage = "Boxes";
     }
 
+    if(nextPage == "AllocateClients"){
+      this.router.navigate(['AllocateClients']); 
+      this.ActivePage = "Boxes";
+    }
+
 
   }
 

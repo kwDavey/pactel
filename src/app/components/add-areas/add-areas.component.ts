@@ -3,6 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from "@angular/router";
 import {SqlService} from "../../Database/sql.service";
 
+import {ModalDismissReasons, NgbModal} from '@ng-bootstrap/ng-bootstrap';
+
 @Component({
   selector: 'app-add-areas',
   templateUrl: './add-areas.component.html',
@@ -10,7 +12,7 @@ import {SqlService} from "../../Database/sql.service";
 })
 export class AddAreasComponent implements OnInit {
 
-  constructor(private dbService: SqlService,private route: ActivatedRoute,  private router: Router) { }
+  constructor(private dbService: SqlService,private route: ActivatedRoute,  private router: Router,private modalService: NgbModal) { }
 
   Area= "";
   Province = "";
@@ -39,7 +41,10 @@ export class AddAreasComponent implements OnInit {
             this.Provinces.push(element);
           });
         }else{
-          alert("Please check your connection and try again");
+          this.PopupTitle = "Something went wrong"
+          this.DisplayErrormessage = "Something went wrong, please try again. If this continuies please contact the I.T Department";
+          let element: HTMLButtonElement = document.getElementById('ErrorButton') as HTMLButtonElement;
+          element.click();
         }
       }));
     }
@@ -49,11 +54,25 @@ export class AddAreasComponent implements OnInit {
 
   async Save(){
     await(this.dbService.AddArea(this.Area, this.Province,).subscribe((ret:any) => {
-      if(ret != "false"){
-        alert("Area Added");
+      if(!(String(ret).includes("Error"))){
+        this.PopupTitle = "Success"
+        this.DisplayErrormessage = "The Area has been added";
+        let element: HTMLButtonElement = document.getElementById('ErrorButton') as HTMLButtonElement;
+        element.click();
         this.Reset();
       }else{
-        alert("Please check your connection and try again");
+        if(String(ret).includes("Duplicate entry")){
+          this.PopupTitle = "Invalid Details"
+          this.DisplayErrormessage = "This Area already exists";
+          let element: HTMLButtonElement = document.getElementById('ErrorButton') as HTMLButtonElement;
+          element.click();
+        }else{
+          this.PopupTitle = "Something went wrong"
+          this.DisplayErrormessage = "Something went wrong, please try again. If this continuies please contact the I.T Department";
+          let element: HTMLButtonElement = document.getElementById('ErrorButton') as HTMLButtonElement;
+          element.click();
+        }
+
       }
     }));
   }
@@ -65,5 +84,32 @@ export class AddAreasComponent implements OnInit {
 
   Back(){
     this.router.navigate(['ViewArea']); 
+  }
+
+
+  closeResult = '';
+  DisplayErrormessage = "";
+  PopupTitle = "";
+  open(content: any) {
+    console.log("HI");
+    this.modalService.open(content,
+   {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = 
+         `Dismissed ${this.getDismissReason(reason)}`;
+      //let element: HTMLButtonElement = document.getElementById('ErrorButton') as HTMLButtonElement;
+      //element.click();
+    });
+  }
+  
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
+    }
   }
 }

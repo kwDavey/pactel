@@ -55,7 +55,7 @@ export class EditUsersComponent implements OnInit {
 
   async Delete(){
     await(this.dbService.DeleteUser(this.Username).subscribe((ret:any) => {
-      if(ret != "false"){
+      if(!(String(ret).includes("Error"))){
         this.PopupTitle = "Success"
         this.DisplayErrormessage = "The User has been deleted";
         let element: HTMLButtonElement = document.getElementById('ErrorButton') as HTMLButtonElement;
@@ -87,17 +87,24 @@ export class EditUsersComponent implements OnInit {
       element.click();
     }else{
       await(this.dbService.EditUser(this.OldUsername, this.Username, this.Password, this.Rights).subscribe((ret:any) => {
-        if(ret != "false"){
+        if(!(String(ret).includes("Error"))){
           this.PopupTitle = "Success"
           this.DisplayErrormessage = "The User's details have been changed";
           let element: HTMLButtonElement = document.getElementById('ErrorButton') as HTMLButtonElement;
           element.click();
           this.Back();
         }else{
-          this.PopupTitle = "Something seems to have gone wrong"
-          this.DisplayErrormessage = "Please check your connection and try again";
-          let element: HTMLButtonElement = document.getElementById('ErrorButton') as HTMLButtonElement;
-          element.click();
+          if(String(ret).includes("Duplicate entry")){
+            this.PopupTitle = "Invalid Details"
+            this.DisplayErrormessage = "This Username already exists";
+            let element: HTMLButtonElement = document.getElementById('ErrorButton') as HTMLButtonElement;
+            element.click();
+          }else{
+            this.PopupTitle = "Something went wrong"
+            this.DisplayErrormessage = "Something went wrong, please try again. If this continuies please contact the I.T Department";
+            let element: HTMLButtonElement = document.getElementById('ErrorButton') as HTMLButtonElement;
+            element.click();
+          }
         }
       }));
     }

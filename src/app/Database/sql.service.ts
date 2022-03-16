@@ -368,4 +368,16 @@ export class SqlService {
   AllocateDistributor(formData:FormData){
     return this.http.post(this.Link + "allocateDistributor.php", formData)
   }
+
+
+  
+  getClientsPerProvince(formData:FormData){
+    return this.http.post(this.Link + "getClientsPerProvince.php", formData)
+  }
+
+  FinishBox(formData:FormData){
+    return this.http.post(this.Link + "FinishBox.php", formData)
+  }
+
+  
 }

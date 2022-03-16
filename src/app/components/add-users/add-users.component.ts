@@ -13,9 +13,7 @@ export class AddUsersComponent implements OnInit {
 
   constructor(private dbService: SqlService,private route: ActivatedRoute,  private router: Router,private modalService: NgbModal) { }
 
-  closeResult = '';
-  DisplayErrormessage = "";
-  PopupTitle = "";
+  
   
   Username= "";
   Password = "";
@@ -48,17 +46,25 @@ export class AddUsersComponent implements OnInit {
       element.click();
     }else{
       await(this.dbService.AddUser(this.Username, this.Password, this.Rights).subscribe((ret:any) => {
-        if(ret != "false"){
+        if(!(String(ret).includes("Error"))){
           this.PopupTitle = "Success"
           this.DisplayErrormessage = "The User has been added";
           let element: HTMLButtonElement = document.getElementById('ErrorButton') as HTMLButtonElement;
           element.click();
           this.Reset();
         }else{
-          this.PopupTitle = "Something seems to have gone wrong"
-          this.DisplayErrormessage = "Please check your connection and try again";
-          let element: HTMLButtonElement = document.getElementById('ErrorButton') as HTMLButtonElement;
-          element.click();
+          if(String(ret).includes("Duplicate entry")){
+            this.PopupTitle = "Invalid Details"
+            this.DisplayErrormessage = "This Username already exists";
+            let element: HTMLButtonElement = document.getElementById('ErrorButton') as HTMLButtonElement;
+            element.click();
+          }else{
+            this.PopupTitle = "Something went wrong"
+            this.DisplayErrormessage = "Something went wrong, please try again. If this continuies please contact the I.T Department";
+            let element: HTMLButtonElement = document.getElementById('ErrorButton') as HTMLButtonElement;
+            element.click();
+          }
+  
         }
       }));
     }
@@ -75,7 +81,9 @@ export class AddUsersComponent implements OnInit {
     this.router.navigate(['ViewUsers']); 
   }
 
-
+  closeResult = '';
+  DisplayErrormessage = "";
+  PopupTitle = "";
   open(content: any) {
     console.log("HI");
     this.modalService.open(content,

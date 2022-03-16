@@ -11,7 +11,7 @@ import {ModalDismissReasons, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 })
 export class PrepareBatchesComponent implements OnInit {
 
-  BoxNumber = "CJA1458679";
+  BoxNumber = "";
 
   closeResult = '';
   DisplayErrormessage = "";
@@ -60,6 +60,7 @@ export class PrepareBatchesComponent implements OnInit {
         this.Boxsize = Number.parseInt(firsttemp[0]);
         this.Batchsize = Number.parseInt(firsttemp[1]);
         this.status = firsttemp[2];
+        //Branch
 
         if(this.status == "Prepped" || this.status == "Allocated"){
           this.PopupTitle = "Success"
@@ -189,7 +190,7 @@ export class PrepareBatchesComponent implements OnInit {
     var sql = "";
     this.InputSerialNumber.forEach(element => {
 
-      sql += "UPDATE `BoxDetails` SET `Batchno`='"+this.CurrentBatch+"' WHERE Serialno = '" +element+ "';";
+      sql += "UPDATE `BoxDetails` SET `Boxno`='"+this.BoxNumber+"',`Batchno`='"+this.CurrentBatch+"' WHERE Serialno = '" +element+ "';";
     });
   
   

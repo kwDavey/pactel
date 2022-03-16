@@ -35,6 +35,10 @@ import { PrepareBatchesComponent } from './components/prepare-batches/prepare-ba
 import { AllocateDistrubutorComponent } from './components/allocate-distrubutor/allocate-distrubutor.component';
 import { TransferBranchComponent } from './components/transfer-branch/transfer-branch.component';
 
+import { AllocateClientComponent } from './components/allocate-client/allocate-client.component';
+
+
+
 import { AuthGaurdGuard } from './auth-gaurd.guard';
 
 const routes: Routes = [ 
@@ -77,8 +81,8 @@ const routes: Routes = [
   { path : 'PrepareBatches', component: PrepareBatchesComponent},
   { path : 'AllocateDistributor', component: AllocateDistrubutorComponent},
   { path : 'TransferBranch', component: TransferBranchComponent},
-  
-  
+  { path : 'AllocateClients', component: AllocateClientComponent},
+
   
 
  

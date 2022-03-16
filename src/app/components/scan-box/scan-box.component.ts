@@ -5,6 +5,7 @@ import {SqlService} from "../../Database/sql.service";
 import * as XLSX from 'xlsx';
 
 import {ModalDismissReasons, NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import { createOfflineCompileUrlResolver } from '@angular/compiler';
 
 type AOA = any[][];
 
@@ -35,6 +36,8 @@ export class ScanBoxComponent implements OnInit {
   excelFile = "";
 
   SERIALNUMBERs = [""];
+  BoxNUMBERs = [""];
+  DataDisplay = [{BoxNum:"",SerialNum:""}];
   BoxNumber = "";
 
   formData = new FormData(); // Currently empty
@@ -46,9 +49,25 @@ export class ScanBoxComponent implements OnInit {
   DisplayErrormessage = "";
   PopupTitle = "";
 
+  CurrentDate = "";
+
   constructor(private dbService: SqlService,private route: ActivatedRoute,  private router: Router,private modalService: NgbModal) { }
 
   ngOnInit(): void {
+    let tempDate = new Date();
+    this.CurrentDate = tempDate.getFullYear() + "-";
+    if(tempDate.getMonth().toString().length == 1){
+      this.CurrentDate += "0" + tempDate.getMonth()  + "-";
+    }else{
+      this.CurrentDate += tempDate.getMonth() + "-";
+    }
+
+    if(tempDate.getDay().toString().length == 1){
+      this.CurrentDate += "0" + tempDate.getDay();
+    }else{
+      this.CurrentDate += tempDate.getDay();
+    }
+
     this.getData();
     this.ImportValid = false;
   }
@@ -72,7 +91,10 @@ export class ScanBoxComponent implements OnInit {
         });
 
       }else{
-        alert("Please check your connection and try again");
+        this.PopupTitle = "Error"
+        this.DisplayErrormessage = "Please check your connection and try again";
+        let element: HTMLButtonElement = document.getElementById('ErrorButton') as HTMLButtonElement;
+        element.click();
       }
     }));
 
@@ -86,7 +108,11 @@ export class ScanBoxComponent implements OnInit {
           this.Branchs.push(element);
         });
       }else{
-        alert("Please check your connection and try again");
+       
+        this.PopupTitle = "Error"
+        this.DisplayErrormessage = "Please check your connection and try again";
+        let element: HTMLButtonElement = document.getElementById('ErrorButton') as HTMLButtonElement;
+        element.click();
       }
     }));
   }
@@ -138,7 +164,7 @@ export class ScanBoxComponent implements OnInit {
         this.excelFile = "";
   
         this.PopupTitle = "Error"
-        this.DisplayErrormessage = "Please make sure the first colomn has Box numbers in it and the heading is:'BOX NUMBER'";
+        this.DisplayErrormessage = "Please make sure the FIRST colomn has Box numbers in it and the heading is:'BOX NUMBER'";
         let element: HTMLButtonElement = document.getElementById('ErrorButton') as HTMLButtonElement;
         element.click();
       }
@@ -146,7 +172,7 @@ export class ScanBoxComponent implements OnInit {
         this.excelFile = "";
   
         this.PopupTitle = "Error"
-        this.DisplayErrormessage = "Please make sure the first colomn has Serial Numbers in it and the heading is:'SERIAL NUMBER'";
+        this.DisplayErrormessage = "Please make sure the SECOND colomn has Serial Numbers in it and the heading is:'SERIAL NUMBER'";
         let element: HTMLButtonElement = document.getElementById('ErrorButton') as HTMLButtonElement;
         element.click();
       }
@@ -156,27 +182,38 @@ export class ScanBoxComponent implements OnInit {
 
    
     var tempString = "";
+    var tempBoxDetailsString = "";
     this.SERIALNUMBERs.splice(0);
+    this.BoxNUMBERs.splice(0);
+    this.DataDisplay.splice(0);
 
     this.BoxNumber = this.data[1][0];
+    let temp = this.ProvidersData[this.Provider];
 
     for (let index = 1; index < this.data.length; index++) {
       //`Boxno`, `Serialno`, `Batchno`, `Client`, `DateDist`
-      tempString = tempString + " ('"+this.BoxNumber+"','"+this.data[index][1]+"','','','"+this.date + "') ,";
+      tempString = tempString + " ('"+this.data[index][0]+"','"+this.data[index][1]+"','','','"+this.date + "') ,";
       this.SERIALNUMBERs.push(this.data[index][1] as string);
+
+
+      if(!(this.BoxNUMBERs.includes(this.data[index][0]))){
+        this.BoxNUMBERs.push(this.data[index][0]);
+        tempBoxDetailsString += "('"+this.data[index][0]+"','"+temp.ID+"','"+temp.BoxSize+"','"+temp.BatchSize+"','"+this.date +"','','"+this.Branch+"','','' ),";
+      }
+
+      this.DataDisplay.push({
+        BoxNum:this.data[index][0],
+        SerialNum:this.data[index][1]
+      });
     }
 
-
-    
-    let temp = this.ProvidersData[this.Provider];
 
     tempString = "INSERT INTO `BoxDetails`(`Boxno`, `Serialno`, `Batchno`, `Client`, `DateDist`) VALUES" + tempString.substr(0,tempString.length-1) + " ; ";
     this.formData.set("SQL", tempString);
 
 
-    tempString = "INSERT INTO `Boxes`(`Boxno`, `Provider`, `Boxsize`, `Batchsize`, `DateReceived`, `Status`, `Branch`, `Distributor`, `Province`) VALUES" + 
-                 "('"+this.BoxNumber+"','"+temp.ID+"','"+temp.BoxSize+"','"+temp.BatchSize+"','"+this.date +"','','"+this.Branch+"','','' );";
-
+    tempString = "INSERT INTO `Boxes`(`Boxno`, `Provider`, `Boxsize`, `Batchsize`, `DateReceived`, `Status`, `Branch`, `Distributor`, `Province`) VALUES" + tempBoxDetailsString.substr(0,tempBoxDetailsString.length-1) + " ; ";
+    console.log("Error");
     this.formData.set("SQL2", tempString);
     
     this.ImportValid = true;
@@ -199,17 +236,29 @@ export class ScanBoxComponent implements OnInit {
 
   async Done(){
     await(this.dbService.AddNewBox(this.formData).subscribe((ret:any) => {
-      if(ret != "false"){
+      if(!(String(ret).includes("Error"))){
         this.router.navigate(['PrepareBatches']); 
         this.PopupTitle = "Success"
         this.DisplayErrormessage = "The Box has been added";
         let element: HTMLButtonElement = document.getElementById('ErrorButton') as HTMLButtonElement;
         element.click();
       }else{
-        this.PopupTitle = "Error"
-        this.DisplayErrormessage = "Please check your internet connection and try again";
-        let element: HTMLButtonElement = document.getElementById('ErrorButton') as HTMLButtonElement;
-        element.click();
+        //"Error.Duplicate entry 'Box1-1' for key 'PRIMARY'"
+        
+        if(String(ret).includes("Duplicate entry")){
+          let tepError = String(ret).replace("Error.","");
+          tepError = tepError.replace(" for key 'PRIMARY'","") + "(Serial Number)";
+
+          this.PopupTitle = "Invalid Details"
+          this.DisplayErrormessage = tepError ;
+          let element: HTMLButtonElement = document.getElementById('ErrorButton') as HTMLButtonElement;
+          element.click();
+        }else{
+          this.PopupTitle = "Error"
+          this.DisplayErrormessage = "Please check your internet connection and try again";
+          let element: HTMLButtonElement = document.getElementById('ErrorButton') as HTMLButtonElement;
+          element.click();
+        }
       }
     }));
   }

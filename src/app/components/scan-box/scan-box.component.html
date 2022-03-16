@@ -27,15 +27,15 @@
         </div>
       </div>
 
-      <div class="form-group">
+      <div class="form-group" >
         <label>Date recieved:</label>
         <div class="input-group mb-3">
-          <input class="form-control" name="date"  type="date"  [(ngModel)]="date" required placeholder="Select a date" />
+          <input class="form-control" name="date"  type="date"  [(ngModel)]="date" required placeholder="Select a date" max={{CurrentDate}}/>
         </div>
       </div>
 
 
-      <div class="form-group">
+      <div class="form-group" *ngIf="date && Branch">
         <label>Import Excel Spread Sheet:</label>
         <div class="input-group mb-3">
           <input type="file" (change)="onFileChange($event)" [(ngModel)]="excelFile" placeholder="Upload file" accept=".xls , .xlsx">
@@ -60,23 +60,19 @@
     </div>
 
 
-    <div *ngIf=!StageOne>
+    <div *ngIf=!StageOne style="min-width: 400px;">
 
-      <div class="form-group">
-        <label>Box Number:</label>
-        <div class="input-group mb-3">
-          <label>{{BoxNumber}}</label>
-        </div>
-      </div>
-
+  
 
       <table id="dtBasicExample" class="viewDataTable" ngb-sort>
         <tr>
+          <th class="viewDataTableHeading">Box NUMBER</th>
           <th class="viewDataTableHeading">SERIAL NUMBER</th>
         </tr>
 
-        <tr *ngFor="let SERIALNUMBERs of SERIALNUMBERs">
-            <td class="viewDataTableCell">{{SERIALNUMBERs}}</td>
+        <tr *ngFor="let dataDisplay of DataDisplay">
+            <td class="viewDataTableCell">{{dataDisplay.BoxNum}}</td>
+            <td class="viewDataTableCell">{{dataDisplay.SerialNum}}</td>
         </tr>
 
       </table>

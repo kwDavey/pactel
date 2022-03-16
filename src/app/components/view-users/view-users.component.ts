@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
 import {SqlService} from "../../Database/sql.service";
 
+import {ModalDismissReasons, NgbModal} from '@ng-bootstrap/ng-bootstrap';
+
 @Component({
   selector: 'app-view-users',
   templateUrl: './view-users.component.html',
@@ -14,7 +16,7 @@ export class ViewUsersComponent implements OnInit {
 
   data = [{}];
 
-  constructor(private dbService: SqlService,private router: Router) { }
+  constructor(private dbService: SqlService,private router: Router,private modalService: NgbModal) { }
 
   ngOnInit(): void {
     this.getData();
@@ -38,7 +40,10 @@ export class ViewUsersComponent implements OnInit {
 
         
       }else{
-        alert("Please check your connection and try again");
+        this.PopupTitle = "Error"
+        this.DisplayErrormessage = "Please check your connection and try again";
+        let element: HTMLButtonElement = document.getElementById('ErrorButton') as HTMLButtonElement;
+        element.click();
       }
     }));
   }
@@ -55,5 +60,33 @@ export class ViewUsersComponent implements OnInit {
   ClearSearch(){
     this.SearchValue = "";
   }
+
+
+
+  closeResult = '';
+  DisplayErrormessage = "";
+  PopupTitle = "";
+  open(content: any) {
+    this.modalService.open(content,
+   {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = 
+         `Dismissed ${this.getDismissReason(reason)}`;
+      //let element: HTMLButtonElement = document.getElementById('ErrorButton') as HTMLButtonElement;
+      //element.click();
+    });
+  }
+  
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
+    }
+  }
+
 
 }

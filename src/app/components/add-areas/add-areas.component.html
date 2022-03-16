@@ -44,3 +44,39 @@
   
   </div>
   
+  <div style="float: right;margin-left:20px;">
+    <button class="btn btn-success btn-lg btn-block" id="ErrorButton" (click)="open(content)" style="display: none;">
+    </button>
+  </div>
+   <ng-template #content let-modal ID="Errormessage">
+        <div class="modal-header">
+            <h4 class="modal-title" 
+                id="modal-basic-title">
+                {{PopupTitle}}
+            </h4>
+            <button type="button" class="close"
+                    aria-label="Close" (click)=
+                    "modal.dismiss('Cross click')">
+      
+                <span aria-hidden="true">
+                    ×
+                </span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <form>
+                <div class="form-group">
+                    <label for="dateOfBirth">
+                        {{DisplayErrormessage}}
+                    </label>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" 
+                class="btn btn-success btn-lg btn-block" 
+                (click)="modal.close('Save click')">
+                Done
+            </button>
+        </div>
+    </ng-template>
