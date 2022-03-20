@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
 import {SqlService} from "../../Database/sql.service";
+import * as XLSX from 'xlsx';
 @Component({
   selector: 'app-view-areas',
   templateUrl: './view-areas.component.html',
@@ -108,6 +109,13 @@ export class ViewAreasComponent implements OnInit {
 
   ClearSearch(){
     this.SearchValue = "";
+  }
+
+  btnDownloadReportClickExcel(){
+    /* generate worksheet */
+    let targetTableElm = document.getElementById("tblData");
+    let wb = XLSX.utils.table_to_book(targetTableElm, <XLSX.Table2SheetOpts>{ sheet: "Report" });
+    XLSX.writeFile(wb, `Report.xlsx`);
   }
 
 }

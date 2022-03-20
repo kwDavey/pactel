@@ -9,11 +9,14 @@
           <button class="btn btn-outline-secondary btnClear" type="button" id="button-addon2" (click)="ClearSearch()">X</button>
         </div>
       </div>
+      <div>
+        <button class="btn btn-outline-primary" type="button" id="button-addon2" (click)="btnDownloadReportClickExcel()">Export</button>
+      </div>
       
     </div>
 
 
-    <table class="viewDataTable">
+    <table class="viewDataTable" ID="tblData">
         <tr>
           <th class="viewDataTableHeading"></th>
           <th class="viewDataTableHeading">Providers Name</th>

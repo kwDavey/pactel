@@ -4,6 +4,8 @@ import {SqlService} from "../../Database/sql.service";
 
 import {ModalDismissReasons, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
+import * as XLSX from 'xlsx';
+
 @Component({
   selector: 'app-view-users',
   templateUrl: './view-users.component.html',
@@ -86,6 +88,14 @@ export class ViewUsersComponent implements OnInit {
     } else {
       return `with: ${reason}`;
     }
+  }
+
+
+  btnDownloadReportClickExcel(){
+    /* generate worksheet */
+    let targetTableElm = document.getElementById("tblData");
+    let wb = XLSX.utils.table_to_book(targetTableElm, <XLSX.Table2SheetOpts>{ sheet: "Report" });
+    XLSX.writeFile(wb, `Report.xlsx`);
   }
 
 

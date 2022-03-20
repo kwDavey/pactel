@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
 import {SqlService} from "../../Database/sql.service";
-
+import * as XLSX from 'xlsx';
 @Component({
   selector: 'app-view-distrubutors',
   templateUrl: './view-distrubutors.component.html',
@@ -56,4 +56,11 @@ export class ViewDistrubutorsComponent implements OnInit {
     this.SearchValue = "";
   }
 
+  btnDownloadReportClickExcel(){
+    /* generate worksheet */
+    let targetTableElm = document.getElementById("tblData");
+    let wb = XLSX.utils.table_to_book(targetTableElm, <XLSX.Table2SheetOpts>{ sheet: "Report" });
+    XLSX.writeFile(wb, `Report.xlsx`);
+  }
+  
 }

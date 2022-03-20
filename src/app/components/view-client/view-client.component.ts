@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from "@angular/router";
 import {SqlService} from "../../Database/sql.service";
-
+import * as XLSX from 'xlsx';
 
 
 
@@ -63,7 +63,12 @@ export class ViewClientComponent implements OnInit {
   }
 
   
- 
+  btnDownloadReportClickExcel(){
+    /* generate worksheet */
+    let targetTableElm = document.getElementById("tblData");
+    let wb = XLSX.utils.table_to_book(targetTableElm, <XLSX.Table2SheetOpts>{ sheet: "Report" });
+    XLSX.writeFile(wb, `Report.xlsx`);
+  }
   
 
 }
