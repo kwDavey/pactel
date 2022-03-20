@@ -40,6 +40,8 @@ import { PrepareBatchesComponent } from './components/prepare-batches/prepare-ba
 import { AllocateDistrubutorComponent } from './components/allocate-distrubutor/allocate-distrubutor.component';
 import { TransferBranchComponent } from './components/transfer-branch/transfer-branch.component';
 import { AllocateClientComponent } from './components/allocate-client/allocate-client.component';
+import { ViewboxesComponent } from './components/viewboxes/viewboxes.component';
+import { ViewSpecificBoxComponent } from './components/view-specific-box/view-specific-box.component';
 
 
 @NgModule({
@@ -72,6 +74,8 @@ import { AllocateClientComponent } from './components/allocate-client/allocate-c
     AllocateDistrubutorComponent,
     TransferBranchComponent,
     AllocateClientComponent,
+    ViewboxesComponent,
+    ViewSpecificBoxComponent,
   ],
   imports: [
     BrowserModule,

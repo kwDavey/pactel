@@ -1,0 +1,58 @@
+<div class="container">
+    <H1>View Boxes</H1>
+
+    <div style="padding-top: 15px;width: 300px;text-align: left;" > 
+      <label>Search:</label>
+      <div class="input-group mb-3">
+        <input class="form-control" ID="details" name="details" type="text" [(ngModel)]="SearchValue" placeholder="Type in something to search"/>
+        <div class="input-group-append">
+          <button class="btn btn-outline-secondary btnClear" type="button" id="button-addon2" (click)="ClearSearch()">X</button>
+        </div>
+      </div>
+      <div>
+        <button class="btn btn-success" type="button" id="button-addon2" (click)="btnDownloadReportClickExcel()">Export</button>
+      </div>
+      
+    </div>
+
+
+    <table class="viewDataTable" ID="tblData">
+      <thead>
+        <tr>
+          <th class="viewDataTableHeading"></th>
+          <th class="viewDataTableHeading">Box Number</th>
+          <th class="viewDataTableHeading">Provider</th>
+          <th class="viewDataTableHeading">Boxsize</th>
+          <th class="viewDataTableHeading">Batchsize</th>
+          <th class="viewDataTableHeading">DateReceived</th>
+          <th class="viewDataTableHeading">Status</th>
+          <th class="viewDataTableHeading">Branch</th>
+          <th class="viewDataTableHeading">Distributor</th>
+          <th class="viewDataTableHeading">Province</th>
+        </tr>
+      </thead>
+
+        <tr *ngFor="let data of data | filter:SearchValue">
+            <td class="viewDataTableCell">
+                <button type="submit" class="btn btn-primary btn-lg btn-block"  ID="btnViewData" (click)="ViewData(data.Boxno)">View</button>
+            </td>
+            <td class="viewDataTableCell">{{data.Boxno}}</td>
+            <td class="viewDataTableCell">{{data.Provider}}</td>
+            <td class="viewDataTableCell">{{data.Boxsize}}</td>
+
+
+            <td class="viewDataTableCell">{{data.Batchsize}}</td>
+            <td class="viewDataTableCell">{{data.DateReceived}}</td>
+            <td class="viewDataTableCell">{{data.Status}}</td>
+            <td class="viewDataTableCell">{{data.Branch}}</td>
+            <td class="viewDataTableCell">{{data.Distributor}}</td>
+            <td class="viewDataTableCell">{{data.Province}}</td>
+            
+        </tr>
+
+      </table>
+
+    
+
+
+</div>

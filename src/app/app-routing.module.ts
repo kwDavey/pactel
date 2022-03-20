@@ -36,7 +36,9 @@ import { AllocateDistrubutorComponent } from './components/allocate-distrubutor/
 import { TransferBranchComponent } from './components/transfer-branch/transfer-branch.component';
 
 import { AllocateClientComponent } from './components/allocate-client/allocate-client.component';
+import { ViewboxesComponent } from './components/viewboxes/viewboxes.component';
 
+import { ViewSpecificBoxComponent } from './components/view-specific-box/view-specific-box.component';
 
 
 import { AuthGaurdGuard } from './auth-gaurd.guard';
@@ -76,13 +78,14 @@ const routes: Routes = [
   { path : 'AddClient', component: AddClientComponent, canActivate: [AuthGaurdGuard]},
   { path : 'EditClient/:ID', component: EditClientComponent, canActivate: [AuthGaurdGuard]},
 
-  { path : 'ScanBox', component: ScanBoxComponent},
+  { path : 'ScanBox', component: ScanBoxComponent, canActivate: [AuthGaurdGuard]},
   
-  { path : 'PrepareBatches', component: PrepareBatchesComponent},
-  { path : 'AllocateDistributor', component: AllocateDistrubutorComponent},
-  { path : 'TransferBranch', component: TransferBranchComponent},
-  { path : 'AllocateClients', component: AllocateClientComponent},
-
+  { path : 'PrepareBatches', component: PrepareBatchesComponent, canActivate: [AuthGaurdGuard]},
+  { path : 'AllocateDistributor', component: AllocateDistrubutorComponent, canActivate: [AuthGaurdGuard]},
+  { path : 'TransferBranch', component: TransferBranchComponent, canActivate: [AuthGaurdGuard]},
+  { path : 'AllocateClients', component: AllocateClientComponent, canActivate: [AuthGaurdGuard]},
+  { path : 'ViewBoxes', component: ViewboxesComponent, canActivate: [AuthGaurdGuard]},
+  { path : 'ViewSpecificBox/:ID', component: ViewSpecificBoxComponent, canActivate: [AuthGaurdGuard]},
   
 
  

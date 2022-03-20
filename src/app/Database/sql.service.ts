@@ -379,5 +379,10 @@ export class SqlService {
     return this.http.post(this.Link + "FinishBox.php", formData)
   }
 
+
+  
+  getAllBoxes(){
+    return this.http.get(this.Link + 'getAllBoxes.php').pipe(catchError(this.handleError));
+  }
   
 }

@@ -99,7 +99,11 @@ export class AllocateDistrubutorComponent implements OnInit {
           
         });
       }else{
-        alert("Please check your connection and try again");
+       
+        this.PopupTitle = "Error"
+        this.DisplayErrormessage = "Please check your internet connection and try again";
+        let element: HTMLButtonElement = document.getElementById('ErrorButton') as HTMLButtonElement;
+        element.click();
       }
     }));
   }
@@ -187,12 +191,12 @@ export class AllocateDistrubutorComponent implements OnInit {
         this.Status = firsttemp[2];
         this.branch = firsttemp[3];
         
-        if(this.Status == "Prepped"){
+        if(this.Status == "Prepped" || this.Status == "Allocated"){
           this.PrintSheet();
         }else{
 
           this.PopupTitle = "Error"
-          this.DisplayErrormessage = "Box has invalid status:'" + this.Status +"', when it should be 'Prepped'"; 
+          this.DisplayErrormessage = "Box has invalid status:'" + this.Status +"', when it should be 'Prepped' OR 'Allocated'"; 
           let element: HTMLButtonElement = document.getElementById('ErrorButton') as HTMLButtonElement;
           element.click();
         }

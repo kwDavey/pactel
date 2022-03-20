@@ -113,6 +113,12 @@ export class HeaderComponent implements OnInit {
       this.ActivePage = "Boxes";
     }
 
+    
+    if(nextPage == "ViewBox"){
+      this.router.navigate(['ViewBoxes']); 
+      this.ActivePage = "Boxes";
+    }
+
 
   }
 

@@ -10,19 +10,21 @@
         </div>
       </div>
       <div>
-        <button class="btn btn-outline-primary" type="button" id="button-addon2" (click)="btnDownloadReportClickExcel()">Export</button>
+        <button class="btn btn-success" type="button" id="button-addon2" (click)="btnDownloadReportClickExcel()">Export</button>
       </div>
       
     </div>
 
 
     <table class="viewDataTable" ID="tblData">
+      <thead>
         <tr>
           <th class="viewDataTableHeading"></th>
           <th class="viewDataTableHeading">Distributors Name</th>
           <th class="viewDataTableHeading">Province</th>
           <th class="viewDataTableHeading">Active</th>
         </tr>
+      </thead>
 
         <tr *ngFor="let data of data | filter:SearchValue">
             <td class="viewDataTableCell">
