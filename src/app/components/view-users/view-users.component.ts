@@ -15,6 +15,8 @@ export class ViewUsersComponent implements OnInit {
 
   SearchValue = "";
   
+  p: number = 1;
+  ItemsPerPage = 20;
 
   data = [{}];
 
@@ -93,7 +95,7 @@ export class ViewUsersComponent implements OnInit {
 
   btnDownloadReportClickExcel(){
     /* generate worksheet */
-    let targetTableElm = document.getElementById("tblData");
+    let targetTableElm = document.getElementById("tblDataExport");
     let wb = XLSX.utils.table_to_book(targetTableElm, <XLSX.Table2SheetOpts>{ sheet: "Report" });
     XLSX.writeFile(wb, `Report.xlsx`);
   }

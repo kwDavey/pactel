@@ -11,6 +11,7 @@
       </div>
       <div>
         <button class="btn btn-success" type="button" id="button-addon2" (click)="btnDownloadReportClickExcel()">Export</button>
+        <button class="btn btn-primary" type="button" id="button-addon2" (click)="Add()" style="margin-left: 20px;">Add</button>
       </div>
       
     </div>
@@ -26,7 +27,7 @@
         </tr>
       </thead>
 
-        <tr *ngFor="let data of data | filter:SearchValue">
+        <tr *ngFor="let data of data | filter:SearchValue  | paginate: { itemsPerPage: ItemsPerPage, currentPage: p }">
             <td class="viewDataTableCell">
                 <button type="submit" class="btn btn-primary btn-lg btn-block"  ID="btnViewData" (click)="EditData(data.ID)">Edit</button>
             </td>
@@ -36,6 +37,25 @@
         </tr>
         
       </table>
+      <pagination-controls (pageChange)="p = $event"></pagination-controls>
+
+      <table class="viewDataTable" ID="tblDataExport" style="display: none;">
+        <thead>
+          <tr>
+            <th class="viewDataTableHeading">Distributors Name</th>
+            <th class="viewDataTableHeading">Province</th>
+            <th class="viewDataTableHeading">Active</th>
+          </tr>
+        </thead>
+  
+          <tr *ngFor="let data of data | filter:SearchValue">
+              <td class="viewDataTableCell">{{data.ID}}</td>
+              <td class="viewDataTableCell">{{data.Province}}</td>
+              <td class="viewDataTableCell">{{data.Active}}</td>
+          </tr>
+          
+        </table>
+  
 
       
 

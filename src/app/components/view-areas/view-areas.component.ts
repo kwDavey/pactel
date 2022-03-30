@@ -11,6 +11,9 @@ export class ViewAreasComponent implements OnInit {
 
   SearchValue = "";
 
+  p: number = 1;
+  ItemsPerPage = 20;
+
   data = [
           {
             ID:"Northworld",
@@ -113,7 +116,7 @@ export class ViewAreasComponent implements OnInit {
 
   btnDownloadReportClickExcel(){
     /* generate worksheet */
-    let targetTableElm = document.getElementById("tblData");
+    let targetTableElm = document.getElementById("tblDataExport");
     let wb = XLSX.utils.table_to_book(targetTableElm, <XLSX.Table2SheetOpts>{ sheet: "Report" });
     XLSX.writeFile(wb, `Report.xlsx`);
   }

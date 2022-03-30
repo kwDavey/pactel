@@ -16,6 +16,9 @@ export class ViewBranchesComponent implements OnInit {
       ID:"Northworld CellC",
     }];
 
+    p: number = 1;
+    ItemsPerPage = 20;
+
   constructor(private dbService: SqlService,private router: Router) { }
 
   ngOnInit(): void {
@@ -54,7 +57,7 @@ export class ViewBranchesComponent implements OnInit {
 
   btnDownloadReportClickExcel(){
     /* generate worksheet */
-    let targetTableElm = document.getElementById("tblData");
+    let targetTableElm = document.getElementById("tblDataExport");
     let wb = XLSX.utils.table_to_book(targetTableElm, <XLSX.Table2SheetOpts>{ sheet: "Report" });
     XLSX.writeFile(wb, `Report.xlsx`);
   }

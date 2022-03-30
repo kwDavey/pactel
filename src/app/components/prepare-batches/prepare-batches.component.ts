@@ -78,16 +78,21 @@ export class PrepareBatchesComponent implements OnInit {
             SerialNumber: secondtemp[0],
             BatchNo: secondtemp[1]
           }
-          if( Number.parseInt(secondtemp[1]) > this.CurrentBatch){
-            this.CurrentBatch = Number.parseInt(secondtemp[1]);
+
+          if(secondtemp[4] == this.BoxNumber){
+            if( Number.parseInt(secondtemp[1]) > this.CurrentBatch){
+              this.CurrentBatch = Number.parseInt(secondtemp[1]);
+            }
+
+            if(Number.parseInt(secondtemp[1]) > 0 ){
+              this.AllocatedSerialnumbers.push(Number.parseInt(secondtemp[0]));
+            }
+            this.AllSerialnumbers.push(Number.parseInt(secondtemp[0]));
+            this.AllSerialBatchnumbers.push(temp);
           }
 
-          if(Number.parseInt(secondtemp[1]) > 0 ){
-            this.AllocatedSerialnumbers.push(Number.parseInt(secondtemp[0]));
-          }
-          this.AllSerialnumbers.push(Number.parseInt(secondtemp[0]));
-          this.AllSerialBatchnumbers.push(temp);
         });
+        console.log(this.AllSerialnumbers);
 
         this.firstscreen = false;
         this.Secondscreen = true;
@@ -323,7 +328,7 @@ export class PrepareBatchesComponent implements OnInit {
     this.DisplayErrormessage = "Please type in 'DONE' below to reset the box.";
     let element: HTMLButtonElement = document.getElementById('btnConfirmClose') as HTMLButtonElement;
     element.click();
-  }
+  } 
 
 
   openConfirmForceClose(content: any) {

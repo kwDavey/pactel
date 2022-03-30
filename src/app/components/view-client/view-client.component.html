@@ -5,19 +5,20 @@
     <div style="padding-top: 15px;width: 300px;text-align: left;" > 
       <label>Search:</label>
       <div class="input-group mb-3">
-        <input class="form-control" ID="details" name="details" type="text" [(ngModel)]="SearchValue" placeholder="Type in something to search"/>
+        <input class="form-control" ID="details" name="details" type="text" [(ngModel)]="SearchValue" placeholder="Type in something to search" (ngModelChange)="SearchChanged()"/>
         <div class="input-group-append">
           <button class="btn btn-outline-secondary btnClear" type="button" id="button-addon2" (click)="ClearSearch()">X</button>
         </div>
       </div>
       <div>
         <button class="btn btn-success" type="button" id="button-addon2" (click)="btnDownloadReportClickExcel()">Export</button>
+        <button class="btn btn-primary" type="button" id="button-addon2" (click)="Add()" style="margin-left: 20px;">Add</button>
       </div>
       
     </div>
 
 
-    <table id="dtBasicExample" class="viewDataTable" ngb-sort ID="tblData">
+    <table class="viewDataTable" ngb-sort ID="tblData" >
       <thead>
         <tr>
           <th class="viewDataTableHeading"></th>
@@ -27,7 +28,7 @@
         </tr>
       </thead>
 
-        <tr *ngFor="let data of data | filter:SearchValue">
+        <tr *ngFor="let data of data | filter:SearchValue | paginate: { itemsPerPage: ItemsPerPage, currentPage: p }">
             <td class="viewDataTableCell">
                 <button type="submit" class="btn btn-primary btn-lg btn-block"  ID="btnViewData" (click)="EditData(data.ID)">Edit</button>
             </td>
@@ -37,6 +38,24 @@
         </tr>
 
       </table>
+      <pagination-controls (pageChange)="p = $event"></pagination-controls>
+
+      <table class="viewDataTable" ngb-sort ID="tblDataExport" style="display: none;">
+        <thead>
+          <tr>
+            <th class="viewDataTableHeading">Client Name</th>
+            <th class="viewDataTableHeading">Province</th>
+            <th class="viewDataTableHeading">Area</th>
+          </tr>
+        </thead>
+  
+          <tr *ngFor="let data of data | filter:SearchValue">
+              <td class="viewDataTableCell">{{data.ID}}</td>
+              <td class="viewDataTableCell">{{data.Province}}</td>
+              <td class="viewDataTableCell">{{data.Area}}</td>
+          </tr>
+  
+        </table>
 
     
     

@@ -1,15 +1,7 @@
-<div class="container"  style="width: 20%;">
+<div class="container"  style="width: 20%;" ID="AddClientContainer">
     <H1>Add Client</H1>
   
     <div>
-
-  
-      <div class="form-group">
-        <label>Client Name:</label>
-        <input class="form-control" name="ClientName" type="text" [(ngModel)]="ClientName" required
-          placeholder="Enter Client Name" maxlength="80"/>
-      </div>
-
       <div class="form-group">
         <label>Province:</label>
           <select class="form-control" name="Province" type="text" [(ngModel)]="Province" required
@@ -19,20 +11,32 @@
           </select>
       </div>
 
-      <div class="form-group">
+      <div class="form-group" *ngIf="Province">
         <label>Area:</label>
           <select class="form-control" name="Area" type="text" [(ngModel)]="Area" required
-          placeholder="Enter Area">
+          placeholder="Enter Area" (change)="AreaNameChanged()" >
           <option *ngFor="let ar of Areas; let i =index" value={{ar}}>{{ar}}
           </option> 
           </select>
+      </div>
+
+      <div class="form-group" *ngIf="Province && Area">
+        <label>Client Name:</label>
+        <input class="form-control" name="ClientName" type="text" [(ngModel)]="ClientName" required
+          placeholder="Enter Client Name" maxlength="80" (ngModelChange)="ClientNameChanged()"/>
+
+          <label style="margin-top: 20px;">Exsisting Clients:</label>
+            <select class="selectpicker form-control" multiple="true" style="padding-bottom: 0px;" [(ngModel)]="PossibleClient" (change)="PossibleClientChanged()">
+                <option *ngFor="let item of PossibleClients; let i =index" value={{item}}>{{item}}
+                </option> 
+            </select>
       </div>
   
   
       <div class="form-group" style="display: inline-flex;">
   
           <div style="float: left;margin-right: 20px;">
-              <button class="btn btn-primary btn-lg btn-block" type="submit"  (click)="Back()">Back</button>
+              <button class="btn btn-primary btn-lg btn-block" type="submit"  (click)="Back()" ID="AddClientBackBtn">Back</button>
           </div>
   
   

@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from "@angular/router";
 import {SqlService} from "../../Database/sql.service";
 import * as XLSX from 'xlsx';
+import { TestBed } from '@angular/core/testing';
 
 
 
@@ -21,6 +22,9 @@ export class ViewClientComponent implements OnInit {
   SearchValue = "";
 
   data = [{}];
+
+  p: number = 1;
+  ItemsPerPage = 20;
 
 
 
@@ -62,13 +66,22 @@ export class ViewClientComponent implements OnInit {
     this.SearchValue = "";
   }
 
-  
-  btnDownloadReportClickExcel(){
-    /* generate worksheet */
-    let targetTableElm = document.getElementById("tblData");
-    let wb = XLSX.utils.table_to_book(targetTableElm, <XLSX.Table2SheetOpts>{ sheet: "Report" });
-    XLSX.writeFile(wb, `Report.xlsx`);
+  Add(){
+    this.router.navigate(['/AddClient']);
   }
+
+  SearchChanged(){
+    this.p = 0;
+  }
+
+  
+   btnDownloadReportClickExcel(){
+    /* generate worksheet */
+    let targetTableElm = document.getElementById("tblDataExport");
+    let wb = XLSX.utils.table_to_book(targetTableElm, <XLSX.Table2SheetOpts>{ sheet: "Report" });
+    XLSX.writeFile(wb, `Report.xlsx`)
+  }
+
   
 
 }

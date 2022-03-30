@@ -20,6 +20,9 @@ export class ScanBoxComponent implements OnInit {
 
   Provider = 0;
 
+  p: number = 1;
+  ItemsPerPage = 20;
+
   ProvidersData = [
     {
       ID:"",
@@ -56,20 +59,24 @@ export class ScanBoxComponent implements OnInit {
   ngOnInit(): void {
     let tempDate = new Date();
     this.CurrentDate = tempDate.getFullYear() + "-";
+    let monthTemp = Number.parseInt(tempDate.getMonth().toString());
+    monthTemp++;
     if(tempDate.getMonth().toString().length == 1){
-      this.CurrentDate += "0" + tempDate.getMonth()  + "-";
+      this.CurrentDate += "0" + monthTemp  + "-";
     }else{
-      this.CurrentDate += tempDate.getMonth() + "-";
+      this.CurrentDate += monthTemp + "-";
     }
 
-    if(tempDate.getDay().toString().length == 1){
-      this.CurrentDate += "0" + tempDate.getDay();
+    if(tempDate.getDate().toString().length == 1){
+      this.CurrentDate += "0" + tempDate.getDate();
     }else{
-      this.CurrentDate += tempDate.getDay();
+      this.CurrentDate += tempDate.getDate();
     }
 
     this.getData();
     this.ImportValid = false;
+
+    console.log(this.CurrentDate);
   }
 
   async getData(){
@@ -192,13 +199,13 @@ export class ScanBoxComponent implements OnInit {
 
     for (let index = 1; index < this.data.length; index++) {
       //`Boxno`, `Serialno`, `Batchno`, `Client`, `DateDist`
-      tempString = tempString + " ('"+this.data[index][0]+"','"+this.data[index][1]+"','','','"+this.date + "') ,";
+      tempString = tempString + " ('"+this.data[index][0]+"','"+this.data[index][1]+"','','','') ,";
       this.SERIALNUMBERs.push(this.data[index][1] as string);
 
 
       if(!(this.BoxNUMBERs.includes(this.data[index][0]))){
         this.BoxNUMBERs.push(this.data[index][0]);
-        tempBoxDetailsString += "('"+this.data[index][0]+"','"+temp.ID+"','"+temp.BoxSize+"','"+temp.BatchSize+"','"+this.date +"','','"+this.Branch+"','','' ),";
+        tempBoxDetailsString += "('"+this.data[index][0]+"','"+temp.ID+"','"+temp.BoxSize+"','"+temp.BatchSize+"','"+this.date +"','Recieved','"+this.Branch+"','','' ),";
       }
 
       this.DataDisplay.push({

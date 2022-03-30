@@ -16,8 +16,11 @@ export class AddAreasComponent implements OnInit {
 
   Area= "";
   Province = "";
+  PossibleArea = "";
 
   Provinces = [""];
+  PossibleAreas = [""];
+  PossibleAreasMain = [""];
 
   ngOnInit(): void {
 
@@ -59,7 +62,8 @@ export class AddAreasComponent implements OnInit {
         this.DisplayErrormessage = "The Area has been added";
         let element: HTMLButtonElement = document.getElementById('ErrorButton') as HTMLButtonElement;
         element.click();
-        this.Reset();
+        this.Area = "";
+        this.ProvinceNameChanged();
       }else{
         if(String(ret).includes("Duplicate entry")){
           this.PopupTitle = "Invalid Details"
@@ -84,6 +88,56 @@ export class AddAreasComponent implements OnInit {
 
   Back(){
     this.router.navigate(['ViewArea']); 
+  }
+
+
+  PossibleAreaChanged(){
+    this.Area = this.PossibleArea;
+  }
+
+  async ProvinceNameChanged(){
+
+
+    this.PossibleAreasMain.splice(0);
+    this.PossibleAreas.splice(0);
+    
+
+    if(this.Province != "" ){
+      await(this.dbService.getAreaPerProvince(this.Province).subscribe((ret:any) => {
+        if(!(String(ret).includes("Error"))){
+
+          if(!(String(ret) == "false")){
+            let a = (ret as string).split(';');
+            a.forEach(element => {
+              this.PossibleAreasMain.push(element);
+            });
+  
+            this.AreaNameChanged();
+          }
+        
+
+        }else{
+         
+          this.PopupTitle = "Something went wrong"
+          this.DisplayErrormessage = "Something went wrong, please try again. If this continuies please contact the I.T Department";
+          let element: HTMLButtonElement = document.getElementById('ErrorButton') as HTMLButtonElement;
+          element.click();
+          
+        }
+      }));
+    }
+  }
+
+  AreaNameChanged(){
+    this.PossibleAreas.splice(0);
+
+    for (let index = 0; index < this.PossibleAreasMain.length; index++) {
+      if(this.PossibleAreasMain[index].indexOf(this.Area) > -1){
+        this.PossibleAreas.push(this.PossibleAreasMain[index]);
+      }
+      
+    }
+   
   }
 
 

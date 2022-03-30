@@ -15,6 +15,10 @@ export class AddClientComponent implements OnInit {
 
   Provinces = [""];
   Areas = [""];
+
+  PossibleClient = "";
+  PossibleClientMain = [""];
+  PossibleClients= [""];
   
 
   constructor(private dbService: SqlService,private route: ActivatedRoute,  private router: Router,private modalService: NgbModal) { }
@@ -96,6 +100,66 @@ export class AddClientComponent implements OnInit {
   Back(){
     this.router.navigate(['ViewClient']); 
   }
+
+
+
+
+  PossibleClientChanged(){
+    this.ClientName = this.PossibleClient;
+  }
+
+  async AreaNameChanged(){
+
+
+    this.PossibleClientMain.splice(0);
+    this.PossibleClients.splice(0);
+    
+
+    if(this.Province != "" ){
+      var formData = new FormData(); // Currently empty  Prepped
+      formData.set("Province", this.Province + "' AND `Area`='" + this.Area);
+
+      console.log("HI");
+
+      await(this.dbService.getClientsPerProvince(formData).subscribe((ret:any) => {
+        if(!(String(ret).includes("Error"))){
+
+          if(!(String(ret) == "false")){
+            let a = (ret as string).split(';');
+            a.forEach(element => {
+              this.PossibleClientMain.push(element.split(',')[0]);
+
+            });
+  
+            this.ClientNameChanged();
+          }
+        
+
+        }else{
+         
+          this.PopupTitle = "Something went wrong"
+          this.DisplayErrormessage = "Something went wrong, please try again. If this continuies please contact the I.T Department";
+          let element: HTMLButtonElement = document.getElementById('ErrorButton') as HTMLButtonElement;
+          element.click();
+          
+        }
+      }));
+    }
+  }
+
+  ClientNameChanged(){
+    this.PossibleClients.splice(0);
+
+    for (let index = 0; index < this.PossibleClientMain.length; index++) {
+      if(this.PossibleClientMain[index].indexOf(this.ClientName) > -1){
+        this.PossibleClients.push(this.PossibleClientMain[index]);
+      }
+      
+    }
+   
+  }
+
+
 
   closeResult = '';
   DisplayErrormessage = "";

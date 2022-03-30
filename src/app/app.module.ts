@@ -44,6 +44,11 @@ import { ViewboxesComponent } from './components/viewboxes/viewboxes.component';
 import { ViewSpecificBoxComponent } from './components/view-specific-box/view-specific-box.component';
 
 
+
+import {NgxPaginationModule} from 'ngx-pagination'; // <-- import the module
+
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -84,6 +89,7 @@ import { ViewSpecificBoxComponent } from './components/view-specific-box/view-sp
     FormsModule,
     Ng2SearchPipeModule,
     NgbModule,
+    NgxPaginationModule
 
   ],
   providers: [],

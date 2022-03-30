@@ -2,6 +2,17 @@
   <H1>Edit Area</H1>
 
   <div>
+
+    <div class="form-group">
+        <label>Province:</label>
+        <select class="form-control" name="Province" type="text" [(ngModel)]="Province" required
+        placeholder="Enter Province">
+        <option *ngFor="let Province of Provinces; let i =index" value={{Province}}>{{Province}}
+        </option> 
+        </select>
+      </div>
+
+      
     <div class="form-group">
       <label>Area:</label>
       <input class="form-control" name="Area" type="text" [(ngModel)]="Area" required
@@ -9,14 +20,7 @@
     </div>
 
 
-    <div class="form-group">
-      <label>Province:</label>
-      <select class="form-control" name="Province" type="text" [(ngModel)]="Province" required
-      placeholder="Enter Province">
-      <option *ngFor="let Province of Provinces; let i =index" value={{Province}}>{{Province}}
-      </option> 
-      </select>
-    </div>
+   
 
 
     <div class="form-group" style="display: inline-flex;">

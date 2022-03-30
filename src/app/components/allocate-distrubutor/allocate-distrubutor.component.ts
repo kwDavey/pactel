@@ -23,6 +23,7 @@ export class AllocateDistrubutorComponent implements OnInit {
   closeResult = '';
   DisplayErrormessage = "";
   PopupTitle = "";
+  ConfirmReset = "";
 
   BoxNumber = "";
 
@@ -120,7 +121,8 @@ export class AllocateDistrubutorComponent implements OnInit {
     formData.set("Province", this.Province);
 
     await(this.dbService.AllocateDistributor(formData).subscribe((ret:any) => {
-      if(ret != "false"){ 
+      console.log(ret);
+      if(!(ret.toString().includes("false"))){ 
 
         
      
@@ -131,10 +133,14 @@ export class AllocateDistrubutorComponent implements OnInit {
 
       }else{
 
-       
+        if(ret == "false, status incorrect"){
+          this.DisplayErrormessage = "The status of this box is not 'prepped'";
+        }else{
+          this.DisplayErrormessage = "Please check your internet connection and try again";
+        }
 
         this.PopupTitle = "Error"
-        this.DisplayErrormessage = "Please check your internet connection and try again";
+        
         let element: HTMLButtonElement = document.getElementById('ErrorButton') as HTMLButtonElement;
         element.click();
 
@@ -143,6 +149,14 @@ export class AllocateDistrubutorComponent implements OnInit {
 
 
     }));
+  }
+
+  RevertCheck(){
+    this.ConfirmReset = "";
+    this.PopupTitle = "Warning!"
+    this.DisplayErrormessage = "Please type in 'YES' below to revert the box.";
+    let element: HTMLButtonElement = document.getElementById('btnConfirmReset') as HTMLButtonElement;
+    element.click();
   }
 
 
@@ -414,6 +428,20 @@ export class AllocateDistrubutorComponent implements OnInit {
     } else {
       return `with: ${reason}`;
     }
+  }
+
+
+  openConfirmReset(content: any) {
+    this.modalService.open(content,
+   {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+         if(this.ConfirmReset == "YES"){
+          this.Revert();
+         }
+    }, (reason) => {
+      this.closeResult = 
+         `Dismissed ${this.getDismissReason(reason)}`;
+    });
   }
 
 }

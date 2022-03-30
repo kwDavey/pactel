@@ -1,11 +1,11 @@
-<div class="container"  style="width: 25%;">
+<div class="container"  style="width: 65%;">
     <H1>Allocate Clients</H1>
   
     <div *ngIf="firstscreen">
       <div class="form-group">
         <label>Enter Box Number:</label>
         <input class="form-control" name="BoxNumber" type="text" [(ngModel)]="BoxNumber" required
-          placeholder="Enter Box Number" maxlength="30"/>
+          placeholder="Enter Box Number" maxlength="30" style="max-width: 200px; margin-left: auto;margin-right: auto;"/>
       </div>
 
   
@@ -30,29 +30,46 @@
     <div *ngIf="Secondscreen">
         <div class="form-group">
           <label>Box Number: {{BoxNumber}}</label><br>
-          <label>Batch Size: {{Batchsize}}</label><br>
+          <label>Province: {{Province}}</label><br>
         </div>
 
-        <div class="form-group" *ngFor="let item of [].constructor(Batchsize); let i = index">
-            <h1>Batch: {{i+1}}</h1>
-            <div>
-                <label>Select Area:</label>
-                <select class="form-control" name="Area" type="text" [(ngModel)]="InputAreas[i]" required
-                placeholder="Enter Area" (change)="AreaChanged(i)">
-                    <option *ngFor="let Area of Areas; let i =index" value={{Area}}>{{Area}}
-                    </option> 
-                </select>
+        <div class="row">
+                <div class="col-6" *ngFor="let item of [].constructor(BoxNumberBatchsize); let i = index" style="padding-bottom: 20px;padding-top: 20px;">
+                    <h1>Batch: {{i+1}}</h1>
+                    <div style="text-align: left;">
+                        <label>Select Area:</label>
+                        <div style="display: flex;">
+                            <select class="form-control" name="Area" type="text" [(ngModel)]="InputAreas[i]" required
+                            placeholder="Enter Area" (change)="AreaChanged(i)">
+                                <option *ngFor="let Area of Areas; let i =index" value={{Area}}>{{Area}}
+                                </option> 
+                            </select>
     
-                <label>Select Client:</label>
-                <select class="form-control" name="Client" type="text" [(ngModel)]="InputClients[i]" required
-                placeholder="Enter Client">
-                    <option *ngFor="let Client of Clients[i]; let i =index" value={{Client}}>{{Client}}
-                    </option> 
-                </select>
-            </div>
-            <br><br>
-          
+                            <button class="form-control btn-primary" style="width: 200px;margin-left:10px;" type="submit"  (click)="AddNewArea()">Add Area</button>
+                
+                        </div>
+                      
+                        <label style="padding-top: 10px;">Select Client:</label>
+
+                        <div style="display: flex;">
+                            <select class="form-control" name="Client" type="text" [(ngModel)]="InputClients[i]" required
+                            placeholder="Enter Client">
+                                <option *ngFor="let Client of Clients[i]; let i =index" value={{Client}}>{{Client}}
+                                </option> 
+                            </select>
+
+                            <button class="form-control btn-primary" style="width: 200px;margin-left:10px;" type="submit"  (click)="AddNewClient()">Add Client</button>
+
+                        </div>
+                    </div>
+                  
+                </div>
+
+           
+
         </div>
+
+       
   
     
         <div class="form-group" style="display: inline-flex;">
@@ -78,15 +95,26 @@
   
   </div>
   
-
+  <script src= 
+  "https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"> 
+      </script> 
 
    <!--Error popup-->
    <div style="float: right;margin-left:20px;">
-    <button class="btn btn-success btn-lg btn-block" id="ErrorButton" (click)="open(content)" style="display: none;">
+    <button class="btn btn-success btn-lg btn-block" id="contentClientPopUpErrorButton" (click)="open(contentClientPopUp)" style="display: none;">
+    </button>
+
+    <button class="btn btn-success btn-lg btn-block" id="AddAreaButton" (click)="opentemplate(content2)" style="display: none;">
+    </button>
+
+    <button class="btn btn-success btn-lg btn-block" id="AddClientButton" (click)="opentemplate(content3)" style="display: none;">
     </button>
   </div>
-   <ng-template #content let-modal ID="Errormessage">
-        <div class="modal-header">
+
+
+   <ng-template #contentClientPopUp let-modal ID="Errormessage">
+
+    <div class="modal-header">
             <h4 class="modal-title" 
                 id="modal-basic-title">
                 {{PopupTitle}}
@@ -121,4 +149,54 @@
             
         </div>
     </ng-template>
+
+ <ng-template #content2 let-modal ID="AddArea">
+    <button type="button" class="close"
+    aria-label="Close" (click)=
+    "modal.dismiss('Cross click')"
+    style="margin-left: auto;padding-right: 10px;">
+
+        <span aria-hidden="true">
+            ×
+        </span>
+    </button>
+
+    <app-add-areas></app-add-areas>
+
+    <div class="modal-footer">
+        <button type="button" 
+            class="btn btn-success btn-lg btn-block" 
+            (click)="modal.close('Save click')">
+            Close Pop-Up
+        </button>
+    </div>
+</ng-template>
+
+<ng-template #content3 let-modal ID="Addclient">
+    <button type="button" class="close"
+    aria-label="Close" (click)=
+    "modal.dismiss('Cross click')"
+    style="margin-left: auto;padding-right: 10px;">
+
+        <span aria-hidden="true">
+            ×
+        </span>
+    </button>
+
+    <app-add-client></app-add-client>
+
+    <div class="modal-footer">
+        <button type="button" 
+            class="btn btn-success btn-lg btn-block" 
+            (click)="modal.close('Save click')">
+            Close Pop-Up
+        </button>
+    </div>
+</ng-template>
+
+
+
+
+
+  
 

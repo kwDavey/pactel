@@ -1,29 +1,39 @@
-<div class="container"  style="width: 20%;">
+<div class="container" ID="AddAreaContainer"  style="width: 20%;">
     <H1>Add Area</H1>
   
     <div>
-      <div class="form-group">
-        <label>Area:</label>
-        <input class="form-control" name="Area" type="text" [(ngModel)]="Area" required
-          placeholder="Enter Area" maxlength="30"/>
-      </div>
+    
   
   
       <div class="form-group">
         <label>Province:</label>
 
         <select class="form-control" name="Province" type="text" [(ngModel)]="Province" required
-          placeholder="Enter Province">
+          placeholder="Enter Province" (change)="ProvinceNameChanged()">
           <option *ngFor="let Province of Provinces; let i =index" value={{Province}}>{{Province}}
           </option> 
           </select>
+      </div>
+
+      <div class="form-group" *ngIf="Province">
+        <label>Area:</label>
+        <input class="form-control" name="Area" type="text" [(ngModel)]="Area" required
+          placeholder="Enter Area" maxlength="30" (ngModelChange)="AreaNameChanged()"/>
+
+          <label style="margin-top: 20px;">Exsisting Areas:</label>
+            <select class="selectpicker form-control" multiple="true" style="padding-bottom: 0px;" [(ngModel)]="PossibleArea" (change)="PossibleAreaChanged()">
+                <option *ngFor="let item of PossibleAreas; let i =index" value={{item}}>{{item}}
+                </option> 
+            </select>
+       
+
       </div>
   
   
       <div class="form-group" style="display: inline-flex;">
   
           <div style="float: left;margin-right: 20px;">
-              <button class="btn btn-primary btn-lg btn-block" type="submit"  (click)="Back()">Back</button>
+              <button class="btn btn-primary btn-lg btn-block" type="submit" ID="AddAreaBackBtn"  (click)="Back()">Back</button>
           </div>
   
   

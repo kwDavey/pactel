@@ -38,7 +38,7 @@
       <div class="form-group" *ngIf="date && Branch">
         <label>Import Excel Spread Sheet:</label>
         <div class="input-group mb-3">
-          <input type="file" (change)="onFileChange($event)" [(ngModel)]="excelFile" placeholder="Upload file" accept=".xls , .xlsx">
+          <input type="file" (change)="onFileChange($event)" [(ngModel)]="excelFile" placeholder="Upload file" accept=".xls">
         </div>
       </div>
       
@@ -64,18 +64,20 @@
 
   
 
-      <table id="dtBasicExample" class="viewDataTable" ngb-sort>
+      <table class="viewDataTable" ngb-sort>
         <tr>
           <th class="viewDataTableHeading">Box NUMBER</th>
           <th class="viewDataTableHeading">SERIAL NUMBER</th>
         </tr>
 
-        <tr *ngFor="let dataDisplay of DataDisplay">
+        <tr *ngFor="let dataDisplay of DataDisplay| paginate: { itemsPerPage: ItemsPerPage, currentPage: p }">
             <td class="viewDataTableCell">{{dataDisplay.BoxNum}}</td>
             <td class="viewDataTableCell">{{dataDisplay.SerialNum}}</td>
         </tr>
 
       </table>
+
+      <pagination-controls (pageChange)="p = $event"></pagination-controls>
 
       <div class="form-group" style="display: inline-flex;">
 
