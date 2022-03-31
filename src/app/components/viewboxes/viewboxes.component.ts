@@ -268,10 +268,6 @@ export class ViewboxesComponent implements OnInit {
           }
 
           this.data.push(temp);
-          this.data.push(temp);
-          this.data.push(temp);
-          this.data.push(temp);
-          this.data.push(temp);
         });
         this.ClearSearch();
       }else{
