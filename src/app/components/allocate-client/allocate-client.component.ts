@@ -189,61 +189,92 @@ export class AllocateClientComponent implements OnInit {
 
 
   async Done(){
-    if(this.confirmed==false){
-      //save in DB
-      var strSQL = "";
-
-      for (let index = 0; index < this.Batchsize; index++) {
-        strSQL += "UPDATE `BoxDetails` SET `Client`='" + this.InputClients[index] +"' WHERE `Boxno`='" + this.BoxNumber + "' AND `Batchno` = '"+ (index+1) + "';";
-        
-      }
-
-      var formData = new FormData(); // Currently empty  Prepped
-      formData.set("SQL", strSQL);
-      //formData.set("SQL2", "UPDATE `Boxes` SET `Status`='Done' WHERE `Boxno`='" + this.BoxNumber + "';");
-
-      await(this.dbService.FinishBox(formData).subscribe((ret:any) => {
-        if(ret != "false"){ 
-        
-          this.PopupTitle = "Confirmation"
-          this.DisplayErrormessage = "Please confirm the above details"; 
-          let element: HTMLButtonElement = document.getElementById('contentClientPopUpErrorButton') as HTMLButtonElement;
-          element.click();
-          this.confirmed=true;
-
-
-        }else{
-          this.confirmed=false;
-          this.PopupTitle = "Error"
-          this.DisplayErrormessage = "Please check your box number try again";
-          let element: HTMLButtonElement = document.getElementById('contentClientPopUpErrorButton') as HTMLButtonElement;
-          element.click();
-        }
-      }));
-      
+    let bValid = true;
+    console.log("HI");
+    if((this.InputClients.length + 1) != this.BoxNumberBatchsize){
+      bValid = false;
     }else{
-      this.confirmed=false;
-      var formData = new FormData(); // Currently empty  Prepped
-     formData.set("SQL", "UPDATE `Boxes` SET `Status`='Done' WHERE `Boxno`='" + this.BoxNumber + "';");
-
-      await(this.dbService.FinishBox(formData).subscribe((ret:any) => {
-        if(ret != "false"){ 
-        
-          this.PopupTitle = "Success"
-          this.DisplayErrormessage = "The box has been closed"; 
-          let element: HTMLButtonElement = document.getElementById('contentClientPopUpErrorButton') as HTMLButtonElement;
-          element.click();
-          this.Reset();
+      for (let index = 0; index < this.BoxNumberBatchsize; index++) {
+        if(this.InputClients[index] == null){
+          bValid = false;
         }else{
-          this.confirmed=false;
-          this.PopupTitle = "Error"
-          this.DisplayErrormessage = "Please check your box number try again";
-          let element: HTMLButtonElement = document.getElementById('contentClientPopUpErrorButton') as HTMLButtonElement;
-          element.click();
+          if(this.InputClients[index] == ""){
+            bValid = false;
+          }
         }
-      }));
+       
+      }
     }
     
+
+    if(bValid == false){
+      this.confirmed=false;
+      this.PopupTitle = "Invalid data"
+      this.DisplayErrormessage = "Please select a Client for all batche's";
+      let element: HTMLButtonElement = document.getElementById('contentClientPopUpErrorButton') as HTMLButtonElement;
+      element.click();
+
+      this.confirmed=false;
+
+    }else{
+      if(this.confirmed==false){
+        //save in DB
+        var strSQL = "";
+  
+        for (let index = 0; index < this.Batchsize; index++) {
+          strSQL += "UPDATE `BoxDetails` SET `Client`='" + this.InputClients[index] +"' WHERE `Boxno`='" + this.BoxNumber + "' AND `Batchno` = '"+ (index+1) + "';";
+          
+        }
+  
+        var formData = new FormData(); // Currently empty  Prepped
+        formData.set("SQL", strSQL);
+        //formData.set("SQL2", "UPDATE `Boxes` SET `Status`='Done' WHERE `Boxno`='" + this.BoxNumber + "';");
+  
+        await(this.dbService.FinishBox(formData).subscribe((ret:any) => {
+          if(ret != "false"){ 
+          
+            this.PopupTitle = "Confirmation"
+            this.DisplayErrormessage = "Please confirm the above details"; 
+            let element: HTMLButtonElement = document.getElementById('contentClientPopUpErrorButton') as HTMLButtonElement;
+            element.click();
+            this.confirmed=true;
+  
+  
+          }else{
+            this.confirmed=false;
+            this.PopupTitle = "Error"
+            this.DisplayErrormessage = "Please check your box number try again";
+            let element: HTMLButtonElement = document.getElementById('contentClientPopUpErrorButton') as HTMLButtonElement;
+            element.click();
+          }
+        }));
+        
+      }else{
+        this.confirmed=false;
+        var formData = new FormData(); // Currently empty  Prepped
+       formData.set("SQL", "UPDATE `Boxes` SET `Status`='Done' WHERE `Boxno`='" + this.BoxNumber + "';");
+  
+        await(this.dbService.FinishBox(formData).subscribe((ret:any) => {
+          if(ret != "false"){ 
+          
+            this.PopupTitle = "Success"
+            this.DisplayErrormessage = "The box has been closed"; 
+            let element: HTMLButtonElement = document.getElementById('contentClientPopUpErrorButton') as HTMLButtonElement;
+            element.click();
+            this.Reset();
+          }else{
+            this.confirmed=false;
+            this.PopupTitle = "Error"
+            this.DisplayErrormessage = "Please check your box number try again";
+            let element: HTMLButtonElement = document.getElementById('contentClientPopUpErrorButton') as HTMLButtonElement;
+            element.click();
+          }
+        }));
+      }
+      
+    }
+
+
   }
 
 

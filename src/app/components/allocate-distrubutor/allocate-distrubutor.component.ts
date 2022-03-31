@@ -120,6 +120,23 @@ export class AllocateDistrubutorComponent implements OnInit {
     formData.set("Distributor", this.Distributor);
     formData.set("Province", this.Province);
 
+    let tempDate = new Date();
+    let tempStringDate = "";
+    tempStringDate = tempDate.getFullYear() + "-";
+    if(tempDate.getMonth().toString().length == 1){
+      tempStringDate += "0" + tempDate.getMonth()  + "-";
+    }else{
+      tempStringDate += tempDate.getMonth() + "-";
+    }
+
+    if(tempDate.getDay().toString().length == 1){
+      tempStringDate += "0" + tempDate.getDay();
+    }else{
+      tempStringDate += tempDate.getDay();
+    }
+
+    formData.set("Date", tempStringDate);
+
     await(this.dbService.AllocateDistributor(formData).subscribe((ret:any) => {
       console.log(ret);
       if(!(ret.toString().includes("false"))){ 

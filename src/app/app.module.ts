@@ -43,7 +43,7 @@ import { AllocateClientComponent } from './components/allocate-client/allocate-c
 import { ViewboxesComponent } from './components/viewboxes/viewboxes.component';
 import { ViewSpecificBoxComponent } from './components/view-specific-box/view-specific-box.component';
 
-
+import { FilterPipe } from './components/viewboxes/viewboxes.component';
 
 import {NgxPaginationModule} from 'ngx-pagination'; // <-- import the module
 
@@ -51,6 +51,7 @@ import {NgxPaginationModule} from 'ngx-pagination'; // <-- import the module
 
 @NgModule({
   declarations: [
+    FilterPipe,
     AppComponent,
     LoginComponent,
     HeaderComponent,

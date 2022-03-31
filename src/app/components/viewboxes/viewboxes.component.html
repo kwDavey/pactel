@@ -1,56 +1,212 @@
-<div class="container">
+<div class="container" style="max-width: 80%;">
     <H1>View Boxes</H1>
 
-    <div style="padding-top: 15px;width: 300px;text-align: left;" > 
-      <label>Search:</label>
-      <div class="input-group mb-3">
-        <input class="form-control" ID="details" name="details" type="text" [(ngModel)]="SearchValue" placeholder="Type in something to search"/>
-        <div class="input-group-append">
-          <button class="btn btn-outline-secondary btnClear" type="button" id="button-addon2" (click)="ClearSearch()">X</button>
+  
+    <div class="row">
+
+        <div class="col-2" style="padding-bottom: 20px;text-align: left;">
+
+        <label>Select Status:</label>
+        <div style="display: flex;">
+          <select class="form-control" name="Status" type="text" [(ngModel)]="SearchValue.Status" required
+            placeholder="Select Status" (change)="Search()">
+            <option value="All">All</option>
+            <option value="Recieved">Recieved</option>
+            <option value="In Prep">In Prep</option>
+            <option value="Prepped">Prepped</option>
+            <option value="Distributed">Distributed</option>
+            <option value="Allocated">Allocated</option>
+            <option value="Done">Done</option>
+          </select>
         </div>
       </div>
-      <div>
-        <button class="btn btn-success" type="button" id="button-addon2" (click)="btnDownloadReportClickExcel()">Export</button>
-      </div>
-      
-    </div>
 
+      <div class="col-2" style="padding-bottom: 20px;text-align: left;">
+
+        <label>Select Provider:</label>
+        <div style="display: flex;">
+          <select class="form-control" name="Provider" type="text" [(ngModel)]="SearchValue.Provider" required
+            placeholder="Select Provider" (change)="Search()">
+            <option *ngFor="let Provider of Providers; let i =index" value={{Provider}}>{{Provider}}
+            </option> 
+          </select>
+        </div>
+      </div>
+
+
+      <div class="col-2" style="padding-bottom: 20px;text-align: left;">
+
+        <label>Select Distributor:</label>
+        <div style="display: flex;">
+          <select class="form-control" name="Distributor" type="text" [(ngModel)]="SearchValue.Distributor" required
+            placeholder="Select Distributor" (change)="Search()">
+            <option *ngFor="let Distributor of Distributors; let i =index" value={{Distributor}}>{{Distributor}}
+            </option> 
+          </select>
+        </div>
+      </div>
+
+      <div class="col-2" style="padding-bottom: 20px;text-align: left;">
+
+        <label>Select Client Name:</label>
+        <div style="display: flex;">
+          <select class="form-control" name="ClientName" type="text" [(ngModel)]="SearchValue.ClientName" required
+            placeholder="Select Client Name" (change)="Search()">
+            <option *ngFor="let ClientName of ClientNames; let i =index" value={{ClientName}}>{{ClientName}}
+            </option> 
+          </select>
+        </div>
+      </div>
+
+
+
+      <div class="col-2" style="padding-bottom: 20px;text-align: left;">
+
+        <label>Select Client Province:</label>
+        <div style="display: flex;">
+          <select class="form-control" name="ClientProvince" type="text" [(ngModel)]="SearchValue.ClientProvince" required
+            placeholder="Select Client Province" (change)="Search()">
+            <option *ngFor="let ClientProvince of ClientProvinces; let i =index" value={{ClientProvince}}>{{ClientProvince}}
+            </option> 
+          </select>
+        </div>
+      </div>
+
+
+    </div>
+    <div class="row">
+
+      <div class="col-2" style="text-align: left;" > 
+        <label>Search Box Number:</label>
+        <div class="input-group mb-3">
+          <input class="form-control" ID="details" name="details" type="text" [(ngModel)]="SearchValue.Boxno" placeholder="Type in something to search" (ngModelChange)="Search()"/>
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary btnClear" type="button" id="button-addon2" (click)="ClearBoxNoSearch()">X</button>
+          </div>
+        </div>
+        <div>
+          <button class="btn btn-warning" type="button" id="button-addon2" (click)="ClearSearch()">Clear Search</button>
+          <button class="btn btn-success" type="button" id="button-addon2" (click)="btnDownloadReportClickExcel()" style="margin-left: 5%;">Export</button>
+        </div>
+      </div>
+
+      <div class="col-4" style="padding-bottom: 20px;">
+
+        <label>Select Distributor:</label>
+        <div class="input-group" style="margin-bottom:1rem!important;align-items: end;">
+          <label>Start Date:</label>
+          <input class="form-control" name="date"  type="date"  [(ngModel)]="SearchValue.DistributorStartDate" required placeholder="Select a date" (ngModelChange)="Search()" style="margin-left: calc(2.25rem + 2px);width:200px" max={{SearchValue.DistributorEndDate}}/>
+        </div>
+
+        <div class="input-group" style="align-items: end;">
+          <label>End Date:</label>
+          <input class="form-control" name="date"  type="date"  [(ngModel)]="SearchValue.DistributorEndDate" required placeholder="Select a date" (ngModelChange)="Search()" style="margin-left: calc(2.25rem + 9px);width:200px" min={{SearchValue.DistributorStartDate}}/>
+        </div>
+      </div>
+
+      <div class="col-4" style="padding-bottom: 20px;">
+
+        <label>Select Recieved:</label>
+        <div class="input-group" style="margin-bottom:1rem!important;align-items: end;">
+          <label>Start Date:</label>
+          <input class="form-control" name="date"  type="date"  [(ngModel)]="SearchValue.RecievedStartDate" required placeholder="Select a date" (ngModelChange)="Search()" style="margin-left: calc(2.25rem + 2px);width:200px" max={{SearchValue.RecievedEndDate}}/>
+        </div>
+
+        <div class="input-group" style="align-items: end;">
+          <label>End Date:</label>
+          <input class="form-control" name="date"  type="date"  [(ngModel)]="SearchValue.RecievedEndDate" required placeholder="Select a date" (ngModelChange)="Search()" style="margin-left: calc(2.25rem + 9px);width:200px" min={{SearchValue.RecievedStartDate}}/>
+        </div>
+      </div>
+
+
+    </div>
+  
+
+   
 
     <table class="viewDataTable" ID="tblData">
       <thead>
         <tr>
-          <th class="viewDataTableHeading"></th>
           <th class="viewDataTableHeading">Box Number</th>
           <th class="viewDataTableHeading">Provider</th>
-          <th class="viewDataTableHeading">Boxsize</th>
-          <th class="viewDataTableHeading">Batchsize</th>
+          
           <th class="viewDataTableHeading">DateReceived</th>
           <th class="viewDataTableHeading">Status</th>
           <th class="viewDataTableHeading">Branch</th>
           <th class="viewDataTableHeading">Distributor</th>
           <th class="viewDataTableHeading">Province</th>
+
+          <th class="viewDataTableHeading">Serial Number</th>
+          <th class="viewDataTableHeading">Date Distributed</th>
+
+          <th class="viewDataTableHeading">Client Name</th>
+          <th class="viewDataTableHeading">Client Province</th>
         </tr>
       </thead>
 
-        <tr *ngFor="let data of data | filter:SearchValue">
-            <td class="viewDataTableCell">
-                <button type="submit" class="btn btn-primary btn-lg btn-block"  ID="btnViewData" (click)="ViewData(data.Boxno)">View</button>
-            </td>
+        <tr *ngFor="let data of data | customfilter:SearchValue | paginate: { itemsPerPage: ItemsPerPage, currentPage: p }">
             <td class="viewDataTableCell">{{data.Boxno}}</td>
             <td class="viewDataTableCell">{{data.Provider}}</td>
-            <td class="viewDataTableCell">{{data.Boxsize}}</td>
-
-
-            <td class="viewDataTableCell">{{data.Batchsize}}</td>
+        
             <td class="viewDataTableCell">{{data.DateReceived}}</td>
             <td class="viewDataTableCell">{{data.Status}}</td>
             <td class="viewDataTableCell">{{data.Branch}}</td>
             <td class="viewDataTableCell">{{data.Distributor}}</td>
             <td class="viewDataTableCell">{{data.Province}}</td>
+
+            <td class="viewDataTableCell">{{data.SerialNumber}}</td>
+            <td class="viewDataTableCell">{{data.DateDistributed}}</td>
+
+            <td class="viewDataTableCell">{{data.ClientName}}</td>
+            <td class="viewDataTableCell">{{data.ClientProvince}}</td>
+            
             
         </tr>
 
       </table>
+
+      <pagination-controls (pageChange)="p = $event"></pagination-controls>
+
+      <table class="viewDataTable"ID="tblDataExport" style="display: none;">
+        <thead>
+          <tr>
+            <th class="viewDataTableHeading">Box Number</th>
+            <th class="viewDataTableHeading">Provider</th>
+            
+            <th class="viewDataTableHeading">DateReceived</th>
+            <th class="viewDataTableHeading">Status</th>
+            <th class="viewDataTableHeading">Branch</th>
+            <th class="viewDataTableHeading">Distributor</th>
+            <th class="viewDataTableHeading">Province</th>
+
+            <th class="viewDataTableHeading">Serial Number</th>
+            <th class="viewDataTableHeading">Date Distributed</th>
+
+            <th class="viewDataTableHeading">Client Name</th>
+            <th class="viewDataTableHeading">Client Province</th>
+          </tr>
+        </thead>
+  
+          <tr *ngFor="let data of data| customfilter:SearchValue">
+              
+              <td class="viewDataTableCell">{{data.Boxno}}</td>
+              <td class="viewDataTableCell">{{data.Provider}}</td>
+          
+              <td class="viewDataTableCell">{{data.DateReceived}}</td>
+              <td class="viewDataTableCell">{{data.Status}}</td>
+              <td class="viewDataTableCell">{{data.Branch}}</td>
+              <td class="viewDataTableCell">{{data.Distributor}}</td>
+              <td class="viewDataTableCell">{{data.Province}}</td>
+
+              <td class="viewDataTableCell">{{data.SerialNumber}}</td>
+              <td class="viewDataTableCell">{{data.DateDistributed}}</td>
+
+              <td class="viewDataTableCell">{{data.ClientName}}</td>
+              <td class="viewDataTableCell">{{data.ClientProvince}}</td>
+              
+          </tr>
+  
+        </table>
 
     
 
