@@ -191,7 +191,7 @@ export class AllocateClientComponent implements OnInit {
   async Done(){
     let bValid = true;
     console.log("HI");
-    if((this.InputClients.length + 1) != this.BoxNumberBatchsize){
+    if((this.InputClients.length) != this.BoxNumberBatchsize){
       bValid = false;
     }else{
       for (let index = 0; index < this.BoxNumberBatchsize; index++) {
