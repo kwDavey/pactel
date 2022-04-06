@@ -34,24 +34,32 @@ export class FilterPipe implements PipeTransform {
 
         if(filter.Distributor == "All"){
           temp.Distributor = item.Distributor;
+        }else if(filter.Distributor == "Empty"){
+          temp.Distributor = "";
         }else{
           temp.Distributor = filter.Distributor;
         }
 
         if(filter.Provider == "All"){
           temp.Provider = item.Provider;
+        }else if(filter.Provider == "Empty"){
+          temp.Provider = "";
         }else{
           temp.Provider = filter.Provider;
         }
 
         if(filter.ClientName == "All"){
           temp.ClientName = item.ClientName;
+        }else if(filter.ClientName == "Empty"){
+          temp.ClientName = "";
         }else{
           temp.ClientName = filter.ClientName;
         }
 
         if(filter.ClientProvince == "All"){
           temp.ClientProvince = item.ClientProvince;
+        }else if(filter.ClientProvince == "Empty"){
+          temp.ClientProvince = "";
         }else{
           temp.ClientProvince = filter.ClientProvince;
         }
@@ -214,7 +222,6 @@ export class ViewboxesComponent implements OnInit {
   }
 
   async getData(){
-   
     await(this.dbService.getAllBoxes().subscribe((ret:any) => {
       if(ret != "false"){
         this.data.splice(0);
@@ -254,18 +261,35 @@ export class ViewboxesComponent implements OnInit {
                         fake:""
                       };
 
-          if(!(this.Providers.includes(temp.Provider))){
-            this.Providers.push(temp.Provider);
+
+          if(temp.Provider != ""){
+            if(!(this.Providers.includes(temp.Provider))){
+              this.Providers.push(temp.Provider);
+            }
           }
-          if(!(this.ClientNames.includes(temp.ClientName))){
-            this.ClientNames.push(temp.ClientName);
+
+          if(temp.ClientName != ""){
+            if(!(this.ClientNames.includes(temp.ClientName))){
+              this.ClientNames.push(temp.ClientName);
+            }
           }
-          if(!(this.ClientProvinces.includes(temp.ClientProvince))){
-            this.ClientProvinces.push(temp.ClientProvince);
+
+          if(temp.ClientProvince != ""){
+            if(!(this.ClientProvinces.includes(temp.ClientProvince))){
+              this.ClientProvinces.push(temp.ClientProvince);
+            }
           }
-          if(!(this.Distributors.includes(temp.Distributor))){
-            this.Distributors.push(temp.Distributor);
+          
+          if(temp.Distributor != ""){
+            if(!(this.Distributors.includes(temp.Distributor))){
+              this.Distributors.push(temp.Distributor);
+            }
           }
+
+          
+         
+        
+          
 
           this.data.push(temp);
         });

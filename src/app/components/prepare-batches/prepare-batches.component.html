@@ -5,8 +5,15 @@
       <div class="form-group">
         <label>Enter Box Number:</label>
         <input class="form-control" name="BoxNumber" type="text" [(ngModel)]="BoxNumber" required
-          placeholder="Enter Box Number" maxlength="30"/>
+          placeholder="Enter Box Number" maxlength="30" (ngModelChange)="BoxNameChanged()"/>
+
+          <label style="margin-top: 20px;">Exsisting Boxes:</label>
+          <select class="selectpicker form-control" multiple="true" style="padding-bottom: 0px;" [(ngModel)]="PossibleBox" (change)="PossibleBoxChanged()">
+              <option *ngFor="let item of PossibleBoxNumbers; let i =index" value={{item}}>{{item}}
+              </option> 
+          </select>
       </div>
+
 
   
       <div class="form-group" style="display: inline-flex;">
@@ -46,6 +53,10 @@
     
         <div class="form-group" style="display: inline-flex;">
     
+            <div style="float: left;margin-right: 20px;margin-left:20px;">
+                <button class="btn btn-warning btn-lg btn-block" type="submit"  (click)="Back()">Back</button>
+            </div>
+
             <div style="float: left;margin-right: 20px;margin-left:20px;">
                 <button class="btn btn-danger btn-lg btn-block" type="submit"  (click)="ResetBox()">Reset Box</button>
             </div>

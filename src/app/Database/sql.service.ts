@@ -384,5 +384,9 @@ export class SqlService {
   getAllBoxes(){
     return this.http.get(this.Link + 'getAllBoxes.php').pipe(catchError(this.handleError));
   }
+
+  getAllBoxesNames(formData:FormData){
+    return this.http.post(this.Link + "getAllBoxNames.php", formData)
+  }
   
 }

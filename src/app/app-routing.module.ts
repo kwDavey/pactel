@@ -85,7 +85,9 @@ const routes: Routes = [
   { path : 'TransferBranch', component: TransferBranchComponent, canActivate: [AuthGaurdGuard]},
   { path : 'AllocateClients', component: AllocateClientComponent, canActivate: [AuthGaurdGuard]},
   { path : 'ViewBoxes', component: ViewboxesComponent, canActivate: [AuthGaurdGuard]},
-  { path : 'ViewSpecificBox/:ID', component: ViewSpecificBoxComponent, canActivate: [AuthGaurdGuard]},
+
+
+  { path : 'Welcome', component: ViewSpecificBoxComponent, canActivate: [AuthGaurdGuard]},
   
 
  

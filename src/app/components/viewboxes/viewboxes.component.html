@@ -23,7 +23,7 @@
 
       <div class="col-2" style="padding-bottom: 20px;text-align: left;">
 
-        <label>Select Provider:</label>
+        <label>Select Provider Name:</label>
         <div style="display: flex;">
           <select class="form-control" name="Provider" type="text" [(ngModel)]="SearchValue.Provider" required
             placeholder="Select Provider" (change)="Search()">
@@ -36,7 +36,7 @@
 
       <div class="col-2" style="padding-bottom: 20px;text-align: left;">
 
-        <label>Select Distributor:</label>
+        <label>Select Distributor Name:</label>
         <div style="display: flex;">
           <select class="form-control" name="Distributor" type="text" [(ngModel)]="SearchValue.Distributor" required
             placeholder="Select Distributor" (change)="Search()">
@@ -92,7 +92,7 @@
 
       <div class="col-4" style="padding-bottom: 20px;">
 
-        <label>Select Distributor:</label>
+        <label>Select Distributed Date:</label>
         <div class="input-group" style="margin-bottom:1rem!important;align-items: end;">
           <label>Start Date:</label>
           <input class="form-control" name="date"  type="date"  [(ngModel)]="SearchValue.DistributorStartDate" required placeholder="Select a date" (ngModelChange)="Search()" style="margin-left: calc(2.25rem + 2px);width:200px" max={{SearchValue.DistributorEndDate}}/>
@@ -106,7 +106,7 @@
 
       <div class="col-4" style="padding-bottom: 20px;">
 
-        <label>Select Recieved:</label>
+        <label>Select Recieved Date:</label>
         <div class="input-group" style="margin-bottom:1rem!important;align-items: end;">
           <label>Start Date:</label>
           <input class="form-control" name="date"  type="date"  [(ngModel)]="SearchValue.RecievedStartDate" required placeholder="Select a date" (ngModelChange)="Search()" style="margin-left: calc(2.25rem + 2px);width:200px" max={{SearchValue.RecievedEndDate}}/>

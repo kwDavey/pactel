@@ -5,7 +5,13 @@
       <div class="form-group">
         <label>Enter Box Number:</label>
         <input class="form-control" name="BoxNumber" type="text" [(ngModel)]="BoxNumber" required
-          placeholder="Enter Box Number" maxlength="30" style="max-width: 200px; margin-left: auto;margin-right: auto;"/>
+          placeholder="Enter Box Number" maxlength="30" style="max-width: 400px; margin-left: auto;margin-right: auto;" (ngModelChange)="BoxNameChanged()"/>
+
+          <label style="margin-top: 20px;">Exsisting Boxes:</label>
+          <select class="selectpicker form-control" multiple="true" style="max-width: 400px;padding-bottom: 0px;margin-left: auto;margin-right: auto;" [(ngModel)]="PossibleBox" (change)="PossibleBoxChanged()">
+              <option *ngFor="let item of PossibleBoxNumbers; let i =index" value={{item}}>{{item}}
+              </option> 
+          </select>
       </div>
 
   
@@ -61,6 +67,13 @@
                             <button class="form-control btn-primary" style="width: 200px;margin-left:10px;" type="submit"  (click)="AddNewClient()">Add Client</button>
 
                         </div>
+
+
+                        <label style="padding-top: 10px;">Select Date Of Distribution:</label>
+                        <div style="display: flex;">
+                            <input class="form-control" name="date"  type="date"  [(ngModel)]="InputDate[i]" required placeholder="Select a date"  max={{CurrentDate}} style="width: 66%;"/>
+                        </div>
+
                     </div>
                   
                 </div>

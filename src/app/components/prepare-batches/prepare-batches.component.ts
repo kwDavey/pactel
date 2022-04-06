@@ -34,11 +34,65 @@ export class PrepareBatchesComponent implements OnInit {
 
   ConfirmReset = "";
 
+  PossibleBoxNumbers = [""];
+  PossibleBoxNumbersMain = [""];
+  PossibleBox = "";
+
   forceClose = false;
 
   constructor(private dbService: SqlService,private route: ActivatedRoute,  private router: Router,private modalService: NgbModal) { }
 
   ngOnInit(): void {
+    this.GetAllBoxNames();
+  }
+
+  PossibleBoxChanged(){
+    this.BoxNumber = this.PossibleBox[0];
+  }
+
+  Back(){
+    this.firstscreen = true;
+    this.Secondscreen = false;
+  }
+
+  BoxNameChanged(){
+    this.PossibleBoxNumbers.splice(0);
+
+    for (let index = 0; index < this.PossibleBoxNumbersMain.length; index++) {
+      if(this.PossibleBoxNumbersMain[index].indexOf(this.BoxNumber) > -1){
+        this.PossibleBoxNumbers.push(this.PossibleBoxNumbersMain[index]);
+      }
+      
+    }
+  }
+
+  async GetAllBoxNames(){
+    this.PossibleBoxNumbers.splice(0);
+    this.PossibleBoxNumbersMain.splice(0);
+
+    var formData = new FormData(); // Currently empty
+    formData.set("Where", " `Status` = 'Recieved' OR `Status` = 'In Prep' ");
+
+
+    await(this.dbService.getAllBoxesNames(formData).subscribe((ret:any) => {
+      if(ret != "false"){
+       
+        let a = (ret as string).split(';');
+
+        this.PossibleBoxNumbersMain = a;
+
+        a.forEach(element => {
+          this.PossibleBoxNumbers.push(element);
+        });
+
+       
+      }else{
+        this.PopupTitle = "Error"
+        this.DisplayErrormessage = "Please check your internet connection and try again";
+        let element: HTMLButtonElement = document.getElementById('ErrorButton') as HTMLButtonElement;
+        element.click();
+      }
+    }));
   }
 
 
@@ -68,35 +122,37 @@ export class PrepareBatchesComponent implements OnInit {
           let element: HTMLButtonElement = document.getElementById('ErrorButton') as HTMLButtonElement;
           element.click();
           this.router.navigate(['AllocateDistributor']); 
+        }else{
+          a.splice(0,1);
+
+          a.forEach(element=> {
+            let secondtemp = element.split(",");
+            let temp = {
+              SerialNumber: secondtemp[0],
+              BatchNo: secondtemp[1]
+            }
+  
+            if(secondtemp[4] == this.BoxNumber){
+              if( Number.parseInt(secondtemp[1]) > this.CurrentBatch){
+                this.CurrentBatch = Number.parseInt(secondtemp[1]);
+              }
+  
+              if(Number.parseInt(secondtemp[1]) > 0 ){
+                this.AllocatedSerialnumbers.push(Number.parseInt(secondtemp[0]));
+              }
+              this.AllSerialnumbers.push(Number.parseInt(secondtemp[0]));
+              this.AllSerialBatchnumbers.push(temp);
+            }
+  
+          });
+  
+  
+          this.firstscreen = false;
+          this.Secondscreen = true;
+          this.CurrentBatch+=1;
         }
 
-        a.splice(0,1);
-
-        a.forEach(element=> {
-          let secondtemp = element.split(",");
-          let temp = {
-            SerialNumber: secondtemp[0],
-            BatchNo: secondtemp[1]
-          }
-
-          if(secondtemp[4] == this.BoxNumber){
-            if( Number.parseInt(secondtemp[1]) > this.CurrentBatch){
-              this.CurrentBatch = Number.parseInt(secondtemp[1]);
-            }
-
-            if(Number.parseInt(secondtemp[1]) > 0 ){
-              this.AllocatedSerialnumbers.push(Number.parseInt(secondtemp[0]));
-            }
-            this.AllSerialnumbers.push(Number.parseInt(secondtemp[0]));
-            this.AllSerialBatchnumbers.push(temp);
-          }
-
-        });
-        console.log(this.AllSerialnumbers);
-
-        this.firstscreen = false;
-        this.Secondscreen = true;
-        this.CurrentBatch+=1;
+        
       }else{
         this.PopupTitle = "Error"
         this.DisplayErrormessage = "Please check your internet connection and try again";
@@ -127,7 +183,18 @@ export class PrepareBatchesComponent implements OnInit {
 
   NextBatch(){
 
-    if((this.InputSerialNumber.length) != this.Batchsize){
+    var bvalid = true;
+    var count = 0;
+    this.InputSerialNumber.forEach(element => {
+      if(element == undefined || element == null){
+        bvalid = false;
+        
+      }else{
+        count++;
+      }
+    });
+
+    if(bvalid != true || count != this.Batchsize){
       this.PopupTitle = "Error"
       this.DisplayErrormessage = "Please fill in all serial numbers";
       let element: HTMLButtonElement = document.getElementById('ErrorButtonConstant') as HTMLButtonElement;
@@ -193,6 +260,7 @@ export class PrepareBatchesComponent implements OnInit {
     var formData = new FormData(); // Currently empty
 
     var sql = "";
+    
     this.InputSerialNumber.forEach(element => {
 
       sql += "UPDATE `BoxDetails` SET `Boxno`='"+this.BoxNumber+"',`Batchno`='"+this.CurrentBatch+"' WHERE Serialno = '" +element+ "';";
@@ -257,19 +325,15 @@ export class PrepareBatchesComponent implements OnInit {
         element.click();
 
       }
-
-
-
     }));
 
-    
   }
 
 
   ResetBox(){
     this.ConfirmReset = "";
     this.PopupTitle = "Warning!"
-    this.DisplayErrormessage = "Please type in 'RESET' below to reset the box.";
+    this.DisplayErrormessage = "Please type in 'RESET' below to RESET the whole the box.";
     let element: HTMLButtonElement = document.getElementById('btnConfirmReset') as HTMLButtonElement;
     element.click();
   }
@@ -325,7 +389,7 @@ export class PrepareBatchesComponent implements OnInit {
 
     this.ConfirmReset = "";
     this.PopupTitle = "Warning!"
-    this.DisplayErrormessage = "Please type in 'DONE' below to reset the box.";
+    this.DisplayErrormessage = "Please type in 'DONE' below to FORCE close the box.";
     let element: HTMLButtonElement = document.getElementById('btnConfirmClose') as HTMLButtonElement;
     element.click();
   } 

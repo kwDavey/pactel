@@ -20,13 +20,66 @@ export class TransferBranchComponent implements OnInit {
   DisplayErrormessage = "";
   PopupTitle = "";
 
+
+  PossibleBoxNumbers = [""];
+  PossibleBoxNumbersMain = [""];
+  PossibleBox = "";
   constructor(private dbService: SqlService,private route: ActivatedRoute,  private router: Router,private modalService: NgbModal) { }
 
   ngOnInit(): void {
     this.getData();
+
+    this.GetAllBoxNames();
   }
 
+  PossibleBoxChanged(){
+    this.BoxNumber = this.PossibleBox[0];
+  }
+
+
+  BoxNameChanged(){
+    this.PossibleBoxNumbers.splice(0);
+
+    for (let index = 0; index < this.PossibleBoxNumbersMain.length; index++) {
+      if(this.PossibleBoxNumbersMain[index].indexOf(this.BoxNumber) > -1){
+        this.PossibleBoxNumbers.push(this.PossibleBoxNumbersMain[index]);
+      }
+      
+    }
+  }
+
+  async GetAllBoxNames(){
+    this.PossibleBoxNumbers.splice(0);
+    this.PossibleBoxNumbersMain.splice(0);
+
+    var formData = new FormData(); // Currently empty
+    formData.set("Where", " true ");
+
+
+    await(this.dbService.getAllBoxesNames(formData).subscribe((ret:any) => {
+      if(ret != "false"){
+       
+        let a = (ret as string).split(';');
+
+        this.PossibleBoxNumbersMain = a;
+
+        a.forEach(element => {
+          this.PossibleBoxNumbers.push(element);
+        });
+
+       
+      }else{
+        this.PopupTitle = "Error"
+        this.DisplayErrormessage = "Please check your internet connection and try again";
+        let element: HTMLButtonElement = document.getElementById('ErrorButton') as HTMLButtonElement;
+        element.click();
+      }
+    }));
+  }
+
+
   async getData(){
+    
     await(this.dbService.GetAllBranches().subscribe((ret:any) => {
       if(ret != "false"){
         this.Branchs.splice(0);

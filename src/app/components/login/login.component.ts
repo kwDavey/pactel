@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit {
         if(ret != "false"){
           //alert("Logged in");
           this.dbService.DidUserLogInSuccessfully(ret as string,true);
-          this.router.navigate(['ScanBox']); 
+          this.router.navigate(['Welcome']); 
         }else{
           this.dbService.DidUserLogInSuccessfully("",false);
           this.PopupTitle = "Invalid Details"

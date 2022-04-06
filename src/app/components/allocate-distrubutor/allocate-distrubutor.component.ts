@@ -47,10 +47,60 @@ export class AllocateDistrubutorComponent implements OnInit {
   Boxsize = 100;
   Status = "";
 
+  PossibleBoxNumbers = [""];
+  PossibleBoxNumbersMain = [""];
+  PossibleBox = "";
+
   constructor(private dbService: SqlService,private route: ActivatedRoute,  private router: Router,private modalService: NgbModal) { }
 
   ngOnInit(): void {
     this.getAllData();
+    this.GetAllBoxNames();
+  }
+
+  PossibleBoxChanged(){
+    this.BoxNumber = this.PossibleBox[0];
+  }
+
+
+  BoxNameChanged(){
+    this.PossibleBoxNumbers.splice(0);
+
+    for (let index = 0; index < this.PossibleBoxNumbersMain.length; index++) {
+      if(this.PossibleBoxNumbersMain[index].indexOf(this.BoxNumber) > -1){
+        this.PossibleBoxNumbers.push(this.PossibleBoxNumbersMain[index]);
+      }
+      
+    }
+  }
+
+  async GetAllBoxNames(){
+    this.PossibleBoxNumbers.splice(0);
+    this.PossibleBoxNumbersMain.splice(0);
+
+    var formData = new FormData(); // Currently empty
+    formData.set("Where", " `Status` = 'Prepped' OR `Status` = 'Allocated' ");
+
+
+    await(this.dbService.getAllBoxesNames(formData).subscribe((ret:any) => {
+      if(ret != "false"){
+       
+        let a = (ret as string).split(';');
+
+        this.PossibleBoxNumbersMain = a;
+
+        a.forEach(element => {
+          this.PossibleBoxNumbers.push(element);
+        });
+
+       
+      }else{
+        this.PopupTitle = "Error"
+        this.DisplayErrormessage = "Please check your internet connection and try again";
+        let element: HTMLButtonElement = document.getElementById('ErrorButton') as HTMLButtonElement;
+        element.click();
+      }
+    }));
   }
 
   Reset(){
@@ -115,57 +165,52 @@ export class AllocateDistrubutorComponent implements OnInit {
     //Validate that the box has been Prepped
     //**********************************************************************************************
 
-    var formData = new FormData(); // Currently empty  Prepped
-    formData.set("BoxNumber", this.BoxNumber);
-    formData.set("Distributor", this.Distributor);
-    formData.set("Province", this.Province);
-
-    let tempDate = new Date();
-    let tempStringDate = "";
-    tempStringDate = tempDate.getFullYear() + "-";
-    if(tempDate.getMonth().toString().length == 1){
-      tempStringDate += "0" + tempDate.getMonth()  + "-";
+    if(!(this.PossibleBoxNumbersMain.includes(this.BoxNumber))){
+      this.DisplayErrormessage = "The status of this box is incorrect. Please select a Box number from the list.";
+      this.PopupTitle = "Error"
+      
+      let element: HTMLButtonElement = document.getElementById('ErrorButton') as HTMLButtonElement;
+      element.click();
     }else{
-      tempStringDate += tempDate.getMonth() + "-";
-    }
-
-    if(tempDate.getDay().toString().length == 1){
-      tempStringDate += "0" + tempDate.getDay();
-    }else{
-      tempStringDate += tempDate.getDay();
-    }
-
-    formData.set("Date", tempStringDate);
-
-    await(this.dbService.AllocateDistributor(formData).subscribe((ret:any) => {
-      console.log(ret);
-      if(!(ret.toString().includes("false"))){ 
-
-        
-     
-        this.PopupTitle = "Success"
-        this.DisplayErrormessage = "A Distributor has been set.";
-        let element: HTMLButtonElement = document.getElementById('ErrorButton') as HTMLButtonElement;
-        element.click();
-
-      }else{
-
-        if(ret == "false, status incorrect"){
-          this.DisplayErrormessage = "The status of this box is not 'prepped'";
+      var formData = new FormData(); // Currently empty  Prepped
+      formData.set("BoxNumber", this.BoxNumber);
+      formData.set("Distributor", this.Distributor);
+      formData.set("Province", this.Province);
+  
+   
+  
+      await(this.dbService.AllocateDistributor(formData).subscribe((ret:any) => {
+        console.log(ret);
+        if(!(ret.toString().includes("false"))){ 
+  
+          
+       
+          this.PopupTitle = "Success"
+          this.DisplayErrormessage = "A Distributor has been set.";
+          let element: HTMLButtonElement = document.getElementById('ErrorButton') as HTMLButtonElement;
+          element.click();
+  
         }else{
-          this.DisplayErrormessage = "Please check your internet connection and try again";
+  
+          if(ret == "false, status incorrect"){
+            this.DisplayErrormessage = "The status of this box is incorrect'";
+          }else{
+            this.DisplayErrormessage = "Please check your internet connection and try again";
+          }
+  
+          this.PopupTitle = "Error"
+          
+          let element: HTMLButtonElement = document.getElementById('ErrorButton') as HTMLButtonElement;
+          element.click();
+  
         }
+  
+  
+  
+      }));
+    }
 
-        this.PopupTitle = "Error"
-        
-        let element: HTMLButtonElement = document.getElementById('ErrorButton') as HTMLButtonElement;
-        element.click();
-
-      }
-
-
-
-    }));
+    
   }
 
   RevertCheck(){

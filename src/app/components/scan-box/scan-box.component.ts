@@ -75,8 +75,6 @@ export class ScanBoxComponent implements OnInit {
 
     this.getData();
     this.ImportValid = false;
-
-    console.log(this.CurrentDate);
   }
 
   async getData(){
