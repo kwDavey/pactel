@@ -13,7 +13,7 @@ export class SqlService {
   UserLoggedIn = false;
   UserLevel = "" ;
 
-  Link = "https://www.silversharksswimmingacademy.co.za/Pactel/";
+  Link = "http://localhost:8080/php/";
   
 
   constructor(private http:HttpClient,private router: Router) { }
