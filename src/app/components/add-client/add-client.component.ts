@@ -117,9 +117,8 @@ export class AddClientComponent implements OnInit {
 
     if(this.Province != "" ){
       var formData = new FormData(); // Currently empty  Prepped
-      formData.set("Province", this.Province + "' AND `Area`='" + this.Area);
+      formData.set("Province", this.Province + "' AND Area='" + this.Area);
 
-      console.log("HI");
 
       await(this.dbService.getClientsPerProvince(formData).subscribe((ret:any) => {
         if(!(String(ret).includes("Error"))){

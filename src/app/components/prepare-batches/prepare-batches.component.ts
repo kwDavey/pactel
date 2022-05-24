@@ -71,7 +71,7 @@ export class PrepareBatchesComponent implements OnInit {
     this.PossibleBoxNumbersMain.splice(0);
 
     var formData = new FormData(); // Currently empty
-    formData.set("Where", " `Status` = 'Recieved' OR `Status` = 'In Prep' ");
+    formData.set("Where", " Status = 'Recieved' OR Status = 'In Prep' ");
 
 
     await(this.dbService.getAllBoxesNames(formData).subscribe((ret:any) => {
@@ -263,12 +263,12 @@ export class PrepareBatchesComponent implements OnInit {
     
     this.InputSerialNumber.forEach(element => {
 
-      sql += "UPDATE `BoxDetails` SET `Boxno`='"+this.BoxNumber+"',`Batchno`='"+this.CurrentBatch+"' WHERE Serialno = '" +element+ "';";
+      sql += "UPDATE [Pactel].[dbo].[BoxDetails]  SET Boxno='"+this.BoxNumber+"',Batchno='"+this.CurrentBatch+"' WHERE Serialno ='" +element+ "';";
     });
   
   
 
-    sql+= "UPDATE `Boxes` SET `Status`='In Prep' WHERE Boxno='" +this.BoxNumber +"';"
+    sql+= "UPDATE [Pactel].[dbo].[Boxes] SET Status='In Prep' WHERE Boxno='" +this.BoxNumber +"';"
     formData.set("SQL", sql);
 
     await(this.dbService.AddNewBatch(formData).subscribe((ret:any) => {
@@ -374,13 +374,13 @@ export class PrepareBatchesComponent implements OnInit {
   openConfirmReset(content: any) {
     this.modalService.open(content,
    {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
+      this.closeResult = 'Closed with: ${result}';
          if(this.ConfirmReset == "RESET"){
           this.ActuallyResetBox();
          }
     }, (reason) => {
       this.closeResult = 
-         `Dismissed ${this.getDismissReason(reason)}`;
+         'Dismissed ${this.getDismissReason(reason)}';
     });
   }
 
@@ -398,7 +398,7 @@ export class PrepareBatchesComponent implements OnInit {
   openConfirmForceClose(content: any) {
     this.modalService.open(content,
    {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
+      this.closeResult ='Closed with: ${result}';
 
          if(this.ConfirmReset == "DONE"){
           this.forceClose = true;
@@ -406,7 +406,7 @@ export class PrepareBatchesComponent implements OnInit {
          }
     }, (reason) => {
       this.closeResult = 
-         `Dismissed ${this.getDismissReason(reason)}`;
+         'Dismissed ${this.getDismissReason(reason)}';
     });
   }
   
@@ -414,10 +414,10 @@ export class PrepareBatchesComponent implements OnInit {
   open(content: any) {
     this.modalService.open(content,
    {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
+      this.closeResult = 'Closed with: ${result}';
     }, (reason) => {
       this.closeResult = 
-         `Dismissed ${this.getDismissReason(reason)}`;
+         'Dismissed ${this.getDismissReason(reason)}';
       //let element: HTMLButtonElement = document.getElementById('ErrorButton') as HTMLButtonElement;
       //element.click();
     });
@@ -426,10 +426,10 @@ export class PrepareBatchesComponent implements OnInit {
   open2(content: any) {
     this.modalService.open(content,
    {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
+      this.closeResult = 'Closed with: ${result}';
     }, (reason) => {
       this.closeResult = 
-         `Dismissed ${this.getDismissReason(reason)}`;
+        ' Dismissed ${this.getDismissReason(reason)}';
       let element: HTMLButtonElement = document.getElementById('ErrorButtonConstant') as HTMLButtonElement;
       element.click();
     });
@@ -441,7 +441,7 @@ export class PrepareBatchesComponent implements OnInit {
     } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
       return 'by clicking on a backdrop';
     } else {
-      return `with: ${reason}`;
+      return 'with: ${reason}';
     }
   }
 

@@ -18,6 +18,7 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.UserLevel = this.dbService.getUserLevel();
+    //console.log(this.dbService.UserLevel);
 
     this.ActivePage = String(localStorage.getItem('ActivePage'));
   }

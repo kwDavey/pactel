@@ -196,14 +196,14 @@ export class ScanBoxComponent implements OnInit {
     let temp = this.ProvidersData[this.Provider];
 
     for (let index = 1; index < this.data.length; index++) {
-      //`Boxno`, `Serialno`, `Batchno`, `Client`, `DateDist`
+      //Boxno, Serialno, Batchno, Client, DateDist
       tempString = tempString + " ('"+this.data[index][0]+"','"+this.data[index][1]+"','','','') ,";
       this.SERIALNUMBERs.push(this.data[index][1] as string);
 
 
       if(!(this.BoxNUMBERs.includes(this.data[index][0]))){
         this.BoxNUMBERs.push(this.data[index][0]);
-        tempBoxDetailsString += "('"+this.data[index][0]+"','"+temp.ID+"','"+temp.BoxSize+"','"+temp.BatchSize+"','"+this.date +"','Recieved','"+this.Branch+"','','' ),";
+        tempBoxDetailsString += "('"+this.data[index][0]+"','"+temp.ID+"','"+temp.BoxSize+"','"+temp.BatchSize+"','"+this.date +"','Recieved','"+this.Branch+"'),";
       }
 
       this.DataDisplay.push({
@@ -213,13 +213,12 @@ export class ScanBoxComponent implements OnInit {
     }
 
 
-    tempString = "INSERT INTO `BoxDetails`(`Boxno`, `Serialno`, `Batchno`, `Client`, `DateDist`) VALUES" + tempString.substr(0,tempString.length-1) + " ; ";
-    this.formData.set("SQL", tempString);
-
-
-    tempString = "INSERT INTO `Boxes`(`Boxno`, `Provider`, `Boxsize`, `Batchsize`, `DateReceived`, `Status`, `Branch`, `Distributor`, `Province`) VALUES" + tempBoxDetailsString.substr(0,tempBoxDetailsString.length-1) + " ; ";
-    console.log("Error");
+    tempString = "INSERT INTO [Pactel].[dbo].[BoxDetails] (Boxno, Serialno, Batchno, Client, DateDist) VALUES" + tempString.substr(0,tempString.length-1) + " ; ";
     this.formData.set("SQL2", tempString);
+
+    tempString = "INSERT INTO [Pactel].[dbo].[Boxes] (Boxno, Provider, Boxsize, Batchsize, DateReceived, Status, Branch) VALUES" + tempBoxDetailsString.substr(0,tempBoxDetailsString.length-1) + " ; ";
+
+    this.formData.set("SQL", tempString);
     
     this.ImportValid = true;
   }
@@ -273,10 +272,10 @@ export class ScanBoxComponent implements OnInit {
   open(content: any) {
     this.modalService.open(content,
    {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
+      this.closeResult = 'Closed with: ${result}';
     }, (reason) => {
       this.closeResult = 
-         `Dismissed ${this.getDismissReason(reason)}`;
+         'Dismissed ${this.getDismissReason(reason)}';
       //let element: HTMLButtonElement = document.getElementById('ErrorButton') as HTMLButtonElement;
       //element.click();
     });
@@ -288,7 +287,7 @@ export class ScanBoxComponent implements OnInit {
     } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
       return 'by clicking on a backdrop';
     } else {
-      return `with: ${reason}`;
+      return 'with: ${reason}';
     }
   }
 

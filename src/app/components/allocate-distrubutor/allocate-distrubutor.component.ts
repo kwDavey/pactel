@@ -79,7 +79,7 @@ export class AllocateDistrubutorComponent implements OnInit {
     this.PossibleBoxNumbersMain.splice(0);
 
     var formData = new FormData(); // Currently empty
-    formData.set("Where", " `Status` = 'Prepped' OR `Status` = 'Allocated' ");
+    formData.set("Where", " Status = 'Prepped' OR Status = 'Allocated' ");
 
 
     await(this.dbService.getAllBoxesNames(formData).subscribe((ret:any) => {

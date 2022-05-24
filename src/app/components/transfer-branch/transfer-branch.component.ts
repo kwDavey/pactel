@@ -53,7 +53,7 @@ export class TransferBranchComponent implements OnInit {
     this.PossibleBoxNumbersMain.splice(0);
 
     var formData = new FormData(); // Currently empty
-    formData.set("Where", " true ");
+    formData.set("Where", " 1=1 ");
 
 
     await(this.dbService.getAllBoxesNames(formData).subscribe((ret:any) => {

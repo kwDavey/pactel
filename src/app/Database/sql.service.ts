@@ -11,7 +11,7 @@ import { retry, catchError } from 'rxjs/operators';
 export class SqlService {
 
   UserLoggedIn = false;
-  UserLevel = "" ;
+  public UserLevel = "" ;
 
   Link = "http://localhost:8080/php/";
   
@@ -33,15 +33,15 @@ export class SqlService {
 
   getUserLevel(): string{
 
-    if(localStorage.getItem('UserLevel') == "1£Admin"){
+    if(localStorage.getItem('UserLevel')?.includes("Admin")){
       this.UserLevel = "Admin";
-    }else if(localStorage.getItem('UserLevel') == "1£Manager"){
+    }else if(localStorage.getItem('UserLevel')?.includes("Manager")){
       this.UserLevel = "Manager";
     }else{
       this.UserLevel = "User";
     }
     
-    
+    console.log(this.UserLevel);
     return this.UserLevel;
   }
 
@@ -94,6 +94,7 @@ export class SqlService {
       errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
     }
     //window.alert(errorMessage);
+    console.log(errorMessage);
     window.alert("Something went wrong, please try again. If this continuies please contact the I.T Department");
     return throwError("Something went wrong, please try again. If this continuies please contact the I.T Department");
     //return throwError(errorMessage);

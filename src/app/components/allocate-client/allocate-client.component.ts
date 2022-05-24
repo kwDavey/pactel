@@ -84,7 +84,7 @@ export class AllocateClientComponent implements OnInit {
     this.PossibleBoxNumbersMain.splice(0);
 
     var formData = new FormData(); // Currently empty
-    formData.set("Where", " `Status` = 'Allocated' ");
+    formData.set("Where", " Status = 'Allocated' ");
 
 
     await(this.dbService.getAllBoxesNames(formData).subscribe((ret:any) => {
@@ -303,19 +303,19 @@ export class AllocateClientComponent implements OnInit {
         var strSQL = "";
   
         for (let index = 0; index < this.Batchsize; index++) {
-          strSQL += "UPDATE `BoxDetails` SET `Client`='" + this.InputClients[index] +"' , `DateDist` = '" +  this.InputDate[index]  + "' WHERE `Boxno`='" + this.BoxNumber + "' AND `Batchno` = '"+ (index+1) + "';";
+          strSQL += "UPDATE [Pactel].[dbo].[BoxDetails] SET Client='" + this.InputClients[index] +"' , DateDist = '" +  this.InputDate[index]  + "' WHERE Boxno='" + this.BoxNumber + "' AND Batchno = '"+ (index+1) + "';";
         }
   
         var formData = new FormData(); // Currently empty  Prepped
         formData.set("SQL", strSQL);
-        //formData.set("SQL2", "UPDATE `Boxes` SET `Status`='Done' WHERE `Boxno`='" + this.BoxNumber + "';");
+        //formData.set("SQL2", "UPDATE Boxes SET Status='Done' WHERE Boxno='" + this.BoxNumber + "';");
   
         await(this.dbService.FinishBox(formData).subscribe(async (ret:any) => {
           if(ret != "false"){ 
           
             this.confirmed=false;
             var formData = new FormData(); // Currently empty  Prepped
-           formData.set("SQL", "UPDATE `Boxes` SET `Status`='Done' WHERE `Boxno`='" + this.BoxNumber + "';");
+           formData.set("SQL", "UPDATE [Pactel].[dbo].[Boxes] SET Status='Done' WHERE Boxno='" + this.BoxNumber + "';");
       
             await(this.dbService.FinishBox(formData).subscribe((ret:any) => {
               if(ret != "false"){ 
@@ -396,10 +396,10 @@ export class AllocateClientComponent implements OnInit {
   open(content: any) {
     this.modalService.open(content,
    {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
+      this.closeResult = 'Closed with: ${result}';
     }, (reason) => {
       this.closeResult = 
-         `Dismissed ${this.getDismissReason(reason)}`;
+         'Dismissed ${this.getDismissReason(reason)}';
       //let element: HTMLButtonElement = document.getElementById('contentClientPopUpErrorButton') as HTMLButtonElement;
       //element.click();
     });
@@ -410,7 +410,7 @@ export class AllocateClientComponent implements OnInit {
     } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
       return 'by clicking on a backdrop';
     } else {
-      return `with: ${reason}`;
+      return 'with: ${reason}';
     }
   }
 
@@ -418,13 +418,13 @@ export class AllocateClientComponent implements OnInit {
   opentemplate(content: any) {
     this.modalService.open(content,
    {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
+      this.closeResult = 'Closed with: ${result}';
       this.Next();
       this.AreaChanged(0);
       
     }, (reason) => {
       this.closeResult = 
-         `Dismissed ${this.getDismissReason(reason)}`;
+         'Dismissed ${this.getDismissReason(reason)}';
          this.Next();
          this.AreaChanged(0);
       //let element: HTMLButtonElement = document.getElementById('contentClientPopUpErrorButton') as HTMLButtonElement;
