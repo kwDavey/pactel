@@ -13,10 +13,13 @@ export class SqlService {
   UserLoggedIn = false;
   public UserLevel = "" ;
 
-  Link = "http://localhost:8080/php/";
+  Link = "http://10.10.10.3:8080/php/";
   
 
-  constructor(private http:HttpClient,private router: Router) { }
+  constructor(private http:HttpClient,private router: Router) { 
+
+    console.log(this.router.url);
+  }
 
 
 

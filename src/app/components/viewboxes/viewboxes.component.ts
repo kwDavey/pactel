@@ -253,7 +253,7 @@ export class ViewboxesComponent implements OnInit {
                         Distributor:elementtemp[5],
                         Province:elementtemp[6],
 
-                        SerialNumber:elementtemp[7],
+                        SerialNumber:elementtemp[7] + ",",
                         DateDistributed:elementtemp[8],
 
                         ClientName:elementtemp[9],
@@ -352,7 +352,7 @@ export class ViewboxesComponent implements OnInit {
       Distributor:this.SearchValue.Distributor,
       Province:this.SearchValue.Province,
   
-      SerialNumber:this.SearchValue.SerialNumber,
+      SerialNumber:this.SearchValue.SerialNumber + ",",
       DateDistributed:this.SearchValue.DateDistributed,
   
       ClientName:this.SearchValue.ClientName,

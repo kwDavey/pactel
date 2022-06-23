@@ -46,7 +46,7 @@
 
         <div class="form-group" *ngFor="let item of [].constructor(Batchsize); let i = index">
             <label>Enter Serial Number:</label>
-            <input class="form-control" name="InputSerialNumber" type="number" [(ngModel)]="InputSerialNumber[i]" required
+            <input class="form-control" name="InputSerialNumber" type="text" [(ngModel)]="InputSerialNumber[i]" required
               placeholder="Enter Serial Number" maxlength="30"/> 
         </div>
   

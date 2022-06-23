@@ -71,7 +71,7 @@
 
                         <label style="padding-top: 10px;">Select Date Of Distribution:</label>
                         <div style="display: flex;">
-                            <input class="form-control" name="date"  type="date"  [(ngModel)]="InputDate[i]" required placeholder="Select a date"  max={{CurrentDate}} style="width: 66%;"/>
+                            <input class="form-control" name="date"  type="date"  [(ngModel)]="InputDate[i]" required placeholder="Select a date" (change)="DateChanged(i)"  max={{CurrentDate}} style="width: 66%;"/>
                         </div>
 
                     </div>

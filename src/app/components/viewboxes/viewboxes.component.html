@@ -1,4 +1,4 @@
-<div class="container" style="max-width: 80%;">
+<div class="container" style="max-width: 100%;">
     <H1>View Boxes</H1>
 
   
@@ -6,10 +6,10 @@
 
         <div class="col-2" style="padding-bottom: 20px;text-align: left;">
 
-        <label>Select Status:</label>
+        <label> Status:</label>
         <div style="display: flex;">
           <select class="form-control" name="Status" type="text" [(ngModel)]="SearchValue.Status" required
-            placeholder="Select Status" (change)="Search()">
+            placeholder=" Status" (change)="Search()">
             <option value="All">All</option>
             <option value="Recieved">Recieved</option>
             <option value="In Prep">In Prep</option>
@@ -23,10 +23,10 @@
 
       <div class="col-2" style="padding-bottom: 20px;text-align: left;">
 
-        <label>Select Provider Name:</label>
+        <label> Provider Name:</label>
         <div style="display: flex;">
           <select class="form-control" name="Provider" type="text" [(ngModel)]="SearchValue.Provider" required
-            placeholder="Select Provider" (change)="Search()">
+            placeholder=" Provider" (change)="Search()">
             <option *ngFor="let Provider of Providers; let i =index" value={{Provider}}>{{Provider}}
             </option> 
           </select>
@@ -36,10 +36,10 @@
 
       <div class="col-2" style="padding-bottom: 20px;text-align: left;">
 
-        <label>Select Distributor Name:</label>
+        <label> Distributor Name:</label>
         <div style="display: flex;">
           <select class="form-control" name="Distributor" type="text" [(ngModel)]="SearchValue.Distributor" required
-            placeholder="Select Distributor" (change)="Search()">
+            placeholder=" Distributor" (change)="Search()">
             <option *ngFor="let Distributor of Distributors; let i =index" value={{Distributor}}>{{Distributor}}
             </option> 
           </select>
@@ -48,10 +48,10 @@
 
       <div class="col-2" style="padding-bottom: 20px;text-align: left;">
 
-        <label>Select Client Name:</label>
+        <label> Client Name:</label>
         <div style="display: flex;">
           <select class="form-control" name="ClientName" type="text" [(ngModel)]="SearchValue.ClientName" required
-            placeholder="Select Client Name" (change)="Search()">
+            placeholder=" Client Name" (change)="Search()">
             <option *ngFor="let ClientName of ClientNames; let i =index" value={{ClientName}}>{{ClientName}}
             </option> 
           </select>
@@ -62,10 +62,10 @@
 
       <div class="col-2" style="padding-bottom: 20px;text-align: left;">
 
-        <label>Select Client Province:</label>
+        <label> Client Province:</label>
         <div style="display: flex;">
           <select class="form-control" name="ClientProvince" type="text" [(ngModel)]="SearchValue.ClientProvince" required
-            placeholder="Select Client Province" (change)="Search()">
+            placeholder=" Client Province" (change)="Search()">
             <option *ngFor="let ClientProvince of ClientProvinces; let i =index" value={{ClientProvince}}>{{ClientProvince}}
             </option> 
           </select>
@@ -92,29 +92,29 @@
 
       <div class="col-4" style="padding-bottom: 20px;">
 
-        <label>Select Distributed Date:</label>
+        <label> Distributed Date:</label>
         <div class="input-group" style="margin-bottom:1rem!important;align-items: end;">
           <label>Start Date:</label>
-          <input class="form-control" name="date"  type="date"  [(ngModel)]="SearchValue.DistributorStartDate" required placeholder="Select a date" (ngModelChange)="Search()" style="margin-left: calc(2.25rem + 2px);width:200px" max={{SearchValue.DistributorEndDate}}/>
+          <input class="form-control" name="date"  type="date"  [(ngModel)]="SearchValue.DistributorStartDate" required placeholder=" a date" (ngModelChange)="Search()" style="margin-left: calc(2.25rem + 2px);width:200px" max={{SearchValue.DistributorEndDate}}/>
         </div>
 
         <div class="input-group" style="align-items: end;">
           <label>End Date:</label>
-          <input class="form-control" name="date"  type="date"  [(ngModel)]="SearchValue.DistributorEndDate" required placeholder="Select a date" (ngModelChange)="Search()" style="margin-left: calc(2.25rem + 9px);width:200px" min={{SearchValue.DistributorStartDate}}/>
+          <input class="form-control" name="date"  type="date"  [(ngModel)]="SearchValue.DistributorEndDate" required placeholder=" a date" (ngModelChange)="Search()" style="margin-left: calc(2.25rem + 9px);width:200px" min={{SearchValue.DistributorStartDate}}/>
         </div>
       </div>
 
       <div class="col-4" style="padding-bottom: 20px;">
 
-        <label>Select Recieved Date:</label>
+        <label> Recieved Date:</label>
         <div class="input-group" style="margin-bottom:1rem!important;align-items: end;">
           <label>Start Date:</label>
-          <input class="form-control" name="date"  type="date"  [(ngModel)]="SearchValue.RecievedStartDate" required placeholder="Select a date" (ngModelChange)="Search()" style="margin-left: calc(2.25rem + 2px);width:200px" max={{SearchValue.RecievedEndDate}}/>
+          <input class="form-control" name="date"  type="date"  [(ngModel)]="SearchValue.RecievedStartDate" required placeholder=" a date" (ngModelChange)="Search()" style="margin-left: calc(2.25rem + 2px);width:200px" max={{SearchValue.RecievedEndDate}}/>
         </div>
 
         <div class="input-group" style="align-items: end;">
           <label>End Date:</label>
-          <input class="form-control" name="date"  type="date"  [(ngModel)]="SearchValue.RecievedEndDate" required placeholder="Select a date" (ngModelChange)="Search()" style="margin-left: calc(2.25rem + 9px);width:200px" min={{SearchValue.RecievedStartDate}}/>
+          <input class="form-control" name="date"  type="date"  [(ngModel)]="SearchValue.RecievedEndDate" required placeholder=" a date" (ngModelChange)="Search()" style="margin-left: calc(2.25rem + 9px);width:200px" min={{SearchValue.RecievedStartDate}}/>
         </div>
       </div>
 

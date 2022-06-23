@@ -21,16 +21,16 @@ export class PrepareBatchesComponent implements OnInit {
   Secondscreen = false;
 
   AllSerialBatchnumbers = [{}];
-  AllSerialnumbers = [0];
-  NewSerialnumbers = [0];
-  AllocatedSerialnumbers = [1,4];
+  AllSerialnumbers = [""];
+  NewSerialnumbers = [""];
+  AllocatedSerialnumbers = [""];
 
   Boxsize = 0;
   Batchsize = 0;
   status = "";
   CurrentBatch = 0;
 
-  InputSerialNumber = [1,4];
+  InputSerialNumber = [""];
 
   ConfirmReset = "";
 
@@ -138,9 +138,10 @@ export class PrepareBatchesComponent implements OnInit {
               }
   
               if(Number.parseInt(secondtemp[1]) > 0 ){
-                this.AllocatedSerialnumbers.push(Number.parseInt(secondtemp[0]));
+                this.AllocatedSerialnumbers.push(secondtemp[0]);
               }
-              this.AllSerialnumbers.push(Number.parseInt(secondtemp[0]));
+
+              this.AllSerialnumbers.push(secondtemp[0]);
               this.AllSerialBatchnumbers.push(temp);
             }
   
@@ -205,26 +206,26 @@ export class PrepareBatchesComponent implements OnInit {
       var bSerialsValid = true;
       var errorMessage = ""; 
 
-      this.InputSerialNumber.forEach(element => {
+      this.InputSerialNumber.forEach(InputSerialNumberEl => {
 
-        if(this.AllSerialnumbers.includes(element)){
-
-          if(this.AllocatedSerialnumbers.includes(element)){
+        if(this.AllSerialnumbers.includes(InputSerialNumberEl)){
+          
+          if(this.AllocatedSerialnumbers.includes(InputSerialNumberEl)){
             bSerialsValid = false;
-            errorMessage = "One of these serial numbers have been allocated a batch already(" + element + ")";
+            errorMessage = "One of these serial numbers have been allocated a batch already(" + InputSerialNumberEl + ")";
           }else{
 
-            if(this.NewSerialnumbers.includes(element)){
+            if(this.NewSerialnumbers.includes(InputSerialNumberEl)){
               bSerialsValid = false;
-              errorMessage = "There are duplicated serial numbers in this batch(" + element + ")";
+              errorMessage = "There are duplicated serial numbers in this batch(" + InputSerialNumberEl + ")";
             }else{
               
-              this.NewSerialnumbers.push(element);
+              this.NewSerialnumbers.push(InputSerialNumberEl);
             }
           }
         }else{
           bSerialsValid = false;
-          errorMessage = "This serial number does not exsist in the box(" + element + ")";
+          errorMessage = "This serial number does not exsist in the box(" + InputSerialNumberEl + ")";
         }
       });
 

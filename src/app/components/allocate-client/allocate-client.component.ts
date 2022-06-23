@@ -84,7 +84,7 @@ export class AllocateClientComponent implements OnInit {
     this.PossibleBoxNumbersMain.splice(0);
 
     var formData = new FormData(); // Currently empty
-    formData.set("Where", " Status = 'Allocated' ");
+    formData.set("Where", " Status = 'Allocated' OR status= 'Done' ");
 
 
     await(this.dbService.getAllBoxesNames(formData).subscribe((ret:any) => {
@@ -155,13 +155,13 @@ export class AllocateClientComponent implements OnInit {
           }
         });
 
-        if(firsttemp[2] == "Allocated"){
+        if(firsttemp[2] == "Allocated" || firsttemp[2] == "Done"){
           this.getClientsPerArea();
           this.firstscreen = false;
           this.Secondscreen = true;
         }else{
           this.PopupTitle = "Error"
-          this.DisplayErrormessage = "Box has invalid status:'" + firsttemp[2] +"', when it should be 'Allocated'"; 
+          this.DisplayErrormessage = "Box has invalid status:'" + firsttemp[2] +"', when it should be 'Allocated' or 'Done'"; 
           let element: HTMLButtonElement = document.getElementById('contentClientPopUpErrorButton') as HTMLButtonElement;
           element.click();
         }
@@ -228,10 +228,22 @@ export class AllocateClientComponent implements OnInit {
     }));
   }
 
+  DateChanged(pos:number){
+
+    if(pos == 0){
+
+      for (let index = 1; index < this.BoxNumberBatchsize; index++) {
+        this.InputDate[index] = (this.InputDate[0]);
+      }
+
+    
+    }
+
+  }
+
   AreaChanged(pos:number){
     //InputAreas[pos]
     this.Clients[pos] = [];
-    console.log("HI");
 
     this.Data.forEach(element => {
 
@@ -247,7 +259,7 @@ export class AllocateClientComponent implements OnInit {
    
     if(pos == 0){
 
-      for (let index = 1; index < this.Batchsize; index++) {
+      for (let index = 1; index < this.BoxNumberBatchsize; index++) {
         this.InputAreas[index] = (this.InputAreas[0]);
         this.AreaChanged(index);
       }
@@ -302,7 +314,7 @@ export class AllocateClientComponent implements OnInit {
         //save in DB
         var strSQL = "";
   
-        for (let index = 0; index < this.Batchsize; index++) {
+        for (let index = 0; index < this.BoxNumberBatchsize; index++) {
           strSQL += "UPDATE [Pactel].[dbo].[BoxDetails] SET Client='" + this.InputClients[index] +"' , DateDist = '" +  this.InputDate[index]  + "' WHERE Boxno='" + this.BoxNumber + "' AND Batchno = '"+ (index+1) + "';";
         }
   
