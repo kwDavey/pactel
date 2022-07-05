@@ -332,6 +332,10 @@ export class SqlService {
   }
 
 
+  DeleteBox(formData:FormData){
+    return this.http.post(this.Link + "deleteBox.php", formData);
+  }
+
 
 
 
@@ -392,5 +396,7 @@ export class SqlService {
   getAllBoxesNames(formData:FormData){
     return this.http.post(this.Link + "getAllBoxNames.php", formData)
   }
+
+
   
 }

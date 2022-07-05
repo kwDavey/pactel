@@ -197,7 +197,7 @@ export class ScanBoxComponent implements OnInit {
 
     for (let index = 1; index < this.data.length; index++) {
       //Boxno, Serialno, Batchno, Client, DateDist
-      tempString = tempString + " ('"+this.data[index][0]+"','"+this.data[index][1]+"','','','') ,";
+      tempString = tempString + " ('"+this.data[index][0]+"','"+this.data[index][1]+"','','','') ;";
       this.SERIALNUMBERs.push(this.data[index][1] as string);
 
 
@@ -213,7 +213,7 @@ export class ScanBoxComponent implements OnInit {
     }
 
 
-    tempString = "INSERT INTO [Pactel].[dbo].[BoxDetails] (Boxno, Serialno, Batchno, Client, DateDist) VALUES" + tempString.substr(0,tempString.length-1) + " ; ";
+    tempString = tempString.substr(0,tempString.length-1);
     this.formData.set("SQL2", tempString);
 
     tempString = "INSERT INTO [Pactel].[dbo].[Boxes] (Boxno, Provider, Boxsize, Batchsize, DateReceived, Status, Branch) VALUES" + tempBoxDetailsString.substr(0,tempBoxDetailsString.length-1) + " ; ";

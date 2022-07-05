@@ -32,6 +32,10 @@
           <div style="float: left;margin-right: 20px;margin-left:20px;">
               <button class="btn btn-warning btn-lg btn-block" type="submit"  (click)="Reset()">Reset</button>
           </div>
+
+          <div style="float: left;margin-right: 20px;margin-left:20px;">
+            <button class="btn btn-warning btn-lg btn-block" type="submit"  (click)="Delete()">Delete Box</button>
+        </div>
   
           <div style="float: right;margin-left:20px;">
               <button class="btn btn-success btn-lg btn-block" type="submit" [disabled]="!BoxNumber ||!Branch" (click)="Save()">Save</button>
@@ -51,6 +55,9 @@
    <!--Error popup-->
    <div style="float: right;margin-left:20px;">
     <button class="btn btn-success btn-lg btn-block" id="ErrorButton" (click)="open(content)" style="display: none;">
+    </button>
+
+    <button class="btn btn-success btn-lg btn-block" id="btnConfirmReset" (click)="openConfirmReset(content2)" style="display: none;">
     </button>
   </div>
    <ng-template #content let-modal ID="Errormessage">
@@ -83,5 +90,51 @@
                 (click)="modal.close('Save click')">
                 Done
             </button>
+        </div>
+    </ng-template>
+
+
+
+    <ng-template #content2 let-modal ID="ConfirmReset">
+        <div class="modal-header">
+            <h4 class="modal-title" 
+                id="modal-basic-title">
+                {{PopupTitle}}
+            </h4>
+            <button type="button" class="close"
+                    aria-label="Close" (click)=
+                    "modal.dismiss('Cross click')">
+      
+                <span aria-hidden="true">
+                    X
+                </span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <form>
+                <div class="form-group">
+                    <label for="dateOfBirth">
+                        {{DisplayErrormessage}}
+                    </label>
+
+                    <div class="form-group">
+                        <input class="form-control" name="ConfirmReset" type="text" [(ngModel)]="ConfirmReset" required
+                        placeholder="" maxlength="30"/> 
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" 
+                class="btn btn-success btn-lg btn-block" 
+                (click)="modal.close('Save click')">
+                Done
+            </button>
+
+            <button type="button" 
+            class="btn btn-warning btn-lg btn-block" 
+            (click)="modal.close('Cancel')">
+            Cancel
+        </button>
         </div>
     </ng-template>

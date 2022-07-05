@@ -112,6 +112,57 @@ export class TransferBranchComponent implements OnInit {
     }));
   }
 
+  ConfirmReset = "";
+
+
+  Delete(){
+    this.ConfirmReset = "";
+    this.PopupTitle = "Warning!"
+    this.DisplayErrormessage = "Please type in 'DELETE' below to DELETE the whole the box.";
+    let element: HTMLButtonElement = document.getElementById('btnConfirmReset') as HTMLButtonElement;
+    element.click();
+  }
+
+
+  formData = new FormData(); // Currently empty
+  async ActuallyDeleteBox(){
+
+
+    this.formData.set("SQL2", "Delete [Pactel].[dbo].[Boxes] where BoxNo =" + this.BoxNumber + "; ");
+
+    this.formData.set("SQL", "Delete [Pactel].[dbo].[BoxDetails] where BoxNo =" + this.BoxNumber + "; ");
+
+    await(this.dbService.DeleteBox(this.formData).subscribe((ret:any) => {
+      if(!(String(ret).includes("Error"))){
+        this.router.navigate(['PrepareBatches']); 
+        this.PopupTitle = "Success"
+        this.DisplayErrormessage = "The Box has been deleted";
+        let element: HTMLButtonElement = document.getElementById('ErrorButton') as HTMLButtonElement;
+        element.click();
+      }else{
+        //"Error.Duplicate entry 'Box1-1' for key 'PRIMARY'"
+
+        this.PopupTitle = "Error"
+        this.DisplayErrormessage = "Please check your internet connection and try again";
+        let element: HTMLButtonElement = document.getElementById('ErrorButton') as HTMLButtonElement;
+        element.click();
+        
+      }
+    }));
+  }
+
+  openConfirmReset(content: any) {
+    this.modalService.open(content,
+   {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+      this.closeResult = 'Closed with: ${result}';
+         if(this.ConfirmReset == "DELETE"){
+          this.ActuallyDeleteBox();
+         }
+    }, (reason) => {
+      this.closeResult = 
+         'Dismissed ${this.getDismissReason(reason)}';
+    });
+  }
 
   Reset(){
     this.BoxNumber = "";
