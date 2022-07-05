@@ -128,9 +128,9 @@ export class TransferBranchComponent implements OnInit {
   async ActuallyDeleteBox(){
 
 
-    this.formData.set("SQL2", "Delete [Pactel].[dbo].[Boxes] where BoxNo =" + this.BoxNumber + "; ");
+    this.formData.set("SQL2", "Delete [Pactel].[dbo].[Boxes] where BoxNo ='" + this.BoxNumber + "'; ");
 
-    this.formData.set("SQL", "Delete [Pactel].[dbo].[BoxDetails] where BoxNo =" + this.BoxNumber + "; ");
+    this.formData.set("SQL", "Delete [Pactel].[dbo].[BoxDetails] where BoxNo ='" + this.BoxNumber + "'; ");
 
     await(this.dbService.DeleteBox(this.formData).subscribe((ret:any) => {
       if(!(String(ret).includes("Error"))){
